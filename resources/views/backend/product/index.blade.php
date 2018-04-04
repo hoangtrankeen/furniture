@@ -1,12 +1,30 @@
 @extends('layouts/backend/master')
 
-@section('title','Product')
+@section('title','All Product')
 
 @section('css')
+	<!-- Data Tables -->
+	<link rel="stylesheet" href="{{asset('backend/assets/plugin/datatables/media/css/dataTables.bootstrap.min.css')}}">
 
+	<link rel="stylesheet" href="{{asset('backend/assets/plugin/datatables/extensions/Responsive/css/responsive.bootstrap.min.css')}}">
 @endsection
 
 @section('content')
+	@if (session()->has('success'))
+		<div class="alert alert-success">
+			{{ session()->get('success') }}
+		</div>
+	@endif
+
+	@if(count($errors) > 0)
+		<div class="alert alert-danger">
+			<ul>
+				@foreach ($errors->all() as $error)
+					<li>{!! $error !!}</li>
+				@endforeach
+			</ul>
+		</div>
+	@endif
 <div class="row small-spacing">
 	<div class="col-xs-12">
 		<div class="box-content">
@@ -15,7 +33,7 @@
 			<div class="dropdown js__drop_down">
 				<a href="#" class="dropdown-icon glyphicon glyphicon-option-vertical js__drop_down_button"></a>
 				<ul class="sub-menu">
-					<li><a href="#">Action</a></li>
+					<li><a href="{{route('product.create')}}">Create Product</a></li>
 					<li><a href="#">Another action</a></li>
 					<li><a href="#">Something else there</a></li>
 					<li class="split"></li>
@@ -32,7 +50,8 @@
 						<th>Detail</th>
 						<th>Price</th>
 						<th>Featured</th>
-						<th>Start date</th>
+						<th>Created date</th>
+						<th>Action</th>
 					</tr>
 				</thead>
 				<tfoot>
@@ -42,7 +61,8 @@
 						<th>Detail</th>
 						<th>Price</th>
 						<th>Featured</th>
-						<th>Start date</th>
+						<th>Created date</th>
+						<th>Action</th>
 					</tr>
 				</tfoot>
 				<tbody>
@@ -54,6 +74,10 @@
 						<td>{{$product->price}}</td>
 						<td>{{$product->featured}}</td>
 						<td>{{$product->created_at}}</td>
+						<td>
+							<a href="" class="btn btn-xs btn-info">Edit</a>
+							<a href="" class="btn btn-xs btn-danger">Delete</a>
+						</td>
 					</tr>
 					@endforeach
 				</tbody>
@@ -67,5 +91,10 @@
 @endsection
 
 @section('javascript')
-
+	<!-- Data Tables -->
+	<script src="{{asset('backend/assets/plugin/datatables/media/js/jquery.dataTables.min.js')}}"></script>
+	<script src="{{asset('backend/assets/plugin/datatables/media/js/dataTables.bootstrap.min.js')}}"></script>
+	<script src="{{asset('backend/assets/plugin/datatables/extensions/Responsive/js/dataTables.responsive.min.js')}}"></script>
+	<script src="{{asset('backend/assets/plugin/datatables/extensions/Responsive/js/responsive.bootstrap.min.js')}}"></script>
+	<script src="{{asset('backend/assets/scripts/datatables.demo.min.js')}}"></script>
 @endsection

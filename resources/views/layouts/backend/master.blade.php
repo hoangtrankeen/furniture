@@ -20,11 +20,9 @@
 
 	<!-- Sweet Alert -->
 	<link rel="stylesheet" href="{{asset('backend/assets/plugin/sweet-alert/sweetalert.css')}}">
-	
-	<!-- Data Tables -->
-	<link rel="stylesheet" href="{{asset('backend/assets/plugin/datatables/media/css/dataTables.bootstrap.min.css')}}">
-	
-	<link rel="stylesheet" href="{{asset('backend/assets/plugin/datatables/extensions/Responsive/css/responsive.bootstrap.min.css')}}">
+
+	<!-- Toastr -->
+	<link rel="stylesheet" href="{{asset('backend/assets/plugin/toastr/toastr.css')}}">
 
 	<!-- Color Picker -->
 	<link rel="stylesheet" href="{{asset('backend/assets/color-switcher/color-switcher.min.css')}}">
@@ -79,12 +77,9 @@
 		<!-- Full Screen Plugin -->
 		<script src="{{asset('backend/assets/plugin/fullscreen/jquery.fullscreen-min.js')}}"></script>
 
-		<!-- Data Tables -->
-		<script src="{{asset('backend/assets/plugin/datatables/media/js/jquery.dataTables.min.js')}}"></script>
-		<script src="{{asset('backend/assets/plugin/datatables/media/js/dataTables.bootstrap.min.js')}}"></script>
-		<script src="{{asset('backend/assets/plugin/datatables/extensions/Responsive/js/dataTables.responsive.min.js')}}"></script>
-		<script src="{{asset('backend/assets/plugin/datatables/extensions/Responsive/js/responsive.bootstrap.min.js')}}"></script>
-		<script src="{{asset('backend/assets/scripts/datatables.demo.min.js')}}"></script>
+		<!-- Toastr -->
+		<script src="{{asset('backend/assets/plugin/toastr/toastr.min.js')}}"></script>
+		<script src="{{asset('backend/assets/scripts/toastr.demo.min.js')}}"></script>
 
 		<script src="{{asset('backend/assets/scripts/main.min.js')}}"></script>
 		<script src="{{asset('backend/assets/color-switcher/color-switcher.min.js')}}"></script>

@@ -29,7 +29,7 @@ Route::post('/cart/switchToSaveForLater/{product}', 'CartController@switchToSave
 // Route::get('/admin', 'ProductController@index')->name('');
 
 Route::prefix('admin')->group(function () {
-    Route::get('/product','Backend\ProductController@index');
+    Route::resource('product','Backend\ProductController');
 });
 
 Auth::routes();
