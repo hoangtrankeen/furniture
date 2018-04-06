@@ -29,6 +29,8 @@
 
 	<link rel="stylesheet" type="text/css" href="{{asset('backend/assets/styles/color/violet.min.css')}}">
 
+	<link rel="stylesheet" type="text/css" href="{{asset('backend/web/custom.css')}}">
+
 	@yield('css')
 </head>
 

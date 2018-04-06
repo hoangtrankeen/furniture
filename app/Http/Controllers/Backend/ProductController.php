@@ -59,48 +59,54 @@ class ProductController extends Controller
             'name'           => 'required|max:190',
             'slug'           => 'required|alpha_dash|min:5|max:255|unique:products,slug',
             'details'        => 'required|max:255',
-            'category_id'    => 'required|integer',
+            'categories'    => 'required',
             'price'          => 'required|integer',
             'description'    => 'required|max:255',
             'featured'       => 'required|integer',
-            'images'         => 'required'
+            'images'         => 'sometimes|required'
         ));
 
-        $photos = $request->file('images');
         $image_name = [];
-        if (!is_array($photos)) {
-            $photos = [$photos];
-        }
 
-        if (!is_dir($this->photos_path)) {
-            mkdir($this->photos_path, 0777);
-        }
+        if($request->hasFile('images')){
+            $photos = $request->file('images');
 
-        for ($i = 0; $i < count($photos); $i++) {
-            $photo = $photos[$i];
-            $name = sha1(date('YmdHis') . str_random(30));
-//            $save_name = $name . '.' . $photo->getClientOriginalExtension();
-            $resize_name = $name . str_random(2) . '.' . $photo->getClientOriginalExtension();
-            $image_name[] =$resize_name;
+            if (!is_array($photos)) {
+                $photos = [$photos];
+            }
 
-            Image::make($photo)
-                ->resize(250, null, function ($constraints) {
-                    $constraints->aspectRatio();
-                })->save($this->photos_path . '/' . $resize_name);
+            if (!is_dir($this->photos_path)) {
+                mkdir($this->photos_path, 0777);
+            }
 
-//            $photo->move($this->photos_path, $save_name);
+            for ($i = 0; $i < count($photos); $i++) {
+                $photo = $photos[$i];
+                $name = sha1(date('YmdHis') . str_random(30));
+                $resize_name = $name . str_random(2) . '.' . $photo->getClientOriginalExtension();
+                $image_name[] =$resize_name;
+
+                Image::make($photo)
+                    ->resize(250, null, function ($constraints) {
+                        $constraints->aspectRatio();
+                    })->save($this->photos_path . '/' . $resize_name);
+            }
+
+            $image_name = json_encode($image_name);
+        }else{
+            $image_name = null;
         }
 
         $product = new Product();
         $product->name = $request->name;
-//            $product->sku = $request->sku;
         $product->slug = $request->slug;
         $product->details = $request->details;
         $product->price = $request->price;
         $product->description = $request->description;
         $product->featured = $request->featured;
-        $product->images = json_encode($image_name);
+        $product->images = $image_name;
         $product->save();
+
+        $product->categories()->attach($request->categories);
 
         Session::flash('success', 'The post was successfully save!');
         return redirect()->route('product.index');
@@ -127,7 +133,24 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        $product = Product::findOrFail($id);
+
+        $categories = $product->categories;
+
+        $cat_ids = [];
+
+        foreach ($categories as $category)
+        {
+            $cat_ids[] = $category->id;
+        }
+
+        $data['product'] = $product;
+
+        $data['cat_ids'] = $cat_ids;
+
+        $data['categories'] = Category::all();
+
+        return view('backend/product/edit', $data);
     }
 
     /**
@@ -139,7 +162,67 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, array(
+            // rules, criteria
+            'name'           => 'required|max:190',
+            'slug'           => 'required|alpha_dash|min:5|max:255|unique:products,slug,'.$id,
+            'details'        => 'required|max:255',
+            'categories'     => 'required',
+            'price'          => 'required|integer',
+            'description'    => 'required|max:255',
+            'featured'       => 'required|integer',
+            'images.*'         => 'sometimes|required|image'
+        ));
+
+        $image_name = [];
+
+        if($request->hasFile('images')){
+            $photos = $request->file('images');
+
+            if (!is_array($photos)) {
+                $photos = [$photos];
+            }
+
+            if (!is_dir($this->photos_path)) {
+                mkdir($this->photos_path, 0777);
+            }
+
+            for ($i = 0; $i < count($photos); $i++) {
+                $photo = $photos[$i];
+                $name = sha1(date('YmdHis') . str_random(30));
+                $resize_name = $name . str_random(2) . '.' . $photo->getClientOriginalExtension();
+                $image_name[] =$resize_name;
+
+                Image::make($photo)
+                    ->resize(250, null, function ($constraints) {
+                        $constraints->aspectRatio();
+                    })->save($this->photos_path . '/' . $resize_name);
+            }
+
+            $image_name = json_encode($image_name);
+        }else{
+            $image_name = null;
+        }
+
+        $product =  Product::findOrFail($id);
+
+        $product->name = $request->name;
+        $product->slug = $request->slug;
+        $product->details = $request->details;
+        $product->price = $request->price;
+        $product->description = $request->description;
+        $product->featured = $request->featured;
+        if($request->hasFile('images')) {
+            $product->images = $image_name;
+        }
+        $product->save();
+
+        $product->categories()->attach($request->categories);
+
+        Session::flash('success', 'The post was successfully updated!');
+        return redirect()->route('product.index');
+
+
     }
 
     /**
@@ -150,6 +233,13 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $product = Product::findOrFail($id);
+
+        $product->categories()->detach();
+
+        $product->delete();
+
+        Session::flash('success', 'The product was successfully deleted!');
+        return redirect()->route('product.index');
     }
 }

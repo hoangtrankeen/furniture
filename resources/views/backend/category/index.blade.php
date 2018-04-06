@@ -1,6 +1,6 @@
 @extends('layouts/backend/master')
 
-@section('title','All Product')
+@section('title','All Category')
 
 @section('css')
 	<!-- Data Tables -->
@@ -33,7 +33,7 @@
 			<div class="dropdown js__drop_down">
 				<a href="#" class="dropdown-icon glyphicon glyphicon-option-vertical js__drop_down_button"></a>
 				<ul class="sub-menu">
-					<li><a href="{{route('product.create')}}">Create Product</a></li>
+					<li><a href="{{route('category.create')}}">Create Category</a></li>
 					<li><a href="#">Another action</a></li>
 					<li><a href="#">Something else there</a></li>
 					<li class="split"></li>
@@ -47,8 +47,7 @@
 					<tr>
 						<th>Name</th>
 						<th>Slug</th>
-						<th>Price</th>
-						<th>Featured</th>
+						<th>Parent Category</th>
 						<th>Created date</th>
 						<th>Action</th>
 					</tr>
@@ -57,23 +56,20 @@
 					<tr>
 						<th>Name</th>
 						<th>Slug</th>
-						<th>Price</th>
-						<th>Featured</th>
+						<th>Parent Category</th>
 						<th>Created date</th>
 						<th>Action</th>
 					</tr>
 				</tfoot>
 				<tbody>
-					@foreach($products as $product)
+					@foreach($categories as $category)
 					<tr>
-						<td><a href="{{route('product.edit', $product->id )}}">{{$product->name}}</a></td>
-						<td>{{$product->slug}}</td>
-						<td>{{$product->price}}</td>
-						<td>{{$product->featured}}</td>
-						<td>{{$product->created_at}}</td>
+						<td><a href="{{route('category.edit', $category->id )}}">{{$category->name}}</a></td>
+						<td>{{$category->slug}}</td>
+						<td>{{$category->parent_id}}</td>
 						<td>
-							<a href="{{route('product.edit', $product->id)}}" class="btn btn-xs btn-info">Edit</a>
-							<form action="{{route('product.destroy', $product->id)}}" method="post">
+							<a href="{{route('category.edit', $category->id)}}" class="btn btn-xs btn-info">Edit</a>
+							<form action="{{route('category.destroy', $category->id)}}" method="post">
 								{{method_field('DELETE')}}
 								{{csrf_field()}}
 								<button type="submit" class="btn btn-xs btn-danger">Delete</button>

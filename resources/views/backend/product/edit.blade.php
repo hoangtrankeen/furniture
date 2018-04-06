@@ -1,6 +1,6 @@
 @extends('layouts/backend/master')
 
-@section('title','Create Product')
+@section('title','Edit Product')
 
 @section('css')
     <link href="{{asset('backend/multiple-select/multiple-select.css')}}" rel="stylesheet"/>
@@ -25,15 +25,17 @@
     <div class="row">
         <div class="col-md-12 col-xs-12">
             <div class="box-content card white">
-                <h4 class="box-title">Create Product</h4>
+                <h4 class="box-title">Edit Product</h4>
                 <!-- /.box-title -->
 
                 <div class="card-content">
-                    <form class="form-horizontal" action="{{route('product.store')}}" id="product" enctype="multipart/form-data" method="post">
+                    <form class="form-horizontal" action="{{route('product.update', $product->id)}}" id="product" enctype="multipart/form-data" method="post">
+                        {{method_field('PUT')}}
+                        {{ csrf_field() }}
                         <div class="form-group">
                             <label for="name" class="col-sm-2 control-label">Name</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="name" name="name" value="{{ old('name')}}">
+                                <input type="text" class="form-control" id="name" name="name" value="{{ $product->name }}">
                             </div>
                         </div>
                         <div class="form-group">
@@ -45,34 +47,35 @@
                         <div class="form-group">
                             <label for="slug" class="col-sm-2 control-label">Slug</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="slug" name="slug" value="{{ old('slug')}}">
+                                <input type="text" class="form-control" id="slug" name="slug" value="{{ $product->slug}}">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="details" class="col-sm-2 control-label">Details</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="details" name="details" value="{{ old('details')}}">
+                                <input type="text" class="form-control" id="details" name="details" value="{{ $product->details}}">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="price" class="col-sm-2 control-label">Price</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="price" name="price" value="{{ old('price')}}">
+                                <input type="text" class="form-control" id="price" name="price" value="{{ $product->price }}">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="description" class="col-sm-2 control-label">Description</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="description" name="description" value="{{ old('description')}}">
+                                <input type="text" class="form-control" id="description" name="description" value="{{ $product->description}}">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="categories" class="col-sm-2 control-label">Categories</label>
                             <div class="col-sm-8">
+
                                 <select class=" categories" id="categories" name="categories[]" multiple="multiple">
                                     @foreach($categories as $category)
-                                        <option value="{{$category->id}}" {{ ($category->id == old('categories')) ? "selected" : ''}}>{{$category->name}}</option>
+                                        <option value="{{$category->id}}" {{ in_array($category->id, $cat_ids) ? "selected" : ''}}>{{$category->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -81,8 +84,8 @@
                             <label for="featured" class="col-sm-2 control-label">Featured</label>
                             <div class="col-xs-1">
                                 <select class="form-control" id="featured" name="featured">
-                                    <option value="0">No</option>
-                                    <option value="1">Yes</option>
+                                    <option value="0" {{!$product->featured ? 'selected' :''}}>No</option>
+                                    <option value="1" {{$product->featured ? 'selected' :''}}>Yes</option>
                                 </select>
                             </div>
                         </div>
@@ -90,16 +93,16 @@
                         <div class="form-group">
                             <label for="images" class="col-sm-2 control-label">Images</label>
                             <div class=" col-xs-8">
-                                <input type="file" name="images[]" multiple  id="files" />
+                                <input type="file" name="images[]" multiple value="" />
                             </div>
                         </div>
-                        {{ csrf_field() }}
+
+
                         <div class="form-group margin-bottom-0">
                             <div class="col-sm-offset-2 col-sm-8">
                                 <button type="submit" class="btn btn-info btn-sm waves-effect waves-light">Save</button>
                             </div>
                         </div>
-
                     </form>
                 </div>
                 <!-- /.card-content -->
@@ -123,46 +126,4 @@
             position: 'top'
         });
     </script>
-
-    <script type="text/javascript">
-        $(document).ready(function() {
-
-            if(window.File && window.FileList && window.FileReader) {
-                $("#files").on("change",function(e) {
-                    var imgThumb = document.getElementById('imageThumb');
-                    if (document.contains(document.getElementById('imageThumb'))) {
-                        imgThumb.remove();
-                    }
-
-
-                    var files = e.target.files ,
-                        filesLength = files.length ;
-                    for (var i = 0; i < filesLength ; i++) {
-                        var f = files[i];
-                        var fileReader = new FileReader();
-                        fileReader.onload = (function(e) {
-                            var file = e.target;
-                            $("<img></img>",{
-                                class : "imageThumb",
-                                id : "imageThumb",
-                                src : e.target.result,
-                                title : file.name
-                            }).insertAfter("#files");
-                        });
-                        fileReader.readAsDataURL(f);
-                    }
-                });
-            } else { alert("Your browser doesn't support to File API") }
-        });
-
-    </script>
-    <style>
-
-        .imageThumb {
-            max-height: 100px;
-            border: 2px solid;
-            margin: 10px 10px 0 0;
-            padding: 1px;
-        }
-    </style>
 @endsection

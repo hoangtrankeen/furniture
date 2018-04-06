@@ -30,6 +30,7 @@ Route::post('/cart/switchToSaveForLater/{product}', 'CartController@switchToSave
 
 Route::prefix('admin')->group(function () {
     Route::resource('product','Backend\ProductController');
+    Route::resource('category','Backend\CategoryController');
 });
 
 Auth::routes();
