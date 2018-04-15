@@ -1,6 +1,6 @@
 @extends('layouts/backend/master')
 
-@section('title','All Category')
+@section('title','All attr_values')
 
 @section('css')
 	<!-- Data Tables -->
@@ -33,7 +33,7 @@
 			<div class="dropdown js__drop_down">
 				<a href="#" class="dropdown-icon glyphicon glyphicon-option-vertical js__drop_down_button"></a>
 				<ul class="sub-menu">
-					<li><a href="{{route('category.create')}}">Create Category</a></li>
+					<li><a href="{{route('attribute-value.create')}}">Create Attribute Value</a></li>
 					<li><a href="#">Another action</a></li>
 					<li><a href="#">Something else there</a></li>
 					<li class="split"></li>
@@ -45,32 +45,29 @@
 			<table id="example" class="table table-striped table-bordered display" style="width:100%">
 				<thead>
 					<tr>
-						<th>Name</th>
-						<th>Slug</th>
-						<th>Parent Category</th>
+						<th>Attribute</th>
+						<th>Attribute Value</th>
 						<th>Created date</th>
 						<th>Action</th>
 					</tr>
 				</thead>
 				<tfoot>
 					<tr>
-						<th>Name</th>
-						<th>Slug</th>
-						<th>Parent Category</th>
+						<th>Attribute</th>
+						<th>Attribute Value</th>
 						<th>Created date</th>
 						<th>Action</th>
 					</tr>
 				</tfoot>
 				<tbody>
-					@foreach($categories as $category)
+					@foreach($attr_values as $attr_value)
 					<tr>
-						<td><a href="{{route('category.edit', $category->id )}}">{{$category->name}}</a></td>
-						<td>{{$category->slug}}</td>
-						<td>{{$category->parent_id}}</td>
-						<td>{{$category->created_at}}</td>
+						<td>{{$attr_value->attribute->name}}</td>
+						<td><a href="{{route('attribute-value.edit', $attr_value->id )}}">{{$attr_value->name}}</a></td>
+						<td>{{$attr_value->created_at}}</td>
 						<td>
-							<a href="{{route('category.edit', $category->id)}}" class="btn btn-xs btn-info">Edit</a>
-							<form action="{{route('category.destroy', $category->id)}}" method="post">
+							<a href="{{route('attribute-value.edit', $attr_value->id)}}" class="btn btn-xs btn-info">Edit</a>
+							<form action="{{route('attribute-value.destroy', $attr_value->id)}}" method="post">
 								{{method_field('DELETE')}}
 								{{csrf_field()}}
 								<button type="submit" class="btn btn-xs btn-danger">Delete</button>

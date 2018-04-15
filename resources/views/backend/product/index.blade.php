@@ -33,8 +33,8 @@
 			<div class="dropdown js__drop_down">
 				<a href="#" class="dropdown-icon glyphicon glyphicon-option-vertical js__drop_down_button"></a>
 				<ul class="sub-menu">
-					<li><a href="{{route('product.create')}}">Create Product</a></li>
-					<li><a href="#">Another action</a></li>
+					<li><a href="{{route('product-group.create')}}">Create Group Product</a></li>
+					<li><a href="{{route('product-simple.create')}}">Create Simple Product</a></li>
 					<li><a href="#">Something else there</a></li>
 					<li class="split"></li>
 					<li><a href="#">Separated link</a></li>
@@ -66,14 +66,14 @@
 				<tbody>
 					@foreach($products as $product)
 					<tr>
-						<td><a href="{{route('product.edit', $product->id )}}">{{$product->name}}</a></td>
+						<td><a href="{{route('product-group.edit', $product->id )}}">{{$product->name}}</a></td>
 						<td>{{$product->slug}}</td>
 						<td>{{$product->price}}</td>
 						<td>{{$product->featured}}</td>
 						<td>{{$product->created_at}}</td>
 						<td>
-							<a href="{{route('product.edit', $product->id)}}" class="btn btn-xs btn-info">Edit</a>
-							<form action="{{route('product.destroy', $product->id)}}" method="post">
+							<a href="{{route('product-group.edit', $product->id)}}" class="btn btn-xs btn-info">Edit</a>
+							<form action="{{route('product-group.destroy', $product->id)}}" method="post">
 								{{method_field('DELETE')}}
 								{{csrf_field()}}
 								<button type="submit" class="btn btn-xs btn-danger">Delete</button>

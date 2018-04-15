@@ -1,6 +1,6 @@
 @extends('layouts/backend/master')
 
-@section('title','All Category')
+@section('title','All attribute')
 
 @section('css')
 	<!-- Data Tables -->
@@ -33,7 +33,7 @@
 			<div class="dropdown js__drop_down">
 				<a href="#" class="dropdown-icon glyphicon glyphicon-option-vertical js__drop_down_button"></a>
 				<ul class="sub-menu">
-					<li><a href="{{route('category.create')}}">Create Category</a></li>
+					<li><a href="{{route('attribute.create')}}">Create attribute</a></li>
 					<li><a href="#">Another action</a></li>
 					<li><a href="#">Something else there</a></li>
 					<li class="split"></li>
@@ -46,8 +46,8 @@
 				<thead>
 					<tr>
 						<th>Name</th>
-						<th>Slug</th>
-						<th>Parent Category</th>
+						<th>Type</th>
+						<th>Name In Form</th>
 						<th>Created date</th>
 						<th>Action</th>
 					</tr>
@@ -55,25 +55,25 @@
 				<tfoot>
 					<tr>
 						<th>Name</th>
-						<th>Slug</th>
-						<th>Parent Category</th>
+						<th>Type</th>
+						<th>Name In Form</th>
 						<th>Created date</th>
 						<th>Action</th>
 					</tr>
 				</tfoot>
 				<tbody>
-					@foreach($categories as $category)
+					@foreach($attributes as $attribute)
 					<tr>
-						<td><a href="{{route('category.edit', $category->id )}}">{{$category->name}}</a></td>
-						<td>{{$category->slug}}</td>
-						<td>{{$category->parent_id}}</td>
-						<td>{{$category->created_at}}</td>
+						<td><a href="{{route('attribute.edit', $attribute->id )}}">{{$attribute->name}}</a></td>
+						<td>{{$attribute->type}}</td>
+						<td>{{$attribute->inform_name}}</td>
+						<td>{{$attribute->created_at}}</td>
 						<td>
-							<a href="{{route('category.edit', $category->id)}}" class="btn btn-xs btn-info">Edit</a>
-							<form action="{{route('category.destroy', $category->id)}}" method="post">
+							<a href="{{route('attribute.edit', $attribute->id)}}" class="btn btn-xs btn-info">Edit</a>
+							<form action="{{route('attribute.destroy', $attribute->id)}}" method="post">
 								{{method_field('DELETE')}}
 								{{csrf_field()}}
-								<button type="submit" class="btn btn-xs btn-danger">Delete</button>
+								{{--<button type="submit" class="btn btn-xs btn-danger">Delete</button>--}}
 							</form>
 						</td>
 					</tr>

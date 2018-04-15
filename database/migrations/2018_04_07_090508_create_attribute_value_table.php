@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateImagesCategories extends Migration
+class CreateAttributeValueTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class CreateImagesCategories extends Migration
      */
     public function up()
     {
-        Schema::table('categories', function (Blueprint $table) {
-            $table->text('images')->nullable();
+        Schema::create('attribute_value', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('attribute_id')->unsigned()->nullable();
+            $table->string('name');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +28,6 @@ class CreateImagesCategories extends Migration
      */
     public function down()
     {
-        Schema::table('categories', function (Blueprint $table) {
-            Schema::dropIfExists('images');
-        });
+        Schema::dropIfExists('attribute_value');
     }
 }

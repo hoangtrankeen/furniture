@@ -13,6 +13,11 @@ class Product extends Model
         return $this->belongsToMany('App\Model\Category');
     }
 
+    public function groups()
+    {
+        return $this->belongsToMany('App\Model\Group');
+    }
+
     public function presentPrice()
     {
         return ( $this->price );
@@ -21,6 +26,17 @@ class Product extends Model
     public function scopeMightAlsoLike($query)
     {
         return $query->inRandomOrder()->take(4);
+    }
+
+    public static function getSimpleProduct()
+    {
+        return Product::where('type_id', 'simple')->get();
+
+    }
+
+    public static function getGroupProduct()
+    {
+        return Product::where('type_id', 'group')->get();
     }
 
 }

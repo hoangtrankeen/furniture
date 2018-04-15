@@ -48,6 +48,7 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+
         $this->validate($request, array(
             // rules, criteria
             'name'           => 'required|max:190',
@@ -60,6 +61,8 @@ class CategoryController extends Controller
         $product->slug = $request->slug;
         $product->parent_id = $request->parent_id;
         $product->save();
+
+        die($product->id);
 
         Session::flash('success', 'The category was successfully save!');
         return redirect()->route('category.index');
@@ -128,8 +131,6 @@ class CategoryController extends Controller
         $category = Category::findOrFail($id);
 
         $category->products()->detach();
-
-        $category->childs()->delete();
 
         $category->delete();
 

@@ -27,7 +27,7 @@
 	<!-- Color Picker -->
 	<link rel="stylesheet" href="{{asset('backend/assets/color-switcher/color-switcher.min.css')}}">
 
-	<link rel="stylesheet" type="text/css" href="{{asset('backend/assets/styles/color/violet.min.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{asset('backend/assets/styles/color/red.min.css')}}">
 
 	<link rel="stylesheet" type="text/css" href="{{asset('backend/web/custom.css')}}">
 
@@ -61,12 +61,17 @@
 		</div>
 		<!-- /.main-content -->
 	</div><!--/#wrapper -->
+
+
+	@yield('modal')
+
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 	<!--[if lt IE 9]>
 		<script src="assets/script/html5shiv.min.js"></script>
 		<script src="assets/script/respond.min.js"></script>
 	<![endif]-->
-	<!-- 
+	<!--
+
 		================================================== -->
 		<!-- Placed at the end of the document so the pages load faster -->
 		<script src="{{asset('backend/assets/scripts/jquery.min.js')}}"></script>
