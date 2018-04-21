@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Model\AttributeValue;
 use App\Model\Category;
 use App\Model\Product;
 use App\Model\Group;
+use App\Model\Attribute;
+use App\Model\ProductAttribute;
 use Illuminate\Support\Facades\Session;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Http\Request;
@@ -39,7 +42,8 @@ class ProductSimpleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
+    {   
+        $data['attributes'] = Attribute::all();
         $data['products'] = Product::getGroupProduct();
         $data['categories'] = Category::all();
 
@@ -101,12 +105,6 @@ class ProductSimpleController extends Controller
             $image_name = null;
         }
 
-        $parent_array = [];
-
-        foreach (explode(',',$request->parent_product) as $parent) {
-            $parent_array[] = (int) $parent;
-        }
-
         //Store Product Parent
         $product = new Product();
         $product->name = $request->name;
@@ -129,34 +127,39 @@ class ProductSimpleController extends Controller
 
         $product->type_id = $request->type_id;
 
-        $product->child_id = json_encode($parent_array);
-
         $product->save();
 
+        $attributes = Attribute::all();
+        foreach ($attributes as $attribute){
+            if($request->has($attribute->inform_name)  && ($request->input($attribute->inform_name) !== null)){
+
+                $attr_val_id = '';
+
+                if($attribute->type == 'select'){
+                    $attr_val_id = $request->input($attribute->inform_name);
+                }
+
+                if($attribute->type == 'text'){
+                    $attr_text_val = new AttributeValue;
+                    $attr_text_val->name = $request->input($attribute->inform_name);
+                    $attr_text_val->attribute_id = $attribute->id;
+                    $attr_text_val->save();
+
+                    $attr_val_id = $attr_text_val->id;
+
+                }
+
+                $pro_attr = new ProductAttribute();
+
+                $pro_attr->product_id = $product->id;
+                $pro_attr->attribute_value_id = $attr_val_id;
+                $pro_attr->attribute_id = $attribute->id;
+
+                $pro_attr->save();
+            }
+        }
         //Store Product - Category
         $product->categories()->attach($request->categories);
-
-        // Store Parent Id
-        $parentdArr =  json_decode($product->parent_id);
-
-        $parentProduct = Product::whereIn('id', $parentdArr)->get();
-
-        foreach($parentProduct as $parent) {
-
-            $child_id = json_decode($parent->child_id);
-
-            if (!is_array($child_id)) {
-                $parent_id = [];
-            }
-
-            $parent_id[] = $product->id;
-
-            $child_product = Product::find($parent->id);
-
-            $child_product->parent_id = json_encode($parent_id);
-
-            $child_product->save();
-        }
 
         Session::flash('success', 'The product was successfully save!');
         return redirect()->route('product-group.index');

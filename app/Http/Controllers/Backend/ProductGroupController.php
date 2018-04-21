@@ -146,9 +146,16 @@ class ProductGroupController extends Controller
         foreach($childProduct as $child) {
 
             $parent_id = json_decode($child->parent_id);
-            if(!in_array($product->id, $parent_id )){
+
+            if($parent_id){
+                if(!in_array($product->id, $parent_id )){
+                    $parent_id[] = $product->id;
+                }
+            }else{
+                $parent_id = [];
                 $parent_id[] = $product->id;
             }
+
 
             $child_product = Product::find($child->id);
 
@@ -310,8 +317,14 @@ class ProductGroupController extends Controller
         foreach($childProduct as $child) {
 
             $parent_id = json_decode($child->parent_id);
-            if(!in_array($product->id, $parent_id )){
-                 $parent_id[] = $product->id;
+
+            if($parent_id){
+                if(!in_array($product->id, $parent_id )){
+                    $parent_id[] = $product->id;
+                }
+            }else{
+                $parent_id = [];
+                $parent_id[] = $product->id;
             }
 
             $child_product = Product::find($child->id);

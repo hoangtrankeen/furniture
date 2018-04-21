@@ -45,6 +45,7 @@
                                 </select>
                             </div>
                         </div>
+
                         <div class="form-group">
                             <label for="inform_name" class="col-sm-2 control-label">Name in form</label>
                             <div class="col-sm-8">
@@ -52,14 +53,12 @@
                             </div>
                         </div>
 
-                        {{--<hr>--}}
-                        {{--<div class="form-group">--}}
-                            {{--<div class="col-sm-offset-2 col-sm-8">--}}
-                                {{--<input type="text" class="form-control attr_value" name="attr_value_1">--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-
-                        <div class="form-group">
+                        <div class="form-group type-toggle">
+                            <div class="col-sm-offset-2 col-sm-8">
+                                <input type="text" class="form-control attr_value" name="attr_value_1">
+                            </div>
+                        </div>
+                        <div class="form-group type-toggle">
                             <div class="col-sm-offset-2 col-sm-8">
                                 <button class="btn btn-danger waves-effect waves-light btn-icon btn-icon-left " id="add-attr"><i class="ico fa fa-plus" aria-hidden="true"></i>Add attribute value</button>
                             </div>
@@ -91,7 +90,27 @@
             $('#add-attr').click(function (e) {
                 e.preventDefault();
                 i = i + 1;
-                $("input[name='attr_value_1']").clone().attr('name','attr_value_'+i).insertBefore('#add-attr');
+                $("input[name='attr_value_1']").clone().attr('name','attr_value_'+i).val('').insertBefore('#add-attr');
+            });
+
+            function checkFirstType(){
+                if($('#type').val() === 'select'){
+                    $('.type-toggle').show();
+                }
+            }
+
+            checkFirstType();
+
+            $('#type').on('change',function () {
+
+                if($(this).val() === 'text'){
+                    $('.type-toggle').hide();
+                }
+
+                if($(this).val() === 'select'){
+                    $('.type-toggle').show();
+                }
+
             });
         });
     </script>

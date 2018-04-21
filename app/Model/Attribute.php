@@ -15,6 +15,11 @@ class Attribute extends Model
         return $this->hasMany('App\Model\AttributeValue','attribute_id', 'id');
     }
 
+    public function product()
+    {
+        return $this->belongsToMany('App\Model\Product','product_attribute','attribute_id','product_id');
+    }
+
     public static function availableAttributeType()
     {
         return [
@@ -23,8 +28,7 @@ class Attribute extends Model
           'textarea',
           'images',
           'checkbox'
-
-
         ];
     }
+
 }

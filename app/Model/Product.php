@@ -18,6 +18,16 @@ class Product extends Model
         return $this->belongsToMany('App\Model\Group');
     }
 
+    public function attributeValue()
+    {
+        return $this->belongsToMany('App\Model\AttributeValue', 'product_attribute', 'product_id', 'attribute_value_id');
+    }
+
+    public function attribute()
+    {
+        return $this->belongsToMany('App\Model\Attribute', 'product_attribute', 'product_id', 'attribute_id');
+    }
+
     public function presentPrice()
     {
         return ( $this->price );
