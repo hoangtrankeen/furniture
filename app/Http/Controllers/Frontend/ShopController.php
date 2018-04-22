@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Frontend;
 
 use App\Model\Product;
 use App\Model\Category;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class ShopController extends Controller
 {
@@ -36,7 +37,7 @@ class ShopController extends Controller
             $products = $products->paginate($pagination);
         }
 
-        return view('shop')->with([
+        return view('frontend/shop')->with([
             'products' => $products,
             'categories' => $categories,
             'categoryName' => $categoryName,
@@ -55,7 +56,7 @@ class ShopController extends Controller
         $categories = Category::all();
         $mightAlsoLike = Product::where('slug', '!=', $slug)->mightAlsoLike()->get();
 
-        return view('product')->with([
+        return view('frontend/product')->with([
             'product' => $product,
             'categories' => $categories,
             'mightAlsoLike' => $mightAlsoLike

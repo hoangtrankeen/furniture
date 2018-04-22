@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Frontend;
 
 use App\Model\Product;
 use App\Model\Category;
 use Illuminate\Http\Request;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Controllers\Controller;
 
 class CartController extends Controller
 {
@@ -20,7 +21,7 @@ class CartController extends Controller
         $data['categories'] = Category::all();
         $data['mightAlsoLike'] = Product::mightAlsoLike()->get();
 
-        return view('cart', $data);
+        return view('frontend/cart', $data);
     }
 
     /**

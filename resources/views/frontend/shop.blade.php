@@ -1,4 +1,4 @@
-@extends('layouts/shop')
+@extends('layouts/frontend/shop')
 
 @section('title', 'Products')
 
@@ -17,6 +17,7 @@
 @endsection
 
 @section('content')
+
     @forelse ($products as $product)
     <div class="product-item-wrap has-post-thumbnail">
         <div class="product-item-inner">

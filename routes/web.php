@@ -16,14 +16,14 @@ Route::get('/', function () {
 });
 
 
-Route::get('/shop', 'ShopController@index')->name('shop.index');
-Route::get('/shop/{product}', 'ShopController@show')->name('shop.show');
+Route::get('/shop', 'Frontend\ShopController@index')->name('shop.index');
+Route::get('/shop/{product}', 'Frontend\ShopController@show')->name('shop.show');
 
-Route::get('/cart', 'CartController@index')->name('cart.index');
-Route::post('/cart', 'CartController@store')->name('cart.store');
-Route::patch('/cart/{product}', 'CartController@update')->name('cart.update');
-Route::delete('/cart/{product}', 'CartController@destroy')->name('cart.destroy');
-Route::post('/cart/switchToSaveForLater/{product}', 'CartController@switchToSaveForLater')->name('cart.switchToSaveForLater');
+Route::get('/cart', 'Frontend\CartController@index')->name('cart.index');
+Route::post('/cart', 'Frontend\CartController@store')->name('cart.store');
+Route::patch('/cart/{product}', 'Frontend\CartController@update')->name('cart.update');
+Route::delete('/cart/{product}', 'Frontend\CartController@destroy')->name('cart.destroy');
+Route::post('/cart/switchToSaveForLater/{product}', 'Frontend\CartController@switchToSaveForLater')->name('cart.switchToSaveForLater');
 
 
 // Route::get('/admin', 'ProductController@index')->name('');

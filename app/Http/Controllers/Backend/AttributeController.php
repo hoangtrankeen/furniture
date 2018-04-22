@@ -116,17 +116,15 @@ class AttributeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $types = implode(",", $this->type);
+        //$types = implode(",", $this->type);
         $this->validate($request, array(
-            'name'           => 'required|max:190',
-            'type'           => 'required|max:190|in:'.$types,
-            'inform_name'    => 'required|max:190',
+            'name'   => 'required|max:190',
         ));
 
         $attribute = Attribute::findOrFail($id);
+
         $attribute->name = $request->name;
-        $attribute->type = $request->type;
-        $attribute->inform_name = $request->inform_name;
+
         $attribute->save();
 
         // Get Attribute value in form
@@ -134,8 +132,6 @@ class AttributeController extends Controller
             $i = 0;
             while ($request->has('attr_value_'.($i+1)) && $request->input('attr_value_'.($i+1)) !== null && is_integer((int)$request->input('attr_value_'.($i+1)))) {
 
-
-                var_dump($attribute->attributeValue);
                 if(!empty($attribute->attributeValue)){
 
                    AttributeValue::where('id', $i+1)
@@ -144,13 +140,18 @@ class AttributeController extends Controller
                         'name' => $request->input('attr_value_'.($i+1))
                         ]);
                 }
-                else{
-                    $attr_val = new AttributeValue;
-                    $attr_val->attribute_id = $attribute->id;
-                    $attr_val->name = $request->input('attr_value_'.($i+1)) ;
-                    $attr_val->save();
 
-                }
+                $i++;
+            }
+
+            $i = 0;
+            while ($request->has('new_attr_value_'.($i+1)) && $request->input('new_attr_value_'.($i+1)) !== null && is_integer((int)$request->input('new_attr_value_'.($i+1)))) {
+
+                $attr_val = new AttributeValue;
+                $attr_val->attribute_id = $attribute->id;
+                $attr_val->name = $request->input('new_attr_value_'.($i+1)) ;
+                $attr_val->save();
+
                 $i++;
             }
         }

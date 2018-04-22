@@ -174,12 +174,11 @@
                                 <input type="text" class="form-control" id="meta_keyword" name="meta_keyword" value="{{ old('meta_keyword')}}">
                             </div>
                         </div>
-                        
                         @foreach($attributes as $attribute)
                             <div class="form-group">
                                 <label for="attribute" class="col-sm-2 control-label">{{$attribute->name}}</label>
                                 <div class="col-sm-8">
-                                    {!! ManagerCatalog::getCustomAttribute($attribute, $product)!!}
+                                    {!! ManagerCatalog::getCustomAttribute($attribute)!!}
                                 </div>
                             </div>
                         @endforeach

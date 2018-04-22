@@ -50,21 +50,17 @@
                         <div class="form-group">
                             <label for="type" class="col-sm-2 control-label">Type</label>
                             <div class="col-sm-8">
-                                <select class="form-control" id="type" name="type">
-                                    @foreach($attr_types as $type)
-                                        <option value="{{$type}}" {{ ($type == $attribute->type) ? "selected" : ''}}>{{$type}}</option>
-                                    @endforeach
-                                </select>
+                                <input type="text" name="type" value="{{ $attribute->type}}" class="form-control" >
                             </div>
                         </div>
-                        <div class="form-group">
+                        <!--<div class="form-group">
                             <label for="inform_name" class="col-sm-2 control-label">Name in form</label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="inform_name" name="inform_name" value="{{ $attribute->inform_name }}">
                             </div>
-                        </div>
-                        @if(!empty($attribute->attributeValue))
-                            @php $i = 1; $count = count($attribute->attributeValue); @endphp
+                        </div>-->
+                        @if(!empty($attribute->attributeValue) && $attribute->type =='select')
+                            @php $i = 1; @endphp
                             @foreach($attribute->attributeValue as $value)
                                 <div class="form-group type-toggle">
                                     <div class="col-sm-offset-2 col-sm-8">
@@ -73,14 +69,18 @@
                                 </div>
                             @endforeach
 
-                            <input type="hidden" value="{{$count}}" name="count" id="count">
-                        @endif
-
-                        <div class="form-group type-toggle">
-                            <div class="col-sm-offset-2 col-sm-8">
-                                <button class="btn btn-danger waves-effect waves-light btn-icon btn-icon-left " id="add-attr"><i class="ico fa fa-plus" aria-hidden="true"></i>Add attribute value</button>
+                            <div class="form-group type-toggle hide-me" >
+                                <div class="col-sm-offset-2 col-sm-8">
+                                    <input type="text" class="form-control attr_value" name="new_attr_value_1" />
+                                </div>
                             </div>
-                        </div>
+
+                            <div class="form-group type-toggle">
+                                <div class="col-sm-offset-2 col-sm-8">
+                                    <button class="btn btn-danger waves-effect waves-light btn-icon btn-icon-left " id="add-attr"><i class="ico fa fa-plus" aria-hidden="true"></i>Add attribute value</button>
+                                </div>
+                            </div>
+                        @endif
                         <div class="form-group margin-bottom-0">
                             <div class="col-sm-offset-2 col-sm-8">
                                 <button type="submit" class="btn btn-info btn-sm waves-effect waves-light">Save</button>
@@ -100,11 +100,10 @@
 
     <script>
         $(document).ready(function () {
-            var i = parseInt($( "input[name$='count']" ).val());
+            var i = 0;
             $('#add-attr').click(function (e) {
                 e.preventDefault();
-                i = i + 1;
-                $("input[name='attr_value_1']").clone().attr('name','attr_value_'+i).val('').insertBefore('#add-attr');
+                $("input[name='new_attr_value_1']").clone().removeClass('hide-me').attr('name','new_attr_value_'+(i+1)).val('').insertBefore('#add-attr');
             });
 
             function checkFirstType(){
@@ -112,20 +111,7 @@
                     $('.type-toggle').show();
                 }
             }
-
             checkFirstType();
-
-            $('#type').on('change',function () {
-
-                if($(this).val() === 'text'){
-                    $('.type-toggle').hide();
-                }
-
-                if($(this).val() === 'select'){
-                    $('.type-toggle').show();
-                }
-
-            });
         });
     </script>
 @endsection

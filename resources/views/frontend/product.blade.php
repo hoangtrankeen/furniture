@@ -1,4 +1,4 @@
-@extends('layouts/product')
+@extends('layouts/frontend/product')
 
 @section('title', 'Products')
 

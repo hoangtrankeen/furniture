@@ -62,8 +62,6 @@ class CategoryController extends Controller
         $product->parent_id = $request->parent_id;
         $product->save();
 
-        die($product->id);
-
         Session::flash('success', 'The category was successfully save!');
         return redirect()->route('category.index');
     }

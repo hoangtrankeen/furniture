@@ -43,7 +43,7 @@
 <div id="preloaderKDZ"></div>
 <div class="sn-site">
     {{--Header--}}
-    @include('partials/header')
+    @include('partials/frontend/header')
     <section>
         <div class="banner-sub-page">
             <div class="container">
@@ -55,7 +55,7 @@
         <div class="products-in-category-tabs-wrapper container">
             <div class="products-content">
                 <div class="woocommerce product-listing columns-4">
-                    @include('partials/tab')
+                    @include('partials/frontend/tab')
                     <div class="desc-review-content tab-content clearfix">
                         <div id="1a" class="tab-pane active">
                             @yield('content')
@@ -65,7 +65,7 @@
             </div>
         </div>
     </div>
-    @include('partials/footer')
+    @include('partials/frontend/footer')
 </div>
 <!-- .mv-site-->
 

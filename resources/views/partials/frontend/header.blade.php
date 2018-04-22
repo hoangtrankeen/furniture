@@ -30,16 +30,20 @@
                     <ul class="nav">
                         <li class="active menu-item menu-home"><a href="index.html">Home</a></li>
                         <li class="menu-item menu-shop"><a href="shop.html">Shop</a>
-                            <ul class="sub-menu">
-                                @foreach ($categories as $category)
+                            {{--<ul class="sub-menu">--}}
+                            <?php /* ?> @foreach ($categories as $category)
                                 <li class="menu_style_dropdown menu-item"><a href="{{ route('shop.index', ['category' => $category->slug]) }}">{{ $category->name }}</a>
                                     <ul class="sub-menu">
                                         <li class="menu-item menu-item-object-page"><a href="product-2-columns-with-sidebar.html">Products 2 Columns with Sidebar</a></li>
                                         <li class="menu-item menu-item-object-page"><a href="products-list.html">Product List</a></li>
                                     </ul>
-                                </li>
-                                @endforeach
-                            </ul>
+                                </li>-->
+
+
+                                @endforeach <?php */ ?>
+                                <?php ManagerCatalog::showCategories(); ?>
+
+                            {{--</ul>--}}
                         </li>
                         <li class="menu-item menu-blog"><a href="#">Blog</a>
                             <ul class="sub-menu">

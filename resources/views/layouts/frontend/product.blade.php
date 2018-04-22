@@ -42,7 +42,7 @@
 <div id="preloaderKDZ"></div>
 <div class="sn-site">
 
-    @include('partials/header')
+    @include('partials/frontend/header')
 
     <section>
         <div class="banner-sub-page">
@@ -54,7 +54,7 @@
 
     @yield('content')
 
-    @include('partials/footer')
+    @include('partials/frontend/footer')
 
 </div>
 <!-- .mv-site-->
