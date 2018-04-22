@@ -5,50 +5,16 @@ namespace App\Http\Controllers\Backend;
 use App\Model\AttributeValue;
 use App\Model\Category;
 use App\Model\Product;
-use App\Model\Group;
 use App\Model\Attribute;
 use App\Model\ProductAttribute;
 use Illuminate\Support\Facades\Session;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Storage;
 
-class ProductSimpleController extends Controller
+class ProductSimpleController extends ProductController
 {
-    private $photos_path;
 
-    public function __construct()
-    {
-        $this->middleware('auth');
-        $this->photos_path = public_path('manage_images');
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request)
-    {
-        $data['products'] = Product::all();
-        return view('backend/product/index',$data);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {   
-        $data['attributes'] = Attribute::all();
-        $data['products'] = Product::getGroupProduct();
-        $data['categories'] = Category::all();
-
-        return view('backend/product/create-simple', $data);
-    }
+    protected $type_id = 'simple';
 
     /**
      * Store a newly created resource in storage.
@@ -125,21 +91,24 @@ class ProductSimpleController extends Controller
 
         $product->sort_order = $request->sort_order;
 
-        $product->type_id = $request->type_id;
+        $product->type_id = $this->type_id;
 
         $product->save();
 
+        $product->categories()->sync($request->categories);
+
+
         $attributes = Attribute::all();
+
         foreach ($attributes as $attribute){
             if($request->has($attribute->inform_name)  && ($request->input($attribute->inform_name) !== null)){
-
-                $attr_val_id = '';
 
                 if($attribute->type == 'select'){
                     $attr_val_id = $request->input($attribute->inform_name);
                 }
 
-                if($attribute->type == 'text'){
+                elseif($attribute->type == 'text'){
+
                     $attr_text_val = new AttributeValue;
                     $attr_text_val->name = $request->input($attribute->inform_name);
                     $attr_text_val->attribute_id = $attribute->id;
@@ -147,33 +116,23 @@ class ProductSimpleController extends Controller
 
                     $attr_val_id = $attr_text_val->id;
 
+                }else{
+                    continue;
                 }
 
                 $pro_attr = new ProductAttribute();
 
                 $pro_attr->product_id = $product->id;
                 $pro_attr->attribute_value_id = $attr_val_id;
-                $pro_attr->attribute_id = $attribute->id;
 
                 $pro_attr->save();
+
             }
         }
         //Store Product - Category
-        $product->categories()->attach($request->categories);
 
         Session::flash('success', 'The product was successfully save!');
         return redirect()->route('product-group.index');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
     }
 
     /**
@@ -203,7 +162,7 @@ class ProductSimpleController extends Controller
 
         $data['categories'] = Category::all();
 
-        return view('backend/product/edit-group', $data);
+        return view('backend/product/edit-simple', $data);
     }
 
     /**
@@ -298,33 +257,62 @@ class ProductSimpleController extends Controller
 
         $product->type_id = $request->type_id;
 
-        $product->child_id = json_encode($child_array);
-
         $product->save();
 
         //Store Product - Category
-        $product->categories()->attach($request->categories);
+        $product->categories()->sync($request->categories);
 
-        // Store Parent Id
-        $childArr =  json_decode($product->child_id);
+        $attributes = Attribute::all();
 
-        $childProduct = Product::whereIn('id', $childArr)->get();
+        //Find in form the attribute field that match one's name in attribute table
+        foreach ($attributes as $attribute){
+            //If found a not null one
+            if($request->has($attribute->inform_name)  && ($request->input($attribute->inform_name) !== null)){
 
-        foreach($childProduct as $child) {
+                //Because each product just has 1 attribute that related to just 1 attribute value
+                //Check if the attribute value (related to the product) exists in attribute value table (base on an exist attribute id above to find)
+                //Then we always get just one
+                $attr_value = $product->attributeValue()->where('attribute_value.attribute_id', $attribute->id)->first();
 
-            $parent_id = json_decode($child->parent_id);
+                // Found one
+                if(!empty($attr_value)){
 
-            if (!is_array($parent_id)) {
-                $parent_id = [];
+                    // Just update the new attribute value id of the pivot table when attribute type is select
+                    if($attribute->type == 'select'){
+
+                        ProductAttribute::where('product_id',$product->id)
+                            ->where('attribute_value_id', $attr_value->id)
+                            ->update([
+                            'attribute_value_id' => $request->input($attribute->inform_name)
+                        ]);
+
+                    }
+
+                    // Just update name field of attribute value table
+                    elseif($attribute->type == 'text'){
+
+                        AttributeValue::where('id',$attr_value->id)->update([
+                            'name' => $request->input($attribute->inform_name)
+                        ]);
+
+                    }else{
+                        continue;
+                    }
+
+                // if not exist the only case, attribute is text type, then create a new text value and store a new row in pivot table
+                }else{
+                    $attr_value = new AttributeValue;
+                    $attr_value->name = $request->input($attribute->inform_name);
+                    $attr_value->attribute_id = $attribute->id;
+                    $attr_value->save();
+
+                    $pro_attr = new ProductAttribute();
+                    $pro_attr->product_id = $product->id;
+                    $pro_attr->attribute_value_id = $attr_value->id;
+
+                    $pro_attr->save();
+                }
             }
-
-            $parent_id[] = $product->id;
-
-            $child_product = Product::find($child->id);
-
-            $child_product->parent_id = json_encode($parent_id);
-
-            $child_product->save();
         }
 
         Session::flash('success', 'The product was successfully updated!');

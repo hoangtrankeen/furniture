@@ -10,6 +10,10 @@ class AttributeValue extends Model
 
     protected $primaryKey = 'id';
 
+    protected $fillable = ['id', 'attribute_id', 'name', 'created_at', 'updated_at'];
+
+    protected $guarded = [];
+
     public function attribute()
     {
         return $this->belongsTo('App\Model\Attribute');
@@ -19,6 +23,8 @@ class AttributeValue extends Model
     {
         return $this->belongsToMany('App\Model\Product','product_attribute','attribute_value_id','product_id');
     }
+
+
 
 
 }

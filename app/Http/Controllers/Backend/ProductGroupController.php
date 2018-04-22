@@ -4,48 +4,12 @@ namespace App\Http\Controllers\Backend;
 
 use App\Model\Category;
 use App\Model\Product;
-use App\Model\Group;
 use Illuminate\Support\Facades\Session;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Storage;
 
-class ProductGroupController extends Controller
+class ProductGroupController extends ProductController
 {
-    private $photos_path;
-
-    public function __construct()
-    {
-        $this->middleware('auth');
-        $this->photos_path = public_path('manage_images');
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request)
-    {
-        $data['products'] = Product::all();
-        return view('backend/product/index',$data);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        $data['products'] = Product::getSimpleProduct();
-        $data['categories'] = Category::all();
-
-        return view('backend/product/create-group', $data);
-    }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -136,7 +100,7 @@ class ProductGroupController extends Controller
         $product->save();
 
         //Store Product - Category
-        $product->categories()->attach($request->categories);
+        $product->categories()->sync($request->categories);
 
         // Store Parent Id
         $childArr =  json_decode($product->child_id);
@@ -166,17 +130,6 @@ class ProductGroupController extends Controller
 
         Session::flash('success', 'The product was successfully save!');
         return redirect()->route('product-group.index');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
     }
 
     /**
@@ -307,7 +260,7 @@ class ProductGroupController extends Controller
         $product->save();
 
         //Store Product - Category
-        $product->categories()->attach($request->categories);
+        $product->categories()->sync($request->categories);
 
         // Store Parent Id
         $childArr =  json_decode($product->child_id);

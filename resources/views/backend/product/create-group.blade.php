@@ -100,7 +100,7 @@
                             <div class="col-sm-8">
                                 <select class=" categories form-control" id="categories" name="categories[]" multiple="multiple">
                                     @foreach($categories as $category)
-                                        <option value="{{$category->id}}" {{ ($category->id == old('categories')) ? "selected" : ''}}>{{$category->name}}</option>
+                                        <option value="{{$category->id}}" {{ old('categories') ? in_array($category->id,(old('categories'))) ? "selected" : '' : ''}}>{{$category->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -256,7 +256,7 @@
 
                                         @endphp
                                         <tr class="{{in_array($product->id, $child_list) ? 'color-toggle': ''}}">
-                                            <td><a href="{{route('product-group.edit', $product->id )}}"  data-value="{{$product->id}}">{{$product->name}}</a></td>
+                                            <td><a href="{{route('product.edit', $product->id )}}"  data-value="{{$product->id}}">{{$product->name}}</a></td>
                                             <td>{{$product->sku}}</td>
                                             <td>{{$product->price}}</td>
                                             <td>{{$product->featured}}</td>

@@ -30,11 +30,16 @@ Route::post('/cart/switchToSaveForLater/{product}', 'CartController@switchToSave
 
 Route::prefix('admin')->group(function () {
 
-    Route::get('product','Backend\ProductController@index')->name('product.index');
-    Route::resource('product-group','Backend\ProductGroupController');
+    Route::get('product/create/{type}','Backend\ProductController@create')->name('product.create');
     Route::resource('product-simple','Backend\ProductSimpleController');
+    Route::resource('product-group','Backend\ProductGroupController');
+
+    Route::resource('product','Backend\ProductController');
+
     Route::resource('category','Backend\CategoryController');
+
     Route::resource('attribute','Backend\AttributeController');
+
     Route::resource('attribute-value','Backend\AttributeValueController');
 });
 

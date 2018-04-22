@@ -46,7 +46,7 @@ class AttributeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {   
+    {
 
         $types = implode(",", $this->type);
 
@@ -65,22 +65,18 @@ class AttributeController extends Controller
 
         // Get Attribute value in form
         if($request->type == 'select'){
+            $i = 0;
+            while ($request->has('attr_value_'.($i+1)) && $request->input('attr_value_'.($i+1)) !== null && is_integer((int)$request->input('attr_value_'.($i+1)))) {
+                $attr_val = new AttributeValue;
 
+                $attr_val->attribute_id = $attribute->id;
+                $attr_val->name = $request->input('attr_value_'.($i+1)) ;
 
-            if($request->has('attr_value_1')){
-                $i = 0;
-                while ($request->has('attr_value_'.($i+1)) && $request->input('attr_value_'.($i+1)) !== null && is_numeric($request->input('attr_value_'.($i+1)))) {
+                $attr_val->save();
 
-                    $attr_val = new AttributeValue;
-
-                    $attr_val->attribute_id = $attribute->id;
-                    $attr_val->name = $request->input('attr_value_'.($i+1)) ;
-
-                    $attr_val->save();
-
-                    $i++;
-                }
+                $i++;
             }
+
         }
 
         Session::flash('success', 'The attribute was successfully save!');
@@ -132,6 +128,33 @@ class AttributeController extends Controller
         $attribute->type = $request->type;
         $attribute->inform_name = $request->inform_name;
         $attribute->save();
+
+        // Get Attribute value in form
+        if($request->type == 'select'){
+            $i = 0;
+            while ($request->has('attr_value_'.($i+1)) && $request->input('attr_value_'.($i+1)) !== null && is_integer((int)$request->input('attr_value_'.($i+1)))) {
+
+
+                var_dump($attribute->attributeValue);
+                if(!empty($attribute->attributeValue)){
+
+                   AttributeValue::where('id', $i+1)
+                       ->where( 'attribute_id', $attribute->id)
+                       ->update([
+                        'name' => $request->input('attr_value_'.($i+1))
+                        ]);
+                }
+                else{
+                    $attr_val = new AttributeValue;
+                    $attr_val->attribute_id = $attribute->id;
+                    $attr_val->name = $request->input('attr_value_'.($i+1)) ;
+                    $attr_val->save();
+
+                }
+                $i++;
+            }
+        }
+
 
         Session::flash('success', 'The attribute was successfully save!');
         return redirect()->route('attribute.index');
