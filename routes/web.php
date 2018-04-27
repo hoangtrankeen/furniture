@@ -1,5 +1,7 @@
 <?php
 
+use App\Model\Category;
+use App\Model\Product;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,14 +18,26 @@ Route::get('/', function () {
 });
 
 
-Route::get('/shop', 'Frontend\ShopController@index')->name('shop.index');
-Route::get('/shop/{product}', 'Frontend\ShopController@show')->name('shop.show');
+    Route::resource('/cart', 'Frontend\CartController');
+    Route::post('/cart/switchToSaveForLater/{product}', 'Frontend\CartController@switchToSaveForLater')->name('cart.switchToSaveForLater');
 
-Route::get('/cart', 'Frontend\CartController@index')->name('cart.index');
-Route::post('/cart', 'Frontend\CartController@store')->name('cart.store');
-Route::patch('/cart/{product}', 'Frontend\CartController@update')->name('cart.update');
-Route::delete('/cart/{product}', 'Frontend\CartController@destroy')->name('cart.destroy');
-Route::post('/cart/switchToSaveForLater/{product}', 'Frontend\CartController@switchToSaveForLater')->name('cart.switchToSaveForLater');
+    Route::get('/san-pham', 'Frontend\ShopController@index')->name('product.all');
+    Route::get('/checkout', 'Frontend\CheckoutController@index')->name('checkout');
+    Route::post('/checkout', 'Frontend\CheckoutController@store')->name('checkout.store');
+
+
+    $router = app()->make('router');
+    $categories = Category::all();
+    $categories->each(function (Category $category) use ($router) {
+        $router->get($category->slug, 'Frontend\ShopController@catalogCategory')->defaults('category',$category)->name('category.'.$category->slug);
+    });
+
+
+    $router = app()->make('router');
+    $products = Product::all();
+    $products->each(function (Product $product) use ($router) {
+        $router->get($product->slug, 'Frontend\ShopController@catalogProduct')->defaults('product',$product)->name('product.'.$product->slug);
+    });
 
 
 // Route::get('/admin', 'ProductController@index')->name('');
@@ -40,7 +54,11 @@ Route::prefix('admin')->group(function () {
 
     Route::resource('attribute','Backend\AttributeController');
 
-    Route::resource('attribute-value','Backend\AttributeValueController');
 });
 
 Auth::routes();
+
+
+
+
+

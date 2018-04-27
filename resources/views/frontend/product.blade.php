@@ -24,32 +24,18 @@
         <div class="row">
             <div class="col-md-6">
                 <div id="sync1" class="owl-carousel owl-template">
+                    @foreach($product->collect_img as $img)
                     <div class="item">
-                        <figure><img src="images/demo/slide-1.jpg" alt="slide" width="540" height="700"/></figure>
+                        <figure><img src="{{asset($img)}}" alt="slide" width="540" height="700"/></figure>
                     </div>
-                    <div class="item">
-                        <figure><img src="images/demo/slide-2.jpg" alt="slide" width="540" height="700"/></figure>
-                    </div>
-                    <div class="item">
-                        <figure><img src="images/demo/slide-3.jpg" alt="slide" width="540" height="700"/></figure>
-                    </div>
-                    <div class="item">
-                        <figure><img src="images/demo/slide-4.jpg" alt="slide" width="540" height="700"/></figure>
-                    </div>
+                    @endforeach
                 </div>
                 <div id="sync2" class="owl-carousel owl-template">
-                    <div class="item">
-                        <figure><img src="images/demo/slide-small-1.jpg" alt="slide" width="180" height="220"/></figure>
-                    </div>
-                    <div class="item">
-                        <figure><img src="images/demo/slide-small-2.jpg" alt="slide" width="180" height="220"/></figure>
-                    </div>
-                    <div class="item">
-                        <figure><img src="images/demo/slide-small-3.jpg" alt="slide" width="180" height="220"/></figure>
-                    </div>
-                    <div class="item">
-                        <figure><img src="images/demo/slide-small-4.jpg" alt="slide" width="180" height="220"/></figure>
-                    </div>
+                    @foreach($product->collect_img as $img)
+                        <div class="item">
+                            <figure><img src="{{asset($img)}}" alt="slide" width="180" height="220"/></figure>
+                        </div>
+                    @endforeach
                 </div>
             </div>
             <div class="col-md-6">
@@ -58,7 +44,7 @@
                     <div class="woocommerce-product-rating"></div>
                     <div class="rate-price">
                         <div class="rate"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i></div><a href="#" class="woocommerce-review-link">(1 review)</a>
-                        <p class="price"><span>{{ $product->presentPrice() }}</span></p>
+                        <p class="price"><span>{{ $product->final_price }}</span></p>
                     </div>
                     <div class="product-single-short-description">
                         <p>{{ $product->details }}</p>
@@ -71,9 +57,10 @@
                         </div>
                         <input type="hidden" name="id" value="{{ $product->id }}">
                         <input type="hidden" name="name" value="{{ $product->name }}">
-                        <input type="hidden" name="price" value="{{ $product->price }}">
-                        <button type="submit" class="single_add_to_cart_button button alt">Add to cart</button>
+                        <input type="hidden" name="final_price" value="{{ $product->final_price }}">
+                        <input type="hidden" name="collect_img" value="{{ $product->collect_img[0] }}">
                         {{ csrf_field() }}
+                        <button type="submit" class="single_add_to_cart_button button alt">Add to cart</button>
                     </form>
                     <div class="product_meta"><span class="sku_wrapper">
                     <label>SKU:</label><span class="sku">SE-26</span>.</span><span class="product-stock-status-wrapper">

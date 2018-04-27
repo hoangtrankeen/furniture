@@ -34,9 +34,8 @@
                     <th>&#32;</th>
                 </tr>
                 @foreach (Cart::content() as $item)
-                <tr>
-                    <td data-title="Product"><a href="#" class="image-product"><img src="images/demo/tab-1.jpg" alt="tab-1" width="180" height="220"/></a></td>
-                    <td data-title="Name"><a href="{{ route('shop.show', $item->model->slug) }}" class="name-product">{{ $item->model->name }}</a></td>
+                    <td data-title="Product"><a href="#" class="image-product"><img src="{{asset(getOneProductImg($item->model->images))}}" alt="tab-1" width="180" height="220"/></a></td>
+                    <td data-title="Name"><a href="{{ route('product.'.$item->model->slug) }}" class="name-product">{{ $item->model->name }}</a></td>
                     <td data-title="Price"><span class="price">{{ ($item->model->price) }}</span></td>
                     <td data-title="Quantity">
                         <select class="quantity" data-id="{{ $item->rowId }}">
@@ -61,7 +60,7 @@
                 <div class="button-cart-left">
                     <input type="text" placeholder="Coupon code"/><a href="#" class="coupon">Apply Coupon</a>
                 </div>
-                <div class="button-cart-right"><a href="#" class="update-cart">Update Cart</a><a href="#" class="process">Proceed to Checkout</a></div>
+                <div class="button-cart-right"><a href="#" class="update-cart">Update Cart</a><a href="{{route('checkout')}}" class="process">Proceed to Checkout</a></div>
             </div>
         </form>
         <div class="row">

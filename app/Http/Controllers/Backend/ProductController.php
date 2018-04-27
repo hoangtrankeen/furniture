@@ -15,13 +15,14 @@ class ProductController extends Controller
 
     protected $photos_path;
 
-    public function __construct()
+    public function __construct(Product $product)
     {
         $this->middleware('auth');
-        $this->photos_path = public_path('manage_images');
+        $this->photos_path = $product->photo_path;
     }
     /**
      * Display a listing of the resource.
+     *
      *
      * @param Request $request
      * @return \Illuminate\Http\Response

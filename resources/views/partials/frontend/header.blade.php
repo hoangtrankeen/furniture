@@ -29,7 +29,7 @@
                 <nav id="primary-menu" class="main-nav">
                     <ul class="nav">
                         <li class="active menu-item menu-home"><a href="index.html">Home</a></li>
-                        <li class="menu-item menu-shop"><a href="shop.html">Shop</a>
+                        <li class="menu-item menu-shop"><a href="/san-pham">Sản Phẩm</a>
                             {{--<ul class="sub-menu">--}}
                             <?php /* ?> @foreach ($categories as $category)
                                 <li class="menu_style_dropdown menu-item"><a href="{{ route('shop.index', ['category' => $category->slug]) }}">{{ $category->name }}</a>

@@ -11,7 +11,8 @@ function setActiveCategory($category, $output = 'active')
     return request()->category == $category ? $output : '';
 }
 
-function productImage($path)
+function getOneProductImg($images)
 {
-    return $path && file_exists('storage/'.$path) ? asset('storage/'.$path) : asset('img/not-found.jpg');
+    $images = json_decode($images);
+    return  '/manage_images'.'/'.$images[0];
 }

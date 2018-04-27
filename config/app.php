@@ -179,6 +179,10 @@ return [
 
         // Manager Service Provider - Personal Service
         App\Providers\ManagerServiceProvider::class,
+        App\Providers\SeoServiceProvider::class,
+
+        //Stripe
+        Cartalyst\Stripe\Laravel\StripeServiceProvider::class,
 
     ],
 
@@ -229,6 +233,9 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'ManagerCatalog' => App\Helpers\Manager\Catalog::class,
+
+        //Stripe
+        'Stripe' => Cartalyst\Stripe\Laravel\Facades\Stripe::class,
 
     ],
 

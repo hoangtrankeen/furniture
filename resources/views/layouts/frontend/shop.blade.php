@@ -44,13 +44,13 @@
 <div class="sn-site">
     {{--Header--}}
     @include('partials/frontend/header')
-    <section>
-        <div class="banner-sub-page">
-            <div class="container">
-                @yield('breadcrumb')
-            </div>
-        </div>
-    </section>
+    {{--<section>--}}
+        {{--<div class="banner-sub-page">--}}
+            {{--<div class="container">--}}
+                {{--@yield('breadcrumb')--}}
+            {{--</div>--}}
+        {{--</div>--}}
+    {{--</section>--}}
     <div class="section">
         <div class="products-in-category-tabs-wrapper container">
             <div class="products-content">

@@ -65,6 +65,7 @@
         </style>
     </head>
     <body>
+    {{var_dump(((int)"567,231.00"))}} {{die()}}
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
                 <div class="top-right links">

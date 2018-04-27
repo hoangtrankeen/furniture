@@ -8,6 +8,7 @@
 namespace App\Helpers\Manager;
 
 use App\Model\Category;
+use App\Model\Product;
 use  Illuminate\Support\ServiceProvider;
 
 class Catalog extends ServiceProvider
@@ -21,9 +22,9 @@ class Catalog extends ServiceProvider
     public static function getCustomAttribute($attr, $product = null)
     {
         $html = '';
+
         if($product !== null){
             $attr_val = $product->attributeValue()->where('attribute_id',$attr->id)->first();
-
             if(!empty($attr_val)){
                 if ($attr->type == 'select') {
 
@@ -41,6 +42,23 @@ class Catalog extends ServiceProvider
                 }
                 if ($attr->type == 'text') {
                     $html = "<input name=$attr->inform_name value=$attr_val->name class='form-control'/>";
+                }
+            }else{
+                if ($attr->type == 'select') {
+
+                    $val_html = '';
+                    $val_html .= "<option value='' >---Select Value---</option>";
+
+                    foreach ($attr->attributeValue as $value) {
+
+                        $val_id = $value->id;
+                        $val_html .= "<option value=$val_id >$value->name</option>";
+                    }
+
+                    $html = "<select name=$attr->inform_name class='form-control'>$val_html</select>";
+                }
+                if ($attr->type == 'text') {
+                    $html = "<input name=$attr->inform_name class='form-control'/>";
                 }
             }
         }
@@ -67,6 +85,7 @@ class Catalog extends ServiceProvider
         return $html;
     }
 
+    //Get Recursive Category Menu
     public static function showCategories( $parent_id = 0, $char = '')
     {
 
@@ -89,7 +108,7 @@ class Catalog extends ServiceProvider
             foreach ($cate_child as $key => $item)
             {
                 // Hiển thị tiêu đề chuyên mục
-                $route = route('shop.index', ['category' => $item->slug]);
+                $route = route('category.'.$item->slug);
                 echo '<li class="menu_style_dropdown menu-item"><a href='.$route.'>'.$item->name.'</a>';
 
                 // Tiếp tục đệ quy để tìm chuyên mục con của chuyên mục đang lặp
@@ -99,5 +118,6 @@ class Catalog extends ServiceProvider
             echo '</ul>';
         }
     }
+
 
 }

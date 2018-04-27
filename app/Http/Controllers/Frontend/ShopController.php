@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Helpers\Manager\Catalog;
 use App\Model\Product;
 use App\Model\Category;
 use Illuminate\Http\Request;
@@ -16,51 +17,41 @@ class ShopController extends Controller
      */
     public function index()
     {
-        $pagination = 9;
-        $categories = Category::all();
+        $data['products'] = Product::getAllProduct();
+        return view('frontend/shop', $data);
+    }
 
-        if (request()->category) {
-            $products = Product::with('categories')->whereHas('categories', function ($query) {
-                    $query->where('slug', request()->category);
-            });
-            $categoryName = optional($categories->where('slug', request()->category)->first())->name;
-        } else {
-            $products = Product::where('featured', true);
-            $categoryName = 'Featured';
+    public function catalogCategory(Category $category)
+    {
+        $products = Product::whereHas('categories', function($query) use($category){
+            $query->where('slug', $category->slug);
+        })->paginate(9);
+
+
+        foreach($products as $key =>  $product)
+        {
+           $product->collect_img = Product::getAllImageProduct($product->id);
+           $product->final_price = Product::getFinalPrice($product);
         }
 
-        if (request()->sort == 'low_high') {
-            $products = $products->orderBy('price')->paginate($pagination);
-        } elseif (request()->sort == 'high_low') {
-            $products = $products->orderBy('price', 'desc')->paginate($pagination);
-        } else {
-            $products = $products->paginate($pagination);
-        }
-
-        return view('frontend/shop')->with([
-            'products' => $products,
-            'categories' => $categories,
-            'categoryName' => $categoryName,
-        ]);
+        $data['products'] = $products;
+        return view('frontend/shop', $data);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  string  $slug
+     * @param Product $product
      * @return \Illuminate\Http\Response
      */
-    public function show($slug)
+    public function catalogProduct(Product $product)
     {
-        $product = Product::where('slug', $slug)->firstOrFail();
-        $categories = Category::all();
-        $mightAlsoLike = Product::where('slug', '!=', $slug)->mightAlsoLike()->get();
+        $product = Product::where('slug', $product->slug)->firstOrFail();
 
-        return view('frontend/product')->with([
-            'product' => $product,
-            'categories' => $categories,
-            'mightAlsoLike' => $mightAlsoLike
-        ]);
+        $product->collect_img = Product::getAllImageProduct($product->id);
+        $product->final_price = Product::getFinalPrice($product);
+
+        $data['product'] = $product;
+        return view('frontend/product',$data);
     }
-
 }
