@@ -1,7 +1,5 @@
 <?php
 
-use App\Model\Category;
-use App\Model\Product;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,31 +11,33 @@ use App\Model\Product;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () {
+//    return view('welcome');
+//});
 
 
-    Route::resource('/cart', 'Frontend\CartController');
-    Route::post('/cart/switchToSaveForLater/{product}', 'Frontend\CartController@switchToSaveForLater')->name('cart.switchToSaveForLater');
+Route::resource('/', 'Frontend\ShopController');
+Route::resource('/cart', 'Frontend\CartController');
+Route::post('/cart/switchToSaveForLater/{product}', 'Frontend\CartController@switchToSaveForLater')->name('cart.switchToSaveForLater');
 
-    Route::get('/san-pham', 'Frontend\ShopController@index')->name('product.all');
-    Route::get('/checkout', 'Frontend\CheckoutController@index')->name('checkout');
-    Route::post('/checkout', 'Frontend\CheckoutController@store')->name('checkout.store');
+Route::get('/san-pham', 'Frontend\ShopController@index')->name('product.all');
+Route::get('/checkout', 'Frontend\CheckoutController@index')->name('checkout');
+Route::post('/checkout', 'Frontend\CheckoutController@store')->name('checkout.store');
+Route::get('/danh-muc/{slug}', 'Frontend\ShopController@catalogCategory')->name('catalog.category');
+Route::get('/san-pham/{slug}', 'Frontend\ShopController@catalogProduct')->name('catalog.product');
 
-
-    $router = app()->make('router');
-    $categories = Category::all();
-    $categories->each(function (Category $category) use ($router) {
-        $router->get($category->slug, 'Frontend\ShopController@catalogCategory')->defaults('category',$category)->name('category.'.$category->slug);
-    });
-
-
-    $router = app()->make('router');
-    $products = Product::all();
-    $products->each(function (Product $product) use ($router) {
-        $router->get($product->slug, 'Frontend\ShopController@catalogProduct')->defaults('product',$product)->name('product.'.$product->slug);
-    });
+//$router = app()->make('router');
+//$categories = Category::all();
+//$categories->each(function (Category $category) use ($router) {
+//    $router->get($category->slug, 'Frontend\ShopController@catalogCategory')->defaults('category',$category)->name('category.'.$category->slug);
+//});
+//
+//
+//$router = app()->make('router');
+//$products = Product::all();
+//$products->each(function (Product $product) use ($router) {
+//    $router->get($product->slug, 'Frontend\ShopController@catalogProduct')->defaults('product',$product)->name('product.'.$product->slug);
+//});
 
 
 // Route::get('/admin', 'ProductController@index')->name('');
@@ -53,6 +53,8 @@ Route::prefix('admin')->group(function () {
     Route::resource('category','Backend\CategoryController');
 
     Route::resource('attribute','Backend\AttributeController');
+
+    Route::resource('order','Backend\OrderController');
 
 });
 

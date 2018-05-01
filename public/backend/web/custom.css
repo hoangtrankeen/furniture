@@ -4,7 +4,7 @@
 }
 
 /*Form create Product*/
-.imageThumb {
+.imageThumb, .imageThumbs {
     max-height: 100px;
     border: 2px solid;
     margin: 10px 10px 0 0;

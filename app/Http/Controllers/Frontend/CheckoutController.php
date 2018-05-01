@@ -103,12 +103,12 @@ class CheckoutController extends Controller
     private function getNumbers()
     {
 
-        $tax = 0;
+        $tax = config('cart.tax') / 100;
         $discount = session()->get('coupon')['discount'] ?? 0;
         $code = session()->get('coupon')['name'] ?? null;
-        $newSubtotal = ((float)Cart::subtotal()) - $discount;
-        $newTax = 0;
-        $newTotal = (Cart::subtotal()) - $discount;
+        $newSubtotal = (Cart::subtotal() - $discount);
+        $newTax = $newSubtotal * $tax;
+        $newTotal = $newSubtotal * (1 + $tax);
 
         return collect([
             'tax' => $tax,

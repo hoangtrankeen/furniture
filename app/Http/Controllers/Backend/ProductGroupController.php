@@ -30,6 +30,7 @@ class ProductGroupController extends ProductController
             'description'    => 'required|max:255',
             'details'        => 'required|max:255',
             'images.*'       => 'sometimes|required|image',
+            'image'         => 'sometimes|required|image',
             'sort_order'     => 'required|integer',
             'type_id'        => 'required',
             'child_product'  => 'required'
@@ -66,6 +67,28 @@ class ProductGroupController extends ProductController
             $image_name = null;
         }
 
+
+        $feature_image = '';
+
+        if($request->hasFile('image')){
+            $photo = $request->file('image');
+
+            if (!is_dir($this->photos_path)) {
+                mkdir($this->photos_path, 0777);
+            }
+
+            $name = sha1(date('YmdHis') . str_random(30));
+            $resize_name = $name . str_random(2) . '.' . $photo->getClientOriginalExtension();
+            $feature_image = $resize_name;
+
+            Image::make($photo)
+                ->resize(250, null, function ($constraints) {
+                    $constraints->aspectRatio();
+                })->save($this->photos_path . '/' . $resize_name);
+        }else{
+            $feature_image = null;
+        }
+
         $child_array = [];
 
 
@@ -89,6 +112,7 @@ class ProductGroupController extends ProductController
         $product->active = $request->active;
         $product->in_stock = $request->in_stock;
 
+        $product->image = $feature_image;
         $product->images = $image_name;
 
         $product->sort_order = $request->sort_order;
@@ -183,6 +207,7 @@ class ProductGroupController extends ProductController
             'description'    => 'required|max:255',
             'details'        => 'required|max:255',
             'images.*'       => 'sometimes|required|image',
+            'image'       => 'sometimes|required|image',
             'sort_order'     => 'required|integer',
             'type_id'        => 'required',
             'child_product'       => 'required'
@@ -220,11 +245,36 @@ class ProductGroupController extends ProductController
             foreach (json_decode($product->images) as $image){
 
                 if(\File::exists($this->photos_path.'/'.$image)){
-//                    \File::delete($this->photos_path.'/'.$image);
+                    \File::delete($this->photos_path.'/'.$image);
                 }
             }
         }else{
             $image_name = $product->images;
+        }
+
+        //Save feature image
+        $feature_image = '';
+
+        if($request->hasFile('image')){
+            $photo = $request->file('image');
+
+            if (!is_dir($this->photos_path)) {
+                mkdir($this->photos_path, 0777);
+            }
+
+            $name = sha1(date('YmdHis') . str_random(30));
+            $resize_name = $name . str_random(2) . '.' . $photo->getClientOriginalExtension();
+            $feature_image = $resize_name;
+
+            Image::make($photo)
+                ->resize(250, null, function ($constraints) {
+                    $constraints->aspectRatio();
+                })->save($this->photos_path . '/' . $resize_name);
+            if(\File::exists($this->photos_path.'/'.$product->image)){
+                \File::delete($this->photos_path.'/'.$product->image);
+            }
+        }else{
+            $feature_image = $product->image;
         }
 
         $child_array = [];
@@ -250,6 +300,7 @@ class ProductGroupController extends ProductController
         $product->in_stock = $request->in_stock;
 
         $product->images = $image_name;
+        $product->image = $feature_image;
 
         $product->sort_order = $request->sort_order;
 

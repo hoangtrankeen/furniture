@@ -34,6 +34,7 @@ class CreateProductsTable extends Migration
             $table->boolean('in_stock')->default(false);
 
             $table->text('images')->nullable();
+            $table->string('image')->nullable();
 
             $table->integer('sort_order')->default(100);
 

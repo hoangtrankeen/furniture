@@ -18,15 +18,15 @@ class ShopController extends Controller
     public function index()
     {
         $data['products'] = Product::getAllProduct();
-        return view('frontend/shop', $data);
+        return view('frontend/home', $data);
     }
 
-    public function catalogCategory(Category $category)
+    public function catalogCategory($slug)
     {
-        $products = Product::whereHas('categories', function($query) use($category){
-            $query->where('slug', $category->slug);
-        })->paginate(9);
 
+        $products = Product::whereHas('categories', function($query) use($slug){
+            $query->where('slug', $slug);
+        })->paginate(9);
 
         foreach($products as $key =>  $product)
         {
@@ -41,12 +41,12 @@ class ShopController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param Product $product
+     * @param Product Slug $slug
      * @return \Illuminate\Http\Response
      */
-    public function catalogProduct(Product $product)
+    public function catalogProduct($slug)
     {
-        $product = Product::where('slug', $product->slug)->firstOrFail();
+        $product = Product::where('slug', $slug)->firstOrFail();
 
         $product->collect_img = Product::getAllImageProduct($product->id);
         $product->final_price = Product::getFinalPrice($product);

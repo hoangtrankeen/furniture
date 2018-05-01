@@ -108,7 +108,7 @@ class Catalog extends ServiceProvider
             foreach ($cate_child as $key => $item)
             {
                 // Hiển thị tiêu đề chuyên mục
-                $route = route('category.'.$item->slug);
+                $route = route('catalog.category',['slug'=>$item->slug]);
                 echo '<li class="menu_style_dropdown menu-item"><a href='.$route.'>'.$item->name.'</a>';
 
                 // Tiếp tục đệ quy để tìm chuyên mục con của chuyên mục đang lặp

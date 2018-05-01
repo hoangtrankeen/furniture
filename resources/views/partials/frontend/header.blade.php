@@ -23,12 +23,12 @@
         <div class="header-bottom">
 
             <div class="main-nav-wrapper header-left">
-                <div class="header-logo pull-left"><a href="index.html" title="YOLO"><img src="images/logo/logo.png" alt="logo" class="logo-img"/></a></div>
+                <div class="header-logo pull-left"><a href="index.html" title="YOLO"><img src="{{asset('assets/images/logo/logo.png')}}" alt="logo" class="logo-img"/></a></div>
                 <!-- .header-logo-->
 
                 <nav id="primary-menu" class="main-nav">
                     <ul class="nav">
-                        <li class="active menu-item menu-home"><a href="index.html">Home</a></li>
+                        <li class="active menu-item menu-home"><a href="/">Home</a></li>
                         <li class="menu-item menu-shop"><a href="/san-pham">Sản Phẩm</a>
                             {{--<ul class="sub-menu">--}}
                             <?php /* ?> @foreach ($categories as $category)
@@ -38,10 +38,8 @@
                                         <li class="menu-item menu-item-object-page"><a href="products-list.html">Product List</a></li>
                                     </ul>
                                 </li>-->
-
-
                                 @endforeach <?php */ ?>
-                                <?php ManagerCatalog::showCategories(); ?>
+                            <?php ManagerCatalog::showCategories(); ?>
 
                             {{--</ul>--}}
                         </li>

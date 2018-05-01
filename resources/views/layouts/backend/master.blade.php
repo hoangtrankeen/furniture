@@ -27,7 +27,7 @@
 	<!-- Color Picker -->
 	<link rel="stylesheet" href="{{asset('backend/assets/color-switcher/color-switcher.min.css')}}">
 
-	<link rel="stylesheet" type="text/css" href="{{asset('backend/assets/styles/color/red.min.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{asset('backend/assets/styles/color/chocolate.min.css')}}">
 
 	<link rel="stylesheet" type="text/css" href="{{asset('backend/web/custom.css')}}">
 

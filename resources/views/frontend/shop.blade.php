@@ -24,7 +24,7 @@
             <div class="product-thumb">
                 <div class="product-flash-wrap"><span class="on-sale product-flash">8.8%</span><span class="on-sale product-flash">Sale</span></div>
                 <div class="product-thumb-primary"><img width="300" height="400" src="{{asset($product->collect_img[0])}}" alt="42" title="42" class="attachment-shop_catalog size-shop_catalog wp-post-image"/></div>
-                <div class="product-thumb-secondary"><img width="300" height="400" src="{{asset($product->collect_img[1])}}" alt="47" class="attachment-shop_catalog size-shop_catalog"/></div><a href="{{route('product.'.$product->slug)}}" class="product-link">
+                <div class="product-thumb-secondary"><img width="300" height="400" src="{{asset($product->collect_img[1])}}" alt="47" class="attachment-shop_catalog size-shop_catalog"/></div><a href="{{route('catalog.product',['slug'=>$product->slug])}}" class="product-link">
                     <div class="product-hover-sign">
                         <hr/>
                         <hr/>

@@ -143,9 +143,21 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="images" class="col-sm-2 control-label">Featured Image</label>
+                            <div class=" col-xs-8">
+                                <input type="file" name="image" id="file" />
+                                <img class="imageThumb" id="imageThumb" src="{{getFeaturedImageProduct($product->image)}}">
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
                             <label for="images" class="col-sm-2 control-label">Images</label>
                             <div class=" col-xs-8">
                                 <input type="file" name="images[]" multiple  id="files" />
+                                @foreach(json_decode($product->images) as $image)
+                                    <img class="imageThumb" id="imageThumbs" src="{{getFeaturedImageProduct($image)}}">
+                                @endforeach
                             </div>
                         </div>
 
@@ -301,6 +313,8 @@
     <script src="{{asset('backend/assets/plugin/datatables/extensions/Responsive/js/responsive.bootstrap.min.js')}}"></script>
     <script src="{{asset('backend/assets/scripts/datatables.demo.min.js')}}"></script>
 
+    <script src="{{asset('backend/web/js/preview.js')}}"></script>
+
     <script type="text/javascript">
         $(document).ready(function() {
             //Select 2
@@ -309,33 +323,8 @@
                 allowClear: true
             });
 
-            //Image Preview
-            if(window.File && window.FileList && window.FileReader) {
-                $("#files").on("change",function(e) {
-                    var imgThumb = document.getElementById('imageThumb');
-                    if (document.contains(document.getElementById('imageThumb'))) {
-                        imgThumb.remove();
-                    }
-
-
-                    var files = e.target.files ,
-                        filesLength = files.length ;
-                    for (var i = 0; i < filesLength ; i++) {
-                        var f = files[i];
-                        var fileReader = new FileReader();
-                        fileReader.onload = (function(e) {
-                            var file = e.target;
-                            $("<img></img>",{
-                                class : "imageThumb",
-                                id : "imageThumb",
-                                src : e.target.result,
-                                title : file.name
-                            }).insertAfter("#files");
-                        });
-                        fileReader.readAsDataURL(f);
-                    }
-                });
-            } else { alert("Your browser doesn't support to File API") }
+            previewImage('#file', 'imageThumb');
+            previewImages('#files', 'imageThumbs');
         });
 
     </script>
@@ -378,7 +367,7 @@
 
                 ChildProduct.val(arr);
 
-                arr = JSON.parse(arr)
+                arr = JSON.parse(arr);
 
                 console.log(arr);
             } );

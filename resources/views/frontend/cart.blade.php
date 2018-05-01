@@ -20,7 +20,7 @@
 
 @section('content')
 
-<section>
+<section id="app">
     <div class="container">
         @if (Cart::count() > 0)
         <form class="cart-form">
@@ -34,8 +34,9 @@
                     <th>&#32;</th>
                 </tr>
                 @foreach (Cart::content() as $item)
+                <tr>
                     <td data-title="Product"><a href="#" class="image-product"><img src="{{asset(getOneProductImg($item->model->images))}}" alt="tab-1" width="180" height="220"/></a></td>
-                    <td data-title="Name"><a href="{{ route('product.'.$item->model->slug) }}" class="name-product">{{ $item->model->name }}</a></td>
+                    <td data-title="Name"><a href="{{ route('catalog.product',['slug' => $item->model->slug]) }}" class="name-product">{{ $item->model->name }}</a></td>
                     <td data-title="Price"><span class="price">{{ ($item->model->price) }}</span></td>
                     <td data-title="Quantity">
                         <select class="quantity" data-id="{{ $item->rowId }}">
@@ -86,7 +87,7 @@
 
 @endsection
 
-@section('javascript')
+@section('top-js')
     <script src="{{ asset('js/app.js') }}"></script>
     <script>
         (function(){
