@@ -13,22 +13,23 @@
                 //'suggestion' templating function used to render a single suggestion
                 suggestion: function (suggestion) {
                     const markup = `
-                        <div class="algolia-result">
-                            <span>
-                                <img src="${window.location.origin}/storage/${suggestion.image}" alt="img" class="algolia-thumb">
+                        <div class="algolia-result row">
+                            <div class="col-sm-3">
+                                <img src="${window.location.origin}/manage_images/${suggestion.image}" alt="img" class="algolia-thumb">
+                            </div>
+                            <div class="col-sm-5">
                                 ${suggestion._highlightResult.name.value}
-                            </span>
-                            <span>$${(suggestion.price / 100).toFixed(2)}</span>
+                            </div>
+                           
+                            <div class=" col-sm-4 result-price">$${(suggestion.price)}</div>
                         </div>
-                        <div class="algolia-details">
-                            <span>${suggestion._highlightResult.details.value}</span>
-                        </div>
+                        
                     `;
 
                     return markup;
                 },
                 empty: function (result) {
-                    return 'Sorry, we did not find any results for "' + result.query + '"';
+                    return 'Không có kết quả nào cho "' + result.query + '"';
                 }
             }
         }).on('autocomplete:selected', function (event, suggestion, dataset) {

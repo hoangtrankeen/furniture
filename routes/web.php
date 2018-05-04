@@ -25,7 +25,8 @@ Route::get('/checkout', 'Frontend\CheckoutController@index')->name('checkout');
 Route::post('/checkout', 'Frontend\CheckoutController@store')->name('checkout.store');
 Route::get('/danh-muc/{slug}', 'Frontend\ShopController@catalogCategory')->name('catalog.category');
 Route::get('/san-pham/{slug}', 'Frontend\ShopController@catalogProduct')->name('catalog.product');
-Route::get('/tim-kiem', 'Frontend\ShopController@searchAlgolia')->name('catalog.search');
+Route::get('/tim-kiem', 'Frontend\ShopController@search')->name('catalog.search');
+Route::get('/tim-kiem-algolia', 'Frontend\ShopController@searchAlgolia')->name('catalog.search-algolia');
 
 //$router = app()->make('router');
 //$categories = Category::all();

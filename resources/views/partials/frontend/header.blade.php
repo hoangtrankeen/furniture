@@ -12,11 +12,11 @@
                     <div class="textwidget"><i class="fa fa-clock-o"></i> Mon - Fri: 9.00 - 17.00 </div>
                 </aside>
             </div>
-            <div class="header-top-right">
-                <div class="header-top-div header-top-search">
-                    <input type="text" placeholder="Tìm kiếm sản phẩm"/><a class="btn"><i class="fa fa-search"></i></a>
-                </div>
-            </div>
+            {{--<div class="header-top-right">--}}
+                {{--<div class="header-top-div header-top-search">--}}
+                    {{--<input type="text" placeholder="Tìm kiếm sản phẩm"/><a class="btn"><i class="fa fa-search"></i></a>--}}
+                {{--</div>--}}
+            {{--</div>--}}
         </div>
     </div><a href="#primary-menu"><i class="fa fa-bars"></i></a>
     <div class="container-fluid">
@@ -100,11 +100,9 @@
             <div class="main-nav-wrapper header-right">
                 <div class="header-right-box">
                     <div class="header-customize header-customize-right">
+                        {{--Search bar--}}
                         <div class="search-container header-customize-item">
-                            <form id="content">
-                                <input type="text" name="input" class="input"/>
-                                <button type="reset" class="search"></button>
-                            </form>
+                            @include('partials/frontend/search-bar')
                         </div>
                         <div class="shopping-cart-wrapper header-customize-item no-price style-default">
                             <div class="widget_shopping_cart_content">

@@ -24,7 +24,11 @@
 <!-- Template CSS-->
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/main.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/home.css')}}">
+
 <link rel="stylesheet" type="text/css" href="{{asset('assets/web/css/custom.css')}}">
-<link rel="stylesheet" type="text/css" href="{{asset('assets/web/css/search-bar.css')}}">
+
+<link rel="stylesheet" type="text/css" href="{{asset('assets/web/css/algolia.css')}}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.6.0/dist/instantsearch.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.6.0/dist/instantsearch-theme-algolia.min.css">
 
 @yield('css')

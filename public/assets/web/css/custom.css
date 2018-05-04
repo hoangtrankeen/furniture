@@ -4,7 +4,7 @@ header.sn-header-style-1 .header-bottom .main-nav > .nav > li {
 }
 
 .header-right .header-right-box {
-    width: 400px;
+    width: 350px;
 }
 
 .header-customize-item {
@@ -19,6 +19,9 @@ header.sn-header-style-1 .header-bottom .main-nav > .nav > li {
     outline: none;
 }
 
-.header-top-search input{
-    padding: 5px;
-}
+/*.search-container{*/
+    /*float: left;*/
+/*}*/
+/*.header-right .header-customize-right > .shopping-cart-wrapper{*/
+    /*float: right;*/
+/*}*/
