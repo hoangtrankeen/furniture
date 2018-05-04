@@ -14,12 +14,12 @@
             </div>
             <div class="header-top-right">
                 <div class="header-top-div header-top-search">
-                    <input type="text" placeholder="Search Product..."/><a class="btn"><i class="fa fa-search"></i></a>
+                    <input type="text" placeholder="Tìm kiếm sản phẩm"/><a class="btn"><i class="fa fa-search"></i></a>
                 </div>
             </div>
         </div>
     </div><a href="#primary-menu"><i class="fa fa-bars"></i></a>
-    <div class="container">
+    <div class="container-fluid">
         <div class="header-bottom">
 
             <div class="main-nav-wrapper header-left">
@@ -100,6 +100,12 @@
             <div class="main-nav-wrapper header-right">
                 <div class="header-right-box">
                     <div class="header-customize header-customize-right">
+                        <div class="search-container header-customize-item">
+                            <form id="content">
+                                <input type="text" name="input" class="input"/>
+                                <button type="reset" class="search"></button>
+                            </form>
+                        </div>
                         <div class="shopping-cart-wrapper header-customize-item no-price style-default">
                             <div class="widget_shopping_cart_content">
                                 <div class="widget_shopping_cart_icon"><i class="wicon fa fa-cart-plus"></i><span class="total">0</span></div>
@@ -117,11 +123,11 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="my-wishlist header-customize-item">
-                            <div class="widget_shopping_wishlist_content">
-                                <div class="my-wishlist-wrapper"><a title="Wishlist" href="#" class="yolo-wishlist"><i class="wicon fa fa-heart-o"></i><span class="total">0</span></a></div>
-                            </div>
-                        </div>
+                        {{--<div class="my-wishlist header-customize-item">--}}
+                            {{--<div class="widget_shopping_wishlist_content">--}}
+                                {{--<div class="my-wishlist-wrapper"><a title="Wishlist" href="#" class="yolo-wishlist"><i class="wicon fa fa-heart-o"></i><span class="total">0</span></a></div>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
                     </div>
                 </div>
             </div>

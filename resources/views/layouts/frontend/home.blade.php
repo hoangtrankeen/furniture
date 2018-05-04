@@ -10,10 +10,23 @@
 
     @include('partials/frontend/header')
     <div id="example-wrapper">
-        @include('partials/frontend/home-slider')
+        @include('partials/frontend/block-home/home-slider')
+
+        @include('partials/frontend/block-home/featured-group')
+
+        @include('partials/frontend/block-home/product-list')
+
         @yield('content')
+
+        @include('partials/frontend/block-home/blog')
+
+        @include('partials/frontend/block-home/newsletter')
+
+        @include('partials/frontend/block-home/guarantee')
+
+        @include('partials/frontend/footer')
     </div>
-    @include('partials/frontend/footer')
+
 
 </div>
 <!-- .mv-site-->

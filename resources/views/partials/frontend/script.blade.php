@@ -18,4 +18,5 @@
 <script type="text/javascript" src="{{asset('assets/libs/prettyphoto-master/js/jquery.prettyPhoto.js')}}"></script>
 <script type="text/javascript" src="{{asset('assets/libs/slick-sider/slick.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('assets/js/min/main.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('assets/web/js/search-bar.js')}}"></script>
 @yield('javascript')

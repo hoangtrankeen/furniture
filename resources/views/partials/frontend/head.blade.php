@@ -25,5 +25,6 @@
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/main.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/home.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('assets/web/css/custom.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('assets/web/css/search-bar.css')}}">
 
 @yield('css')

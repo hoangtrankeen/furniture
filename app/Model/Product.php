@@ -2,10 +2,13 @@
 
 namespace App\Model;
 
+use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
+    use Searchable;
+
     protected $table = 'products';
 
     //path to save images

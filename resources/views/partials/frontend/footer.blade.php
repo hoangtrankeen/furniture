@@ -1,18 +1,18 @@
-<div class="section">
+<div class="section-no-margin">
     <footer class="footer footer-style-3">
-        <div class="slide-logo">
-            <div class="container">
-                <div data-number="5" data-margin="10" data-loop="yes" data-navcontrol="yes" class="sofani-owl-carousel">
-                    <div class="slide-logo-item"><a href="#"><img src="images/demo/slide-logo-1.png" alt="logo1"/></a></div>
-                    <div class="slide-logo-item"><a href="#"><img src="images/demo/slide-logo-2.png" alt="logo1"/></a></div>
-                    <div class="slide-logo-item"><a href="#"><img src="images/demo/slide-logo-3.png" alt="logo1"/></a></div>
-                    <div class="slide-logo-item"><a href="#"><img src="images/demo/slide-logo-4.png" alt="logo1"/></a></div>
-                    <div class="slide-logo-item"><a href="#"><img src="images/demo/slide-logo-5.png" alt="logo1"/></a></div>
-                    <div class="slide-logo-item"><a href="#"><img src="images/demo/slide-logo-3.png" alt="logo1"/></a></div>
-                    <div class="slide-logo-item"><a href="#"><img src="images/demo/slide-logo-5.png" alt="logo1"/></a></div>
-                </div>
-            </div>
-        </div>
+        {{--<div class="slide-logo">--}}
+            {{--<div class="container">--}}
+                {{--<div data-number="5" data-margin="10" data-loop="yes" data-navcontrol="yes" class="sofani-owl-carousel">--}}
+                    {{--<div class="slide-logo-item"><a href="#"><img src="images/demo/slide-logo-1.png" alt="logo1"/></a></div>--}}
+                    {{--<div class="slide-logo-item"><a href="#"><img src="images/demo/slide-logo-2.png" alt="logo1"/></a></div>--}}
+                    {{--<div class="slide-logo-item"><a href="#"><img src="images/demo/slide-logo-3.png" alt="logo1"/></a></div>--}}
+                    {{--<div class="slide-logo-item"><a href="#"><img src="images/demo/slide-logo-4.png" alt="logo1"/></a></div>--}}
+                    {{--<div class="slide-logo-item"><a href="#"><img src="images/demo/slide-logo-5.png" alt="logo1"/></a></div>--}}
+                    {{--<div class="slide-logo-item"><a href="#"><img src="images/demo/slide-logo-3.png" alt="logo1"/></a></div>--}}
+                    {{--<div class="slide-logo-item"><a href="#"><img src="images/demo/slide-logo-5.png" alt="logo1"/></a></div>--}}
+                {{--</div>--}}
+            {{--</div>--}}
+        {{--</div>--}}
         <div class="container">
             <div class="footer-top">
                 <div class="row">
@@ -61,3 +61,5 @@
         </div>
     </footer>
 </div>
+
+<!-- .mv-site-->
