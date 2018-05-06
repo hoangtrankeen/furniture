@@ -96,10 +96,10 @@
 <div class="click-back-top-body">
     <button type="button" class="sn-btn sn-btn-style-17 sn-back-to-top fixed-right-bottom"><i class="btn-icon fa fa-angle-up"></i></button>
 </div>
+
+@yield('modal')
+
 @include('partials/frontend/script')
-
-
-
 
 </body>
 </html>

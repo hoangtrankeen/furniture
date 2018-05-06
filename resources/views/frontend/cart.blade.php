@@ -9,13 +9,12 @@
 @section('page', 'cart')
 
 @section('breadcrumb')
-    <div class="breadcrumbs">
-        <div class="breadcrumbs-list">
-            <div class="page">Home</div>
-            <div class="page">Shopping Cart</div>
-        </div>
-    </div>
-    <h2 class="sub-page-name">Shopping Cart</h2>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+            <li class="breadcrumb-item"><a href="/cart">Giỏ hàng</a></li>
+        </ol>
+    </nav>
 @endsection
 
 @section('content')
@@ -26,18 +25,18 @@
         <form class="cart-form">
             <table>
                 <tr>
-                    <th>Product</th>
-                    <th>&#32;</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
-                    <th>Total</th>
+                    <th>Hình ảnh</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Giá</th>
+                    <th>Số lượng</th>
+                    <th>Tổng giá</th>
                     <th>&#32;</th>
                 </tr>
                 @foreach (Cart::content() as $item)
                 <tr>
-                    <td data-title="Product"><a href="#" class="image-product"><img src="{{asset(getOneProductImg($item->model->images))}}" alt="tab-1" width="180" height="220"/></a></td>
+                    <td data-title="Product"><a href="#" class="image-product"><img src="{{asset(getFeaturedImageProduct($item->model->image))}}" alt="tab-1" width="180" height="220"/></a></td>
                     <td data-title="Name"><a href="{{ route('catalog.product',['slug' => $item->model->slug]) }}" class="name-product">{{ $item->model->name }}</a></td>
-                    <td data-title="Price"><span class="price">{{ ($item->model->price) }}</span></td>
+                    <td data-title="Price"><span class="price">{{ presentPrice($item->model->price) }}</span></td>
                     <td data-title="Quantity">
                         <select class="quantity" data-id="{{ $item->rowId }}">
                             @for ($i = 1; $i < 5 + 1 ; $i++)
@@ -45,14 +44,10 @@
                             @endfor
                         </select>
                     </td>
-                    <td data-title="Total"><span class="total">{{ ($item->subtotal) }}</span></td>
+                    <td data-title="Total"><span class="total">{{ presentPrice($item->total) }}</span></td>
 
                     <td data-title="Remove">
-                        <form action="{{ route('cart.destroy', $item->rowId) }}" method="POST">
-                            {{ csrf_field() }}
-                            {{ method_field('DELETE') }}
-                            <button type="submit" class="cart-options"><i class="fa fa-times"></i></button>
-                        </form>
+                        <button type="button" class="cart-remove" data-value="{{$item->rowId}}"><i class="fa fa-trash"></i></button>
                     </td>
                 </tr>
                 @endforeach
@@ -110,5 +105,43 @@
                 })
             })
         })();
+    </script>
+
+@endsection
+
+@section('javascript')
+    <script>
+        $(document).ready(function () {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $(".cart-remove").on('click',function(e){
+                e.preventDefault();
+
+                var id = $(this).attr('data-value');
+                console.log(id);
+                $.ajax({
+                    type: "POST",
+                    url: window.location.origin +'/cart/remove/'+ id,
+                    dataType: 'json',
+                    data: {
+                        id:id,
+                        _method: 'DELETE'
+                    },
+                    success: function( data ) {
+                        console.log(data.message);
+                        location.reload();
+                    },
+
+                    error: function(xhr, textStatus, error){
+
+                    }
+                });
+
+            });
+        })
     </script>
 @endsection

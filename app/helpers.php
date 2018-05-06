@@ -2,7 +2,7 @@
 
 function presentPrice($price)
 {
-    return ( $price);
+    return number_format($price).' VNĐ';
 }
 
 function setActiveCategory($category, $output = 'active')
@@ -37,3 +37,13 @@ function presentDateFormat($date = '')
     return $date;
 }
 
+function getProductStatus($status)
+{
+    if($status === 1){
+        $status = 'Còn hàng';
+    }else{
+        $status = 'Hết hàng';
+    }
+
+    return $status;
+}

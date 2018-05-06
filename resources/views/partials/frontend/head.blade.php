@@ -3,6 +3,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
+<meta name="csrf-token" content="{{ csrf_token() }}">
 
 <!-- Favicon-->
 <link rel="shortcut icon" href="images/icon/favicon.png" type="image/x-icon">
@@ -25,10 +26,12 @@
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/main.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/home.css')}}">
 
+<!--Custom and overriding css-->
 <link rel="stylesheet" type="text/css" href="{{asset('assets/web/css/custom.css')}}">
 
-<link rel="stylesheet" type="text/css" href="{{asset('assets/web/css/algolia.css')}}">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.6.0/dist/instantsearch.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.6.0/dist/instantsearch-theme-algolia.min.css">
+<!-- Search bar -->
+<link rel="stylesheet" type="text/css" href="{{asset('assets/web/search-bar/css/search-bar.css')}}">
+
+
 
 @yield('css')

@@ -23,7 +23,7 @@ class ShopController extends Controller
 
     public function catalogCategory($slug)
     {
-
+        $category = Category::where('slug', $slug)->first();
         $products = Product::whereHas('categories', function($query) use($slug){
             $query->where('slug', $slug);
         })->paginate(9);
@@ -35,6 +35,7 @@ class ShopController extends Controller
         }
 
         $data['products'] = $products;
+        $data['category'] = $category;
         return view('frontend/shop', $data);
     }
 
@@ -57,24 +58,25 @@ class ShopController extends Controller
 
     public function search(Request $request)
     {
-        $request->validate([
-            'query' => 'required|min:3',
-        ]);
-
         $query = $request->input('query');
 
-        // $products = Product::where('name', 'like', "%$query%")
-        //                    ->orWhere('details', 'like', "%$query%")
-        //                    ->orWhere('description', 'like', "%$query%")
-        //                    ->paginate(10);
+        $products = Product::where('name', 'like', "%$query%")
+                            ->orWhere('sku', 'like', "%$query%")
+                            ->paginate(10);
 
-        $products = Product::search($query)->paginate(10);
+        $result = [];
 
-        return view('search-results')->with('products', $products);
+        foreach ($products as $product){
+            $result[] = [
+                'name' => $product->name,
+                'image' => getFeaturedImageProduct($product->image),
+                'final_price' => presentPrice(Product::getFinalPrice($product))
+            ];
+        }
+
+        return response()->json([
+            'products' => $result
+        ]);
     }
 
-    public function searchAlgolia()
-    {
-        return view('frontend/search-results-algolia');
-    }
 }

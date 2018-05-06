@@ -4,7 +4,7 @@ Author by: T_T
 Project:	Sofani
 Version:	1.1
 Last change:	17/11/16 [fixed Float bug, vf]
-Primary use:	Blog, Shop 
+Primary use:	Blog, Shop
 -------------------------------------------------------------------*/
 /*------------------------------------------------------------------------
 COMMON STYLING
@@ -1311,7 +1311,7 @@ body .sn-site .bg-f5-p-20 {
   padding: 15px;
   background: #ffffff;
 }
-/* 
+/*
  * team member
  */
 .yolo-teammember.teammember-carousel {
@@ -1957,7 +1957,7 @@ body .sn-site .bg-f5-p-20 {
 .yolo-testimonial.testimonial-carousel-2 .testimonial-control .testimonial-nav.nav_prev {
   left: 20px;
 }
-/* 
+/*
  * product masonry
  */
 .shortcode-product-wrap {
@@ -2366,7 +2366,7 @@ h3.sc-title {
     width: 100%;
   }
 }
-/* 
+/*
  * product list
  */
 .products-list .product-listing .product-style.list_style_1 .product-item-inner .product-info {
@@ -2546,7 +2546,7 @@ h3.sc-title {
 .products-in-category-tabs-wrapper .see-more-wrapper {
   display: none;
 }
-/* 
+/*
  * Single Product Shortcode
  */
 .shortcode-single-product-wrap .product-item-wrap {
@@ -6700,15 +6700,15 @@ a.btn:hover,
   margin: 70px 0;
 }
 .cart .cart-form tr {
-  border-bottom: 1px solid #eee;
+  border: 1px solid #eee;
 }
 .cart .cart-form tr td:last-child {
   border-left: 1px solid #eee;
   text-align: center;
 }
 .cart .cart-form th {
-  background-color: #ffdc73;
-  color: #fff;
+  /*background-color: #ffdc73;*/
+  /*color: #fff;*/
   letter-spacing: 0.5px;
   padding: 20px 10px;
   text-transform: uppercase;

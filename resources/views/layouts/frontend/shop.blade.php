@@ -11,28 +11,24 @@
 
     -->
 </head>
-<body class="product-page shop">
+<body class="product-page product-grid product-3-columns-width-sidebar">
 <div id="preloaderKDZ"></div>
 <div class="sn-site">
     {{--Header--}}
     @include('partials/frontend/header')
-    {{--<section>--}}
-        {{--<div class="banner-sub-page">--}}
-            {{--<div class="container">--}}
-                {{--@yield('breadcrumb')--}}
-            {{--</div>--}}
-        {{--</div>--}}
-    {{--</section>--}}
+
     <div class="section">
         <div class="products-in-category-tabs-wrapper container">
-            <div class="products-content">
-                <div class="woocommerce product-listing columns-4">
-                    @include('partials/frontend/tab')
-                    <div class="desc-review-content tab-content clearfix">
-                        <div id="1a" class="tab-pane active">
-                            @yield('content')
-                        </div>
-                    </div><a href="#" class="load-more-shop">Load more</a>
+            <div class="breadcrumb-wrapper">
+                @yield('breadcrumb')
+            </div>
+
+            <div class="row">
+                <div class="col-md-3">
+                   @include('partials/frontend/block-shop/left-nav')
+                </div>
+                <div class="col-md-9">
+                   @yield('content')
                 </div>
             </div>
         </div>
@@ -50,9 +46,10 @@
     <button type="button" class="sn-btn sn-btn-style-17 sn-back-to-top fixed-right-bottom"><i class="btn-icon fa fa-angle-up"></i></button>
 </div>
 
+@yield('modal')
+
 @include('partials/frontend/script')
 
 
-@yield('javascript')
 </body>
 </html>

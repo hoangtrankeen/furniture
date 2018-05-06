@@ -10,6 +10,10 @@
 
 @endsection
 
-@section('js')
-
+@section('javascript')
+    <script type="text/javascript">
+        $("#carousel").owlCarousel({
+            lazyLoad:true
+        })
+    </script>
 @endsection

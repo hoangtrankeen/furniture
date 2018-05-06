@@ -110,7 +110,7 @@
                             <div class="col-xs-1">
                                 <select class="form-control" id="featured" name="featured">
                                     <option value="0" {{$product->featured == 0 ? 'selected' : ''}} >No</option>
-                                    <option value="0" {{$product->featured == 1 ? 'selected' : ''}} >Yes</option>
+                                    <option value="1" {{$product->featured == 1 ? 'selected' : ''}} >Yes</option>
                                 </select>
                             </div>
                         </div>
@@ -119,7 +119,7 @@
                             <div class="col-xs-1">
                                 <select class="form-control" id="visibility" name="visibility">
                                     <option value="0" {{$product->visibility == 0 ? 'selected' : ''}} >No</option>
-                                    <option value="0" {{$product->visibility == 1 ? 'selected' : ''}} >Yes</option>
+                                    <option value="1" {{$product->visibility == 1 ? 'selected' : ''}} >Yes</option>
                                 </select>
                             </div>
                         </div>
@@ -128,7 +128,7 @@
                             <div class="col-xs-1">
                                 <select class="form-control" id="active" name="active">
                                     <option value="0" {{$product->active == 0 ? 'selected' : ''}} >No</option>
-                                    <option value="0" {{$product->active == 1 ? 'selected' : ''}} >Yes</option>
+                                    <option value="1" {{$product->active == 1 ? 'selected' : ''}} >Yes</option>
                                 </select>
                             </div>
                         </div>
@@ -137,7 +137,7 @@
                             <div class="col-xs-1">
                                 <select class="form-control" id="in_stock" name="in_stock">
                                     <option value="0" {{$product->in_stock == 0 ? 'selected' : ''}} >No</option>
-                                    <option value="0" {{$product->in_stock == 1 ? 'selected' : ''}} >Yes</option>
+                                    <option value="1" {{$product->in_stock == 1 ? 'selected' : ''}} >Yes</option>
                                 </select>
                             </div>
                         </div>

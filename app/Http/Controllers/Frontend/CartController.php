@@ -76,11 +76,13 @@ class CartController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroyCartItem($id)
     {
         Cart::remove($id);
 
-        return back()->with('success_message', 'Item has been removed!');
+        return response()->json([
+            'message' => 'Giỏ hàng đã được cập nhật'
+        ]);
     }
 
     /**
@@ -107,5 +109,36 @@ class CartController extends Controller
             ->associate('App\Model\Product');
 
         return redirect()->route('cart.index')->with('success_message', 'Item has been Saved For Later!');
+    }
+
+    public function addCartShopPage(Request $request)
+    {
+        if ($request->isMethod('post')){
+
+            $product = Product::where('id',$request->id)->first();
+
+            $duplicates = Cart::search(function ($cartItem, $rowId) use ($request) {
+                return $cartItem->id === $request->id;
+            });
+
+            if ($duplicates->isNotEmpty()) {
+                $message = $product->name.' đã được thêm vào giỏ hàng trước đó';
+            }else{
+                Cart::add($request->id, $request->name, 1, $request->final_price)
+                    ->associate('App\Model\Product');
+
+                $message = 'Bạn đã thêm '.$product->name.' (sl: 1) vào giỏ hàng';
+            }
+
+            return response()->json([
+                    'message' => $message,
+                    'count' => Cart::count(),
+                    'subtotal' => presentPrice(Cart::subtotal()),
+                    'image' => url(getFeaturedImageProduct($product->image)),
+                ]);
+
+        }else{
+            return response()->json(['message' => 'Không thể thêm sản phẩm vào giỏ hàng']);
+        }
     }
 }

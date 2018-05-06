@@ -2,6 +2,7 @@
 
 <!-- Vendor jQuery-->
 <script type="text/javascript" src="{{asset('assets/libs/jquery/jquery-2.1.4.min.js')}}"></script>
+
 <script type="text/javascript" src="{{asset('assets/libs/bootstrap/js/bootstrap.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('assets/libs/animate/wow.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('assets/libs/owl.carousel.min/owl.carousel.min.js')}}"></script>
@@ -19,10 +20,7 @@
 <script type="text/javascript" src="{{asset('assets/libs/slick-sider/slick.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('assets/js/min/main.min.js')}}"></script>
 
-<!-- Include AlgoliaSearch JS Client and autocomplete.js library -->
-<script type="text/javascript" src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.6.0"></script>
-<script type="text/javascript" src="{{asset('assets/web/js/algolia.js')}}"></script>
+<!-- Search bar -->
+<script type="text/javascript" src="{{asset('assets/web/search-bar/js/search-bar.js')}}"></script>
 
 @yield('javascript')

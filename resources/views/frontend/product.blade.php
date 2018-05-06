@@ -3,19 +3,23 @@
 @section('title', 'Products')
 
 @section('css')
-
+    <style>
+        .owl-carousel .owl-item img{
+            width: 80%;
+        }
+    </style>
 @endsection
 
 @section('page', 'single-product')
 
 @section('breadcrumb')
-    <div class="breadcrumbs">
-        <div class="breadcrumbs-list">
-            <div class="page">Home</div>
-            <div class="page">Shop</div>
-        </div>
-    </div>
-    <h2 class="sub-page-name">Shop</h2>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+            <li class="breadcrumb-item"><a href="/">Library</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Data</li>
+        </ol>
+    </nav>
 @endsection
 
 @section('content')
@@ -44,7 +48,7 @@
                     <div class="woocommerce-product-rating"></div>
                     <div class="rate-price">
                         <div class="rate"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i></div><a href="#" class="woocommerce-review-link">(1 review)</a>
-                        <p class="price"><span>{{ $product->final_price }}</span></p>
+                        <p class="price"><span>{{ presentPrice($product->final_price) }}</span></p>
                     </div>
                     <div class="product-single-short-description">
                         <p>{{ $product->details }}</p>
@@ -58,14 +62,12 @@
                         <input type="hidden" name="id" value="{{ $product->id }}">
                         <input type="hidden" name="name" value="{{ $product->name }}">
                         <input type="hidden" name="final_price" value="{{ $product->final_price }}">
-                        <input type="hidden" name="collect_img" value="{{ $product->collect_img[0] }}">
                         {{ csrf_field() }}
-                        <button type="submit" class="single_add_to_cart_button button alt">Add to cart</button>
+                        <button type="submit" class="single_add_to_cart_button button alt">Thêm vào giỏ hàng</button>
                     </form>
                     <div class="product_meta"><span class="sku_wrapper">
-                    <label>SKU:</label><span class="sku">SE-26</span>.</span><span class="product-stock-status-wrapper">
-                    <label>Availability:</label><span class="product-stock-status in-stock">In stock</span></span><span class="posted_in">
-                    <label>Category:</label><a href="#">Essential</a>.</span></div>
+                    <label>Mã sản phẩm:</label><span class="sku">{{$product->sku}}</span>.</span><span class="product-stock-status-wrapper">
+                    <label>Tình trạng:</label><span class="product-stock-status in-stock">{{getProductStatus($product->in_stock)}}</span></span><span class="posted_in">
                     <div class="social-share-wrap">
                         <label>Follow us:</label>
                         <ul class="social-share">
@@ -157,4 +159,14 @@
     </div>
 </section>
 
+@endsection
+
+
+@section('javascript')
+    <script type="text/javascript">
+        $("#carousel").owlCarousel({
+            lazyLoad:true,
+
+        })
+    </script>
 @endsection

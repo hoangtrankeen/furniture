@@ -17,13 +17,9 @@
 
     @include('partials/frontend/header')
 
-    {{--<section>--}}
-        {{--<div class="banner-sub-page">--}}
-            {{--<div class="container">--}}
-                {{--@yield('breadcrumb')--}}
-            {{--</div>--}}
-        {{--</div>--}}
-    {{--</section>--}}
+    <div class="container breadcrumb-wrapper" >
+        @yield('breadcrumb')
+    </div>
 
     @yield('content')
 
@@ -41,6 +37,7 @@
     <button type="button" class="sn-btn sn-btn-style-17 sn-back-to-top fixed-right-bottom"><i class="btn-icon fa fa-angle-up"></i></button>
 </div>
 
+@yield('modal')
 @include('partials/frontend/script')
 
 </body>

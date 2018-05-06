@@ -101,12 +101,15 @@
                 <div class="header-right-box">
                     <div class="header-customize header-customize-right">
                         {{--Search bar--}}
-                        <div class="search-container header-customize-item">
-                            @include('partials/frontend/search-bar')
-                        </div>
+
+                        @include('partials/frontend/search-bar')
+
                         <div class="shopping-cart-wrapper header-customize-item no-price style-default">
                             <div class="widget_shopping_cart_content">
-                                <div class="widget_shopping_cart_icon"><i class="wicon fa fa-cart-plus"></i><span class="total">0</span></div>
+                                <div class="widget_shopping_cart_icon">
+                                    <i class="wicon fa fa-cart-plus"></i>
+                                    <span class="total" id="total-in-cart">{{Cart::count()}}</span>
+                                </div>
                                 <div class="sub-total-text"><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>0.00</span></div>
                                 <div class="cart_list_wrapper">
                                     <div class="scroll-wrapper cart_list product_list_widget scrollbar-inner">
