@@ -87,6 +87,11 @@
     width: 80%;
 }
 
+.modal-custom .modal-content-right .cart-info{
+    text-align: center;
+
+}
+
 .modal-custom .modal-content-right{
     width: 60%;
     float: right;

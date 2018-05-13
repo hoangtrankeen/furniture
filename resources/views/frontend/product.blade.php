@@ -3,6 +3,7 @@
 @section('title', 'Products')
 
 @section('css')
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/web/modal/mymodal.css')}}">
     <style>
         .owl-carousel .owl-item img{
             width: 80%;
@@ -16,8 +17,11 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
-            <li class="breadcrumb-item"><a href="/">Library</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Data</li>
+            @if(Session::has('category'))
+                @php $bread =  Session::get('category');@endphp
+                <li class="breadcrumb-item"><a href="{{route('catalog.category', $bread['slug'])}}">{{ $bread['name']}}</a></li>
+            @endif
+            <li class="breadcrumb-item active" aria-current="page">{{$product->name}}</li>
         </ol>
     </nav>
 @endsection
@@ -53,7 +57,7 @@
                     <div class="product-single-short-description">
                         <p>{{ $product->details }}</p>
                     </div>
-                    <form action="{{ route('cart.store') }}" method="post" enctype="multipart/form-data" class="cart">
+                    <form id="form-cart" action="{{ route('cart.store') }}" method="post" enctype="multipart/form-data" class="cart">
                         <div class="quantity">
                             <div class="quantity-inner">
                                 <input step="1" min="1" name="quantity" value="1" title="Qty" size="4" type="number" class="input-text qty text"/>
@@ -65,9 +69,20 @@
                         {{ csrf_field() }}
                         <button type="submit" class="single_add_to_cart_button button alt">Thêm vào giỏ hàng</button>
                     </form>
-                    <div class="product_meta"><span class="sku_wrapper">
-                    <label>Mã sản phẩm:</label><span class="sku">{{$product->sku}}</span>.</span><span class="product-stock-status-wrapper">
-                    <label>Tình trạng:</label><span class="product-stock-status in-stock">{{getProductStatus($product->in_stock)}}</span></span><span class="posted_in">
+                    <div class="product_meta">
+                        <span class="sku_wrapper">
+                            <label>Mã sản phẩm:</label>
+                            <span class="sku">{{$product->sku}}</span>
+                        </span>
+                        <span class="product-stock-status-wrapper">
+                            <label>Tình trạng:</label>
+                            <span class="product-stock-status in-stock">{{getProductStatus($product->in_stock)}}</span>
+                        </span>
+                        @foreach($product->attributeValue as $attr)
+                            <span class="posted_in">
+                                <label> {{$attr->attribute->name}}</label><span>{{$attr->name}}</span>
+                             </span>
+                        @endforeach
                     <div class="social-share-wrap">
                         <label>Follow us:</label>
                         <ul class="social-share">
@@ -91,8 +106,8 @@
                 <div class="col-md-2"></div>
                 <div class="col-md-8">
                     <ul class="nav nav-pills">
-                        <li class="active"><a href="#1a" data-toggle="tab">Description</a></li>
-                        <li><a href="#2a" data-toggle="tab">Reviews (1)</a></li>
+                        <li class="active"><a href="#1a" data-toggle="tab">Chi tiết sản phẩm</a></li>
+                        <li><a href="#2a" data-toggle="tab">Đánh giá</a></li>
                     </ul>
                     <div class="desc-review-content tab-content clearfix">
                         <div id="1a" class="tab-pane active">
@@ -161,12 +176,85 @@
 
 @endsection
 
+@section('modal')
+    <!-- The Modal -->
+    <div id="myModal" class="modal-custom">
+        <!-- Modal content -->
+        <div class="modal-content modal-small ">
+            <div class="modal-header">
+                <span class="close">&times;</span>
+                <p id="header-message"></p>
+            </div>
+            <div class="modal-body clearfix">
+                <div class="modal-content-left">
+                    <img src="" alt="" class="to-cart-thumb">
+                </div>
+                <div class="modal-content-right">
+                    <div class="cart-info">
+                        <p><span>Giỏ hàng</span> <span id="count"></span></p>
+                        <p><span>Tổng giá</span> <span id="subtotal"></span></p>
+                    </div>
+                    <div class="product-action">
+                        <a href="{{url('cart')}}" class="btn-cart btn-border">Xem giỏ hàng</a>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <div class="product-action">
+                    <a href="{{route('checkout')}}" class="btn-checkout btn-full-width">Thanh toán</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+@endsection
+
 
 @section('javascript')
-    <script type="text/javascript">
-        $("#carousel").owlCarousel({
-            lazyLoad:true,
+    <!-- Modal-->
+    <script type="text/javascript" src="{{asset('assets/web/modal/mymodal.js')}}"></script>
 
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $("#form-cart").on('submit',function(e){
+                e.preventDefault();
+                var values = $(this).serialize();
+                $.ajax({
+                    type: "POST",
+                    url: window.location.origin+'/add-to-cart',
+                    dataType: 'json',
+                    data: values,
+                    success: function( data ) {
+                        console.log(data.message);
+                        console.log(data.count);
+                        $('#total-in-cart').html(data.count);
+                        openModal();
+                        importModalData(data.message,
+                            data.image,
+                            data.subtotal,
+                            data.count
+                        );
+
+
+                    },
+
+                    error: function(xhr, textStatus, error){
+                        console.log(xhr.statusText);
+                        console.log(textStatus);
+                        console.log(error);
+                    }
+                });
+
+            });
         })
     </script>
 @endsection

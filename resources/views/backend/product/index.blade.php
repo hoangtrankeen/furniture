@@ -47,8 +47,8 @@
 					<tr>
 						<th>Name</th>
 						<th>Slug</th>
-						<th>Price</th>
 						<th>Type</th>
+						<th>Price</th>
 						<th>Featured</th>
 						<th>Created date</th>
 						<th>Action</th>
@@ -58,8 +58,8 @@
 					<tr>
 						<th>Name</th>
 						<th>Slug</th>
-						<th>Price</th>
 						<th>Type</th>
+						<th>Price</th>
 						<th>Featured</th>
 						<th>Created date</th>
 						<th>Action</th>
@@ -71,7 +71,7 @@
 						<td><a href="{{route('product.edit', $product->id )}}">{{$product->name}}</a></td>
 						<td>{{$product->slug}}</td>
 						<td>{{$product->type_id}}</td>
-						<td>{{$product->price}}</td>
+						<td>{{presentPrice($product->price)}}</td>
 						<td>{{$product->featured}}</td>
 						<td>{{$product->created_at}}</td>
 						<td>

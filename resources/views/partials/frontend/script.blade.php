@@ -18,7 +18,7 @@
 <script type="text/javascript" src="{{asset('assets/libs/mansory/mansory.js')}}"></script>
 <script type="text/javascript" src="{{asset('assets/libs/prettyphoto-master/js/jquery.prettyPhoto.js')}}"></script>
 <script type="text/javascript" src="{{asset('assets/libs/slick-sider/slick.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('assets/js/min/main.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('assets/js/main.js')}}"></script>
 
 <!-- Search bar -->
 <script type="text/javascript" src="{{asset('assets/web/search-bar/js/search-bar.js')}}"></script>

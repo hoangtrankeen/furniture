@@ -54,9 +54,9 @@
             </table>
             <div class="button-cart">
                 <div class="button-cart-left">
-                    <input type="text" placeholder="Coupon code"/><a href="#" class="coupon">Apply Coupon</a>
+                    <input type="text" placeholder="Nhập mã giảm giá"/><a href="/cart" class="coupon">Áp dụng mã giảm giá</a>
                 </div>
-                <div class="button-cart-right"><a href="#" class="update-cart">Update Cart</a><a href="{{route('checkout')}}" class="process">Proceed to Checkout</a></div>
+                <div class="button-cart-right"><a href="#" class="update-cart">Cập nhật giỏ hàng</a><a href="{{route('checkout')}}" class="process">Thanh toán</a></div>
             </div>
         </form>
         <div class="row">

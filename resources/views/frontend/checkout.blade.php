@@ -36,173 +36,215 @@
 
 @section('page', 'checkout')
 
-@section('content')
+@section('breadcrumb')
 
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+            <li class="breadcrumb-item"><a href="/cart">Thanh toán</a></li>
+        </ol>
+    </nav>
+@endsection
+
+@section('content')
+    <div class="container">
+        @if (session()->has('success'))
+            <div class="alert alert-success">
+                {{ session()->get('success') }}
+            </div>
+        @endif
+
+        @if(count($errors) > 0)
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{!! $error !!}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+    </div>
     <section>
         <div class="container">
-            @if (session()->has('success_message'))
-                <div class="spacer"></div>
-                <div class="alert alert-success">
-                    {{ session()->get('success_message') }}
+            <!--<div class="form-customers">
+                <h3 class="check-out-title">Returning customers?</h3>
+                <div class="woocommerce-checkout-info">Returning customer?
+                    <div class="showlogin">Click here to login</div>
                 </div>
-            @endif
-
-            @if(count($errors) > 0)
-                <div class="spacer"></div>
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{!! $error !!}</li>
-                        @endforeach
-                    </ul>
+                <form class="login">
+                    <p>If you have shopped with us before, please enter your details in the boxes below. If you are a new customer please proceed to the Billing & Shipping section.</p>
+                    <p>
+                        <label>Username or email <span class="required">*</span></label>
+                        <input id="username" name="username" type="text"/>
+                    </p>
+                    <p>
+                        <label>Password   <span class="required">*</span></label>
+                        <input id="password" name="password" type="password"/>
+                    </p>
+                    <div class="clear"></div>
+                    <p>
+                        <input name="login" value="Login" type="submit" class="button"/>
+                        <label class="inline">
+                            <input id="rememberme" name="rememberme" value="forever" type="checkbox"/> Remember me
+                        </label>
+                    </p>
+                    <p class="lost_password"><a href="#">Lost your password?</a></p>
+                    <div class="clear"></div>
+                </form>
+                <div class="woocommerce-checkout-info">Have a coupon?
+                    <div class="showcoupon">Click here to enter your code</div>
                 </div>
-            @endif
-                <h1 class="checkout-heading stylish-heading">Checkout</h1>
-                <div class="checkout-section">
-                    <div class="col-md-6">
-                        <form action="{{ route('checkout.store') }}" method="POST" id="payment-form">
-                            {{ csrf_field() }}
-                            <h2>Billing Details</h2>
+                <form class="checkout_coupon">
+                    <input type="text"/>
+                    <p><a href="#" class="btn">Apply Coupon</a></p>
+                </form>
+            </div>-->
+            <form class="checkout" action="{{route('checkout')}}" method="post"  id="payment-form">
+                {{csrf_field()}}
+                <div id="customer_details" class="col2-set row">
+                    <div class="col-1 col-md-6">
+                        <div class="woocommerce-billing-fields">
+                            <h3>Thông tin hóa đơn</h3>
+                            <p>
+                                <label>Tên <abbr title="required" class="required">*</abbr></label>
+                                <input id="name" name="name" placeholder="" autocomplete="family-name" value="" type="text"/>
+                            </p>
 
-                            <div class="form-group">
-                                <label for="email">Email Address</label>
-                                @if (auth()->user())
-                                    <input type="email" class="form-control" id="email" name="email" value="{{ auth()->user()->email }}" readonly>
-                                @else
-                                    <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}" required>
-                                @endif
-                            </div>
-                            <div class="form-group">
-                                <label for="name">Name</label>
-                                <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="address">Address</label>
-                                <input type="text" class="form-control" id="address" name="address" value="{{ old('address') }}" required>
-                            </div>
-
-                            <div class="half-form">
-                                <div class="form-group">
-                                    <label for="city">City</label>
-                                    <input type="text" class="form-control" id="city" name="city" value="{{ old('city') }}" required>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p>
+                                        <label>Email <abbr title="required" class="required">*</abbr></label>
+                                        @if (auth()->user())
+                                            <input type="email" name="email" id="email" value="{{ auth()->user()->email }}" readonly>
+                                        @else
+                                            <input type="email"  name="email" id="email" value="{{ old('email') }}" required>
+                                        @endif
+                                    </p>
                                 </div>
-                                <div class="form-group">
-                                    <label for="province">Province</label>
-                                    <input type="text" class="form-control" id="province" name="province" value="{{ old('province') }}" required>
+                                <div class="col-md-6">
+                                    <p>
+                                        <label>Số điện thoại <abbr title="required" class="required">*</abbr></label>
+                                        <input type="tel" name="phone" id="phone"/>
+                                    </p>
                                 </div>
-                            </div> <!-- end half-form -->
-
-                            <div class="half-form">
-                                <div class="form-group">
-                                    <label for="postalcode">Postal Code</label>
-                                    <input type="text" class="form-control" id="postalcode" name="postalcode" value="{{ old('postalcode') }}" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="phone">Phone</label>
-                                    <input type="text" class="form-control" id="phone" name="phone" value="{{ old('phone') }}" required>
-                                </div>
-                            </div> <!-- end half-form -->
-
-                            <div class="spacer"></div>
-
-                            <h2>Payment Details</h2>
-
-                            <div class="form-group">
-                                <label for="name_on_card">Name on Card</label>
-                                <input type="text" class="form-control" id="name_on_card" name="name_on_card" value="">
                             </div>
-
-                            <div class="form-group">
-                                <label for="card-element">
-                                    Credit or debit card
-                                </label>
-                                <div id="card-element">
-                                    <!-- a Stripe Element will be inserted here. -->
+                            <p>
+                                <label>Địa chỉ <abbr title="required" class="required">*</abbr></label>
+                                <input type="text" name="address" id="address">
+                            </p>
+                            <p>
+                                <label>Thành phố <abbr title="required" class="required">*</abbr></label>
+                                <input type="text" name="city" id="city"/>
+                            </p>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p>
+                                        <label>Huyện / Quận</label>
+                                        <input type="text" name="province" id="province">
+                                    </p>
                                 </div>
-
-                                <!-- Used to display form errors -->
-                                <div id="card-errors" role="alert"></div>
+                                <div class="col-md-6">
+                                    <p>
+                                        <label>Postcode / ZIP</label>
+                                        <input type="text" name="postalcode" id="postalcode" />
+                                    </p>
+                                </div>
                             </div>
-                            <div class="spacer"></div>
-
-                            <button type="submit" id="complete-order" class="button-primary full-width">Complete Order</button>
-                        </form>
+                            {{--<p class="create-account woocommerce-validated">--}}
+                                {{--<input type="checkbox" id="createaccount"/>--}}
+                                {{--<label class="checkbox">Create an account?</label>--}}
+                            {{--</p>--}}
+                            {{--<div class="create-account">--}}
+                                {{--<p>Create an account by entering the information below. If you are a returning customer please login at the top of the page.</p>--}}
+                                {{--<p>--}}
+                                    {{--<label>Account password <abbr title="required" class="required">*</abbr></label>--}}
+                                    {{--<input type="password"/>--}}
+                                {{--</p>--}}
+                                {{--<div class="clear"></div>--}}
+                            {{--</div>--}}
+                        </div>
                     </div>
+                    <div class="col-2 col-md-6">
+                        <div class="woocommerce-shipping-fields">
+                            <h3>Order của bạn</h3>
+                            <div id="order_review" class="woocommerce-checkout-review-order">
+                                <table class="shop_table woocommerce-checkout-review-order-table">
+                                    <thead>
+                                    <tr>
+                                        <th class="product-name">Sản phẩm</th>
+                                        <th class="product-total">Tổng tiền</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach (Cart::content() as $item)
+                                        <tr class="cart_item">
+                                            <td class="product-name">{{$item->model->name}}<strong class="product-quantity">× {{$item->qty}}</strong></td>
+                                            <td class="product-total"><span class="woocommerce-Price-amount amount">{{presentPrice($item->price)}}</span></td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                    <tfoot>
+                                    {{--<tr class="cart-subtotal">--}}
+                                        {{--<th>Subtotal</th>--}}
+                                        {{--<td><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>890.00</span></td>--}}
+                                    {{--</tr>--}}
+                                    <tr class="order-total">
+                                        <th>Tổng tiền</th>
+                                        <td><strong><span class="woocommerce-Price-amount amount">{{presentPrice(Cart::total())}}</span></strong></td>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                                <div id="payment" class="woocommerce-checkout-payment">
+                                    <ul class="wc_payment_methods payment_methods methods">
+                                        <li class="payment_method_cheque">
+                                            <div class="payment_box_title active">
+                                                <input id="payment_method_cheque" name="payment_method" value="cheque" checked="checked" data-order_button_text="" type="radio" class="input-radio"/>
+                                                <label>Thanh toán sau</label>
+                                            </div>
+                                            <div class="payment_box payment_method_cheque">
+                                            </div>
+                                        </li>
+                                        <li class="payment_method_paypal">
+                                            <div class="payment_box_title">
+                                                <input id="payment_method_paypal" name="payment_method" value="paypal" data-order_button_text="Proceed to PayPal" type="radio" class="input-radio"/>
+                                                <label>Thanh toán với Stripe <img src="{{asset('assets/images/logo/logo-stripe.png')}}" alt="Stripe Acceptance Mark"/><a href="#" title="Stripe là gì ?" class="about_paypal">Stripe là gì ?</a></label>
+                                            </div>
 
+                                            <div class="payment_box payment_method_paypal">
+                                                <h3>Payment Details</h3>
 
+                                                <div class="form-group">
+                                                    <label for="name_on_card">Name on Card</label>
+                                                    <input type="text" class="form-control" id="name_on_card" name="name_on_card" value="">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="card-element">
+                                                        Credit or debit card
+                                                    </label>
+                                                    <div id="card-element">
+                                                        <!-- a Stripe Element will be inserted here. -->
+                                                    </div>
 
-                    <div class="checkout-table-container col-md-4 pull-right">
-                        <h2>Your Order</h2>
-
-                        <div class="checkout-table">
-                            @foreach (Cart::content() as $item)
-                                <div class="checkout-table-row">
-                                    <div class="checkout-table-row-left">
-                                        <img src="{{getOneProductImg($item->model->images) }}" alt="item" class="checkout-table-img">
-                                        <div class="checkout-item-details">
-                                            <div class="checkout-table-item">{{ $item->model->name }}</div>
-                                            <div class="checkout-table-description">{{ $item->model->details }}</div>
-                                            <div class="checkout-table-price">{{ $item->model->presentPrice() }}</div>
-                                        </div>
-                                    </div> <!-- end checkout-table -->
-
-                                    <div class="checkout-table-row-right">
-                                        <div class="checkout-table-quantity">{{ $item->qty }}</div>
+                                                    <!-- Used to display form errors -->
+                                                    <div id="card-errors" role="alert"></div>
+                                                </div>
+                                                <div class="spacer"></div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <div class="place-order">
+                                        <noscript>Trong trường hợp trình duyệt của bạn không hỗ trợ Javascript, hoặc nó bị tắt đi, vui lòng bấm <em>nút Cập nhật tổng giá</em> trước khi đặt hàng. Điều đó đảm bảo rằng đó là giá cuối cùng bạn muốn thanh toán<br/><input type="submit" class="button alt" name="woocommerce_checkout_update_totals" value="Update totals" /></noscript>
+                                        <input id="place_order" type="submit" class="button alt"/>
                                     </div>
-                                </div> <!-- end checkout-table-row -->
-                            @endforeach
-
-                        </div> <!-- end checkout-table -->
-
-                        <div class="checkout-totals">
-                            <div class="checkout-totals-left">
-                                Subtotal <br>
-                                @if (session()->has('coupon'))
-                                    Discount ({{ session()->get('coupon')['name'] }}) :
-                                    <form action="{{ route('coupon.destroy') }}" method="POST" style="display:inline">
-                                        {{ csrf_field() }}
-                                        {{ method_field('delete') }}
-                                        <button type="submit" style="font-size:14px">Remove</button>
-                                    </form>
-                                    <br>
-                                    <hr>
-                                    New Subtotal <br>
-                                @endif
-                                Tax (13%)<br>
-                                <span class="checkout-totals-total">Total</span>
-
+                                </div>
                             </div>
-
-                            <div class="checkout-totals-right">
-                                {{--{{ presentPrice(Cart::subtotal()) }} <br>--}}
-                                {{--@if (session()->has('coupon'))--}}
-                                    {{---{{ presentPrice($discount) }} <br>--}}
-                                    {{--<hr>--}}
-                                    {{--{{ presentPrice($newSubtotal) }} <br>--}}
-                                {{--@endif--}}
-                                {{--{{ presentPrice($newTax) }} <br>--}}
-                                {{--<span class="checkout-totals-total">{{ presentPrice($newTotal) }}</span>--}}
-
-                            </div>
-                        </div> <!-- end checkout-totals -->
-
-                        @if (! session()->has('coupon'))
-
-                            <a href="#" class="have-code">Have a Code?</a>
-
-                            <div class="have-code-container">
-                                <form action="" method="POST">
-                                    {{ csrf_field() }}
-                                    <input type="text" name="coupon_code" id="coupon_code">
-                                    <button type="submit" class="button button-plain">Apply</button>
-                                </form>
-                            </div> <!-- end have-code-container -->
-                        @endif
+                        </div>
 
                     </div>
+                </div>
 
-                </div> <!-- end checkout-section -->
-            </div>
+            </form>
+        </div>
     </section>
 
 @endsection
@@ -260,7 +302,7 @@
                 event.preventDefault();
 
                 // Disable the submit button to prevent repeated clicks
-                document.getElementById('complete-order').disabled = true;
+                document.getElementById('place_order').disabled = true;
 
                 var options = {
                     name: document.getElementById('name_on_card').value,
@@ -277,7 +319,7 @@
                         errorElement.textContent = result.error.message;
 
                         // Enable the submit button
-                        document.getElementById('complete-order').disabled = false;
+                        document.getElementById('place_order').disabled = false;
                     } else {
                         // Send the token to your server
                         stripeTokenHandler(result.token);

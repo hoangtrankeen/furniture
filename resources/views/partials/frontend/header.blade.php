@@ -86,13 +86,13 @@
                     <div class="header-customize-item canvas-menu-toggle-wrapper">
                         <div class="canvas-menu-toggle"><i class="fa fa-bars"></i></div>
                     </div>
-                    <ul class="header-customize-item header-social-profile-wrapper">
-                        <li><a href="#" target="_blank"><i class="fa fa-facebook"></i></a></li>
-                        <li><a href="#" target="_blank"><i class="fa fa-skype"></i></a></li>
-                        <li><a href="#" target="_blank"><i class="fa fa-youtube"></i></a></li>
-                        <li><a href="#" target="_blank"><i class="fa fa-twitter"></i></a></li>
-                        <li><a href="#" target="_blank"><i class="fa fa-dribbble"></i></a></li>
-                    </ul>
+                    {{--<ul class="header-customize-item header-social-profile-wrapper">--}}
+                        {{--<li><a href="#" target="_blank"><i class="fa fa-facebook"></i></a></li>--}}
+                        {{--<li><a href="#" target="_blank"><i class="fa fa-skype"></i></a></li>--}}
+                        {{--<li><a href="#" target="_blank"><i class="fa fa-youtube"></i></a></li>--}}
+                        {{--<li><a href="#" target="_blank"><i class="fa fa-twitter"></i></a></li>--}}
+                        {{--<li><a href="#" target="_blank"><i class="fa fa-dribbble"></i></a></li>--}}
+                    {{--</ul>--}}
                 </nav>
                 <!-- .header-main-nav-->
             </div>
@@ -106,12 +106,13 @@
 
                         <div class="shopping-cart-wrapper header-customize-item no-price style-default">
                             <div class="widget_shopping_cart_content">
-                                <div class="widget_shopping_cart_icon">
+                                <div class="widget_shopping_cart_icon canvas-menu-toggle">
                                     <i class="wicon fa fa-cart-plus"></i>
                                     <span class="total" id="total-in-cart">{{Cart::count()}}</span>
                                 </div>
+
                                 <div class="sub-total-text"><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>0.00</span></div>
-                                <div class="cart_list_wrapper">
+                                <!--<div class="cart_list_wrapper">
                                     <div class="scroll-wrapper cart_list product_list_widget scrollbar-inner">
                                         <ul class="cart_list product_list_widget scrollbar-inner scroll-content">
                                             <li class="empty">
@@ -120,8 +121,8 @@
                                             </li>
                                         </ul>
                                     </div>
-                                    <!-- end product list-->
-                                </div>
+
+                                </div>-->
                             </div>
                         </div>
                         {{--<div class="my-wishlist header-customize-item">--}}
@@ -132,38 +133,35 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
+
     <nav data-ps-id="3859a354-888f-fe67-254f-cd059357f1c2" class="yolo-canvas-menu-wrapper dark ps-container"><a href="#" class="yolo-canvas-menu-close"><i class="fa fa-close"></i></a>
         <div class="yolo-canvas-menu-inner sidebar">
+            <h4 class="title-header"><i class="wicon fa fa-cart-plus"></i> Giỏ hàng <span>({{Cart::count()}})</span></h4>
+            <hr>
             <aside id="text-5" class="widget widget_text">
-                <div class="textwidget">
-                    <div class="about-us-widget text-center">
-                        <div class="about-image"><img src="images/demo/about-us.png" alt=""/></div>
-                        <div class="about-description">Hi, I am John Doe - web designer & blogger. I love design and travel a lot. Explore new places and meet friends. Enjoy my template!</div>
+                @foreach(Cart::content() as $item)
+                    <div class="product clearfix">
+                        <div class="product-item-photo col-md-5">
+                            <img src="{{getFeaturedImageProduct($item->model->image)}}" alt="{{$item->model->name}}">
+                        </div>
+                        <div class="product-item-details col-md-7">
+                            <a href="{{route('catalog.product', $item->model->slug)}}"><strong class="product-item-name">{{$item->model->name}} x {{$item->qty}}</strong></a>
+                            <div class="product-item-pricing">
+                                {{presentPrice($item->total)}}
+                            </div>
+                        </div>
                     </div>
+                    <hr>
+                @endforeach
+                <div class="subtotal">
+                    <h4 class="price">Tổng giá: {{presentPrice(Cart::subtotal())}}</h4>
                 </div>
-            </aside>
-            <aside id="yolo-social-profile-2" class="text-center widget widget-social-profile">
-                <ul class="social-profile social-icon-bordered">
-                    <li><a title="Twitter" href="#" target="_blank"><i class="fa fa-twitter"></i></a></li>
-                    <li><a title="Facebook" href="#" target="_blank"><i class="fa fa-facebook"></i></a></li>
-                    <li><a title="GooglePlus" href="#" target="_blank"><i class="fa fa-google-plus"></i></a></li>
-                    <li><a title="Instagram" href="#" target="_blank"><i class="fa fa-instagram"></i></a></li>
-                </ul>
-            </aside>
-            <aside id="null-instagram-feed-5" class="instagram-col-3 padding-2 widget widget null-instagram-feed">
-                <h4 class="widget-title"><span>Instagram</span></h4>
-                <ul class="intagram">
-                    <li><a href="#"><img src="images/demo/instagram-1.jpg" alt="tag-mega"/></a></li>
-                    <li><a href="#"><img src="images/demo/instagram-2.jpg" alt="tag-mega"/></a></li>
-                    <li><a href="#"><img src="images/demo/instagram-3.jpg" alt="tag-mega"/></a></li>
-                    <li><a href="#"><img src="images/demo/instagram-4.jpg" alt="tag-mega"/></a></li>
-                    <li><a href="#"><img src="images/demo/instagram-5.jpg" alt="tag-mega"/></a></li>
-                    <li><a href="#"><img src="images/demo/instagram-6.jpg" alt="tag-mega"/></a></li>
-                </ul>
-                <p class="clear"><a href="#" rel="me" target="_blank">Follow Me!</a></p>
+                <div class="product-cart">
+                    <a href="{{route('cart.index')}}" class="btn-cart">Giỏ hàng</a>
+                    <a href="{{route('checkout')}}" class="btn-checkout">Thanh toán</a>
+                </div>
             </aside>
         </div>
     </nav>

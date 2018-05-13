@@ -155,9 +155,11 @@
                             <label for="images" class="col-sm-2 control-label">Images</label>
                             <div class=" col-xs-8">
                                 <input type="file" name="images[]" multiple  id="files" />
-                                @foreach(json_decode($product->images) as $image)
-                                    <img class="imageThumb" id="imageThumbs" src="{{getFeaturedImageProduct($image)}}">
-                                @endforeach
+                                @if($product->images)
+                                    @foreach(json_decode($product->images) as $image)
+                                        <img class="imageThumb" id="imageThumbs" src="{{getFeaturedImageProduct($image)}}">
+                                    @endforeach
+                                @endif
                             </div>
                         </div>
 

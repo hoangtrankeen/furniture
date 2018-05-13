@@ -87,11 +87,9 @@ class ProductSimpleController extends ProductController
                 ->resize(250, null, function ($constraints) {
                     $constraints->aspectRatio();
                 })->save($this->photos_path . '/' . $resize_name);
-            if(\File::exists($this->photos_path.'/'.$product->image)){
-                \File::delete($this->photos_path.'/'.$product->image);
-            }
+
         }else{
-            $feature_image = $product->image;
+            $feature_image = '';
         }
 
         //Store Product Parent
@@ -118,6 +116,8 @@ class ProductSimpleController extends ProductController
         $product->type_id = $this->type_id;
 
         $product->save();
+
+        //Store Product - Category
 
         $product->categories()->sync($request->categories);
 
@@ -153,7 +153,6 @@ class ProductSimpleController extends ProductController
 
             }
         }
-        //Store Product - Category
 
         Session::flash('success', 'The product was successfully save!');
         return redirect()->route('product-group.index');
@@ -244,10 +243,12 @@ class ProductSimpleController extends ProductController
             }
             $image_name = json_encode($image_name);
 
-            foreach (json_decode($product->images) as $image){
+            if($product->images){
+                foreach (json_decode($product->images) as $image){
 
-                if(\File::exists($this->photos_path.'/'.$image)){
+                    if(\File::exists($this->photos_path.'/'.$image)){
 //                    \File::delete($this->photos_path.'/'.$image);
+                    }
                 }
             }
         }else{
@@ -325,6 +326,7 @@ class ProductSimpleController extends ProductController
                 // Found one
                 if(!empty($attr_value)){
 
+
                     // Just update the new attribute value id of the pivot table when attribute type is select
                     if($attribute->type == 'select'){
 
@@ -349,14 +351,28 @@ class ProductSimpleController extends ProductController
 
                 // if not exist the only case, attribute is text type, then create a new text value and store a new row in pivot table
                 }else{
-                    $attr_value = new AttributeValue;
-                    $attr_value->name = $request->input($attribute->inform_name);
-                    $attr_value->attribute_id = $attribute->id;
-                    $attr_value->save();
+
+                    if($attribute->type == 'select'){
+                        $attr_val_id = $request->input($attribute->inform_name);
+                    }
+
+                    elseif($attribute->type == 'text'){
+
+                        $attr_text_val = new AttributeValue;
+                        $attr_text_val->name = $request->input($attribute->inform_name);
+                        $attr_text_val->attribute_id = $attribute->id;
+                        $attr_text_val->save();
+
+                        $attr_val_id = $attr_text_val->id;
+
+                    }else{
+                        continue;
+                    }
 
                     $pro_attr = new ProductAttribute();
+
                     $pro_attr->product_id = $product->id;
-                    $pro_attr->attribute_value_id = $attr_value->id;
+                    $pro_attr->attribute_value_id = $attr_val_id;
 
                     $pro_attr->save();
                 }

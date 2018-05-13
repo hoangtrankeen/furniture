@@ -18,6 +18,8 @@
 
 Route::resource('/', 'Frontend\ShopController');
 Route::resource('/cart', 'Frontend\CartController');
+Route::delete('/cart/remove/{id}', 'Frontend\CartController@destroyCartItem');
+Route::post('/add-to-cart','Frontend\CartController@addCartShopPage');
 Route::post('/cart/switchToSaveForLater/{product}', 'Frontend\CartController@switchToSaveForLater')->name('cart.switchToSaveForLater');
 
 Route::get('/san-pham', 'Frontend\ShopController@index')->name('product.all');
@@ -26,20 +28,7 @@ Route::post('/checkout', 'Frontend\CheckoutController@store')->name('checkout.st
 Route::get('/danh-muc/{slug}', 'Frontend\ShopController@catalogCategory')->name('catalog.category');
 Route::get('/san-pham/{slug}', 'Frontend\ShopController@catalogProduct')->name('catalog.product');
 Route::get('/tim-kiem', 'Frontend\ShopController@search')->name('catalog.search');
-Route::get('/tim-kiem-algolia', 'Frontend\ShopController@searchAlgolia')->name('catalog.search-algolia');
-
-//$router = app()->make('router');
-//$categories = Category::all();
-//$categories->each(function (Category $category) use ($router) {
-//    $router->get($category->slug, 'Frontend\ShopController@catalogCategory')->defaults('category',$category)->name('category.'.$category->slug);
-//});
-//
-//
-//$router = app()->make('router');
-//$products = Product::all();
-//$products->each(function (Product $product) use ($router) {
-//    $router->get($product->slug, 'Frontend\ShopController@catalogProduct')->defaults('product',$product)->name('product.'.$product->slug);
-//});
+Route::get('/sort', 'Frontend\ShopController@search')->name('catalog.sort');
 
 
 // Route::get('/admin', 'ProductController@index')->name('');

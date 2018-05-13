@@ -242,12 +242,15 @@ class ProductGroupController extends ProductController
             }
             $image_name = json_encode($image_name);
 
-            foreach (json_decode($product->images) as $image){
+            if($product->images){
+                foreach (json_decode($product->images) as $image){
 
-                if(\File::exists($this->photos_path.'/'.$image)){
-                    \File::delete($this->photos_path.'/'.$image);
+                    if(\File::exists($this->photos_path.'/'.$image)){
+                        \File::delete($this->photos_path.'/'.$image);
+                    }
                 }
             }
+
         }else{
             $image_name = $product->images;
         }

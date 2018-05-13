@@ -7,6 +7,7 @@ use App\Model\Product;
 use App\Model\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Session;
 
 class ShopController extends Controller
 {
@@ -21,18 +22,38 @@ class ShopController extends Controller
         return view('frontend/home', $data);
     }
 
-    public function catalogCategory($slug)
+    public function catalogCategory($slug, Request $request)
     {
+        $pagination = 9;
         $category = Category::where('slug', $slug)->first();
         $products = Product::whereHas('categories', function($query) use($slug){
             $query->where('slug', $slug);
-        })->paginate(9);
+        });
+
+        if (request()->sort == 'low_high') {
+            $products = $products->orderBy('price')->paginate($pagination);
+        } elseif (request()->sort == 'high_low') {
+            $products = $products->orderBy('price', 'desc')->paginate($pagination);
+        } elseif (request()->sort == 'name') {
+            $products = $products->orderBy('name', 'asc')->paginate($pagination);
+        }elseif (request()->sort == 'best_seller') {
+            $products = $products->where('featured','1')->orderBy('name', 'asc')->paginate($pagination);
+        } else {
+            $products = $products->paginate($pagination);
+        }
 
         foreach($products as $key =>  $product)
         {
-           $product->collect_img = Product::getAllImageProduct($product->id);
-           $product->final_price = Product::getFinalPrice($product);
+            $product->collect_img = Product::getAllImageProduct($product->id);
+            $product->final_price = Product::getFinalPrice($product);
         }
+        if($request->session()->has('category')){
+            $request->session()->forget('category');
+        }
+        $request->session()->put('category', [
+            'name' => $category->name,
+            'slug' => $category->slug
+        ]);
 
         $data['products'] = $products;
         $data['category'] = $category;
@@ -58,25 +79,29 @@ class ShopController extends Controller
 
     public function search(Request $request)
     {
-        $query = $request->input('query');
+        $query = $request->input('q');
 
         $products = Product::where('name', 'like', "%$query%")
                             ->orWhere('sku', 'like', "%$query%")
                             ->paginate(10);
 
-        $result = [];
-
-        foreach ($products as $product){
-            $result[] = [
-                'name' => $product->name,
-                'image' => getFeaturedImageProduct($product->image),
-                'final_price' => presentPrice(Product::getFinalPrice($product))
-            ];
+        foreach($products as $key =>  $product)
+        {
+            $product->final_price = Product::getFinalPrice($product);
         }
 
-        return response()->json([
-            'products' => $result
-        ]);
+        $data['products'] = $products;
+//        $result = [];
+//
+//        foreach ($products as $product){
+//            $result[] = [
+//                'name' => $product->name,
+//                'image' => url(getFeaturedImageProduct($product->image)),
+//                'final_price' => presentPrice(Product::getFinalPrice($product))
+//            ];
+//        }
+
+        return view('frontend/search', $data);
     }
 
 }

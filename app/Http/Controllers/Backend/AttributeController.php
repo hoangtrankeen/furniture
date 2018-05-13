@@ -47,7 +47,7 @@ class AttributeController extends Controller
      */
     public function store(Request $request)
     {
-
+//        dd($request->all());
         $types = implode(",", $this->type);
 
         $this->validate($request, array(

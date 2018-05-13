@@ -122,7 +122,11 @@ class CartController extends Controller
             });
 
             if ($duplicates->isNotEmpty()) {
-                $message = $product->name.' đã được thêm vào giỏ hàng trước đó';
+                $quantity = $request->quantity ?? 1;
+                $rowId = $duplicates->first()->rowId;
+                $qty_incart = $duplicates->first()->qty;
+                Cart::update( $rowId, $qty_incart + $quantity);
+                $message = 'Bạn đã thêm '.$product->name.' (sl: '.$quantity.') vào giỏ hàng';
             }else{
                 Cart::add($request->id, $request->name, 1, $request->final_price)
                     ->associate('App\Model\Product');
@@ -135,10 +139,9 @@ class CartController extends Controller
                     'count' => Cart::count(),
                     'subtotal' => presentPrice(Cart::subtotal()),
                     'image' => url(getFeaturedImageProduct($product->image)),
-                ]);
-
+                ],200);
         }else{
-            return response()->json(['message' => 'Không thể thêm sản phẩm vào giỏ hàng']);
+            return response()->json(['message' => 'Không thể thêm sản phẩm vào giỏ hàng'], 400);
         }
     }
 }
