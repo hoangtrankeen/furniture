@@ -16,7 +16,7 @@
 //});
 
 
-Route::resource('/', 'Frontend\ShopController');
+Route::get('/', 'Frontend\ShopController@index');
 Route::resource('/cart', 'Frontend\CartController');
 Route::delete('/cart/remove/{id}', 'Frontend\CartController@destroyCartItem');
 Route::post('/add-to-cart','Frontend\CartController@addCartShopPage');
@@ -31,10 +31,18 @@ Route::get('/tim-kiem', 'Frontend\ShopController@search')->name('catalog.search'
 Route::get('/sort', 'Frontend\ShopController@search')->name('catalog.sort');
 
 
-// Route::get('/admin', 'ProductController@index')->name('');
+// route to show the login form
+Route::get('customer/login', 'Auth\CustomerAuthController@showLoginForm')->name('customer.login');
+
+// route to process the form
+Route::post('customer/login', 'Auth\CustomerAuthController@login')->name('customer.login.submit');
+
+Route::get('/customer', 'Frontend\CustomerController@index')->name('customer.dashboard');
+
 
 Route::prefix('admin')->group(function () {
 
+    Route::get('/', 'Backend\DashboardController@index');
     Route::get('product/create/{type}','Backend\ProductController@create')->name('product.create');
     Route::resource('product-simple','Backend\ProductSimpleController');
     Route::resource('product-group','Backend\ProductGroupController');
