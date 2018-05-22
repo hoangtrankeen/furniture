@@ -300,6 +300,9 @@ body .sn-site .products-in-category-tabs-wrapper > .row > .col-md-3 {
     color: #333;
 }
 
+.shortcode-single-product-wrap .product-item-wrap.product-style_1 .product-item-inner .product-info{
+    background-color: rgba(86,207,225,0.07);
+}
 
 @media (max-width: 767px){
     body .woocommerce .product-actions > div {

@@ -8,7 +8,7 @@
 namespace App\Helpers\Manager;
 
 use App\Model\Category;
-use App\Model\Product;
+use App\Model\Topic;
 use  Illuminate\Support\ServiceProvider;
 
 class Catalog extends ServiceProvider
@@ -119,5 +119,64 @@ class Catalog extends ServiceProvider
         }
     }
 
+    public static function showTopicsOption($topics, $parent_id = 0, $char = '', $parent ='')
+    {
+        $p_id = '';
+        if(isset($parent->id)){
+            $p_id = $parent->id;
+        }
+        foreach ($topics as $key => $item)
+        {
+            $selected = $p_id == $item['id'] ? 'selected' : '';
+            // Nếu là chuyên mục con thì hiển thị
+            if ($item['parent_id'] == $parent_id)
+            {
+                echo '<option value="'.$item['id'].'" '.$selected.'  >';
+                echo $char . $item['name'];
+                echo '</option>';
+
+                // Xóa chuyên mục đã lặp
+                unset($topics[$key]);
+
+                // Tiếp tục đệ quy để tìm chuyên mục con của chuyên mục đang lặp
+                self::showTopicsOption($topics, $item['id'], $char.'|---', $parent='');
+            }
+        }
+    }
+
+    public static function showTopicsTable($topics, $parent_id = 0, $char = '')
+    {
+        foreach ($topics as $key => $item)
+        {
+            // Nếu là chuyên mục con thì hiển thị
+            if ($item['parent_id'] == $parent_id)
+            {
+                echo '<tr>';
+                echo '<td>';
+                echo $char . $item['name'];
+                echo '</td>';
+
+                echo '<td>';
+                echo $item['slug'];
+                echo '</td>';
+
+                echo '<td>';
+                echo $item['created_at'];
+                echo '</td>';
+
+                echo '<td>';
+                echo '<a href="'.route('topic.edit', $item['id']).'" class="btn btn-xs btn-info">Edit</a>';
+                echo '</td>';
+
+                echo '</tr>';
+
+                // Xóa chuyên mục đã lặp
+                unset($topics[$key]);
+
+                // Tiếp tục đệ quy để tìm chuyên mục con của chuyên mục đang lặp
+                self::showTopicsTable($topics, $item['id'], $char.'|---');
+            }
+        }
+    }
 
 }

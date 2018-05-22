@@ -33,12 +33,13 @@
             <div class="col-md-6">
                 <div id="sync1" class="owl-carousel owl-template">
                     @foreach($product->collect_img as $img)
-                    <div class="item">
-                        <figure><img src="{{asset($img)}}" alt="slide" width="540" height="700"/></figure>
-                    </div>
+                        <div class="item">
+                            <figure><img src="{{asset($img)}}" alt="slide" width="540" height="700"/></figure>
+                        </div>
                     @endforeach
                 </div>
                 <div id="sync2" class="owl-carousel owl-template">
+
                     @foreach($product->collect_img as $img)
                         <div class="item">
                             <figure><img src="{{asset($img)}}" alt="slide" width="180" height="220"/></figure>

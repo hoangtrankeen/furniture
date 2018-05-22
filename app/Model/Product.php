@@ -12,7 +12,7 @@ class Product extends Model
     protected $table = 'products';
 
     //path to save images
-    public $photo_path = 'manage_images';
+    public $photo_path = 'media/products';
 
     public function categories()
     {

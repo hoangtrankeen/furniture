@@ -2,21 +2,14 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Model\Category;
-use App\Model\Product;
-use Illuminate\Support\Facades\Session;
+use App\Model\Topic;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Session;
 
-class CategoryController extends Controller
+
+class TopicController extends Controller
 {
-    private $photos_path;
-
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -24,31 +17,29 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $data['categories'] = Category::all();
-        return view('backend/category/index',$data);
+        $data['topics'] = Topic::all();
+        return view('backend/topic/index', $data);
     }
 
     /**
      * Show the form for creating a new resource.
-     *b
+     *
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        $data['categories'] = Category::where('parent_id', 0)->get();
-
-        return view('backend/category/create', $data);
+        $data['topics'] = Topic::all();
+        return view('backend/topic/create', $data);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  Request  $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-
         $this->validate($request, array(
             // rules, criteria
             'name'           => 'required|max:190',
@@ -56,14 +47,14 @@ class CategoryController extends Controller
             'parent_id'      => 'required|max:255',
         ));
 
-        $category = new Category();
-        $category->name = $request->name;
-        $category->slug = $request->slug;
-        $category->parent_id = $request->parent_id;
-        $category->save();
+        $topic = new Topic();
+        $topic->name = $request->name;
+        $topic->slug = $request->slug;
+        $topic->parent_id = $request->parent_id;
+        $topic->save();
 
-        Session::flash('success', 'The category was successfully save!');
-        return redirect()->route('category.index');
+        Session::flash('success', 'The topic was successfully save!');
+        return redirect()->route('topic.index');
     }
 
     /**
@@ -74,7 +65,7 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**
@@ -85,10 +76,12 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $data['thiscat'] = Category::findOrFail($id);
+        $topic = Topic::find($id);
+        $data['topics'] = Topic::all();
+        $data['topic'] = $topic;
+        $data['parents'] =  $topic->parents;
 
-        $data['categories'] = Category::where('parent_id', 0)->where('id','!=', $id)->get();
-        return view('backend/category/edit', $data);
+        return view('backend/topic/edit', $data);
     }
 
     /**
@@ -103,19 +96,18 @@ class CategoryController extends Controller
         $this->validate($request, array(
             // rules, criteria
             'name'           => 'required|max:190',
-            'slug'           => 'required|alpha_dash|max:255|unique:products,slug,'.$id,
+            'slug'           => 'required|alpha_dash|unique:products,slug,'.$id,
             'parent_id'      => 'required|max:255',
         ));
 
-        $category = Category::findOrFail($id);
-        $category->name = $request->name;
-        $category->slug = $request->slug;
-        $category->parent_id = $request->parent_id;
+        $topic = Topic::find($id);
+        $topic->name = $request->name;
+        $topic->slug = $request->slug;
+        $topic->parent_id = $request->parent_id;
+        $topic->save();
 
-        $category->save();
-
-        Session::flash('success', 'The category was successfully save!');
-        return redirect()->route('category.index');
+        Session::flash('success', 'The topic was successfully updated!');
+        return redirect()->route('topic.index');
     }
 
     /**
@@ -126,13 +118,6 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $category = Category::findOrFail($id);
-
-        $category->products()->detach();
-
-        $category->delete();
-
-        Session::flash('success', 'The category was successfully deleted!');
-        return redirect()->route('category.index');
+        //
     }
 }

@@ -19,6 +19,8 @@ class ShopController extends Controller
     public function index()
     {
         $data['products'] = Product::getAllProduct();
+        $data['featured'] = Product::where('featured',1)->take(6)->get();
+
         return view('frontend/home', $data);
     }
 

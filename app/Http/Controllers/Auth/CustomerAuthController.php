@@ -12,7 +12,7 @@ class CustomerAuthController extends Controller
     public function __construct()
     {
         //people are not logged in as customer
-        $this->middleware('guest:customer');
+        $this->middleware('guest:customer')->except('logout');
     }
 
     public function showLoginForm()
@@ -38,6 +38,20 @@ class CustomerAuthController extends Controller
         }
 
         // else redirect to login form with the form data
-        return redirect()->back()->input($request->only('email','remember'));
+        return redirect()->back()->withInput($request->only('email','remember'));
+    }
+
+    /**
+     * Log the user out of the application.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function logout()
+    {
+        Auth::guard('customer')->logout();
+
+        //$request->session()->invalidate();
+
+        return redirect('/');
     }
 }

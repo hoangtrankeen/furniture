@@ -1,23 +1,25 @@
-@extends('layouts/backend/master')
-
-@section('title','All Product')
-
-@section('css')
-    <!-- Data Tables -->
-    <link rel="stylesheet" href="{{asset('backend/assets/plugin/datatables/media/css/dataTables.bootstrap.min.css')}}">
-
-    <link rel="stylesheet" href="{{asset('backend/assets/plugin/datatables/extensions/Responsive/css/responsive.bootstrap.min.css')}}">
-@endsection
+@extends('layouts.app')
 
 @section('content')
-    <h2>You are loggin as Admin</h2>
-@endsection
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Admin Dashboard</div>
 
-@section('javascript')
-    <!-- Data Tables -->
-    <script src="{{asset('backend/assets/plugin/datatables/media/js/jquery.dataTables.min.js')}}"></script>
-    <script src="{{asset('backend/assets/plugin/datatables/media/js/dataTables.bootstrap.min.js')}}"></script>
-    <script src="{{asset('backend/assets/plugin/datatables/extensions/Responsive/js/dataTables.responsive.min.js')}}"></script>
-    <script src="{{asset('backend/assets/plugin/datatables/extensions/Responsive/js/responsive.bootstrap.min.js')}}"></script>
-    <script src="{{asset('backend/assets/scripts/datatables.demo.min.js')}}"></script>
+                    <div class="panel-body">
+                        @if (session('status'))
+                            <div class="alert alert-success">
+                                {{ session('status') }}
+                            </div>
+                        @endif
+
+                        @component('components.who')
+
+                        @endcomponent
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection

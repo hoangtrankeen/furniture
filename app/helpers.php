@@ -10,20 +10,20 @@ function setActiveCategory($category, $output = 'active')
     return request()->category == $category ? $output : '';
 }
 
-function getImagePath()
+function getProductImagePath()
 {
-    return '/manage_images';
+    return '/media/products';
 }
 
 function getOneProductImg($images)
 {
     $images = json_decode($images);
-    return  getImagePath().'/'.$images[0];
+    return  getProductImagePath().'/'.$images[0];
 }
 
 function getFeaturedImageProduct($image)
 {
-    return  getImagePath().'/'.$image;
+    return  getProductImagePath().'/'.$image;
 }
 
 function presentDateFormat($date = '')
@@ -46,4 +46,9 @@ function getProductStatus($status)
     }
 
     return $status;
+}
+
+function formatStr($str)
+{
+    return substr($str, 0,20) .'...';
 }

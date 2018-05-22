@@ -39,10 +39,10 @@ Route::post('customer/login', 'Auth\CustomerAuthController@login')->name('custom
 
 Route::get('/customer', 'Frontend\CustomerController@index')->name('customer.dashboard');
 
-
+Route::get('customer/logout','Auth\CustomerAuthController@logout')->name('customer.logout');
 Route::prefix('admin')->group(function () {
 
-    Route::get('/', 'Backend\DashboardController@index');
+    Route::get('/', 'Backend\DashboardController@index')->name('admin');
     Route::get('product/create/{type}','Backend\ProductController@create')->name('product.create');
     Route::resource('product-simple','Backend\ProductSimpleController');
     Route::resource('product-group','Backend\ProductGroupController');
@@ -54,6 +54,15 @@ Route::prefix('admin')->group(function () {
     Route::resource('attribute','Backend\AttributeController');
 
     Route::resource('order','Backend\OrderController');
+
+    Route::resource('topic','Backend\TopicController');
+
+    Route::resource('post','Backend\PostController');
+
+    Route::resource('tag','Backend\TagController');
+
+    Route::get('/logout','Auth\LoginController@logout')->name('admin.logout');
+
 
 });
 

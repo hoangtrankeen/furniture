@@ -16,6 +16,8 @@
 
         @include('partials/frontend/block-home/product-list')
 
+        @include('partials/frontend/block-home/featured-block')
+
         @yield('content')
 
         @include('partials/frontend/block-home/blog')

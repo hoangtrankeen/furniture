@@ -116,22 +116,21 @@ class CartController extends Controller
         if ($request->isMethod('post')){
 
             $product = Product::where('id',$request->id)->first();
-
+            $quantity = $request->quantity ?? 1;
             $duplicates = Cart::search(function ($cartItem, $rowId) use ($request) {
                 return $cartItem->id === $request->id;
             });
 
             if ($duplicates->isNotEmpty()) {
-                $quantity = $request->quantity ?? 1;
                 $rowId = $duplicates->first()->rowId;
                 $qty_incart = $duplicates->first()->qty;
                 Cart::update( $rowId, $qty_incart + $quantity);
                 $message = 'Bạn đã thêm '.$product->name.' (sl: '.$quantity.') vào giỏ hàng';
             }else{
-                Cart::add($request->id, $request->name, 1, $request->final_price)
+                Cart::add($request->id, $request->name, $quantity, $request->final_price)
                     ->associate('App\Model\Product');
 
-                $message = 'Bạn đã thêm '.$product->name.' (sl: 1) vào giỏ hàng';
+                $message = 'Bạn đã thêm '.$product->name.' (sl: '.$quantity.') vào giỏ hàng';
             }
 
             return response()->json([

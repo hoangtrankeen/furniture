@@ -14,7 +14,9 @@
                             </div>
                         @endif
 
-                        You are logged in as Customer!
+                        @component('components.who')
+
+                        @endcomponent
                     </div>
                 </div>
             </div>
