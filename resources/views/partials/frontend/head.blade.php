@@ -32,6 +32,4 @@
 <!-- Search bar -->
 <link rel="stylesheet" type="text/css" href="{{asset('assets/web/search-bar/css/search-bar.css')}}">
 
-
-
 @yield('css')

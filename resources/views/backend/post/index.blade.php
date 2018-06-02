@@ -48,10 +48,10 @@
 						<th>Image</th>
 						<th>Title</th>
 						<th>Description</th>
-						<th>Category</th>
 						<th>Active</th>
 						<th>Featured</th>
 						<th>Created At</th>
+						<th>Action</th>
 					</tr>
 					</thead>
 					<tfoot>
@@ -59,10 +59,10 @@
 						<th>Image</th>
 						<th>Title</th>
 						<th>Description</th>
-						<th>Category</th>
 						<th>Active</th>
 						<th>Featured</th>
 						<th>Created At</th>
+						<th>Action</th>
 					</tr>
 					</tfoot>
 					<tbody>

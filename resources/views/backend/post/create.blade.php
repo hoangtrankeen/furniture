@@ -2,6 +2,16 @@
 
 @section('title','Create Post')
 	<link rel="stylesheet" href="{{asset('backend/assets/plugin/select2/css/select2.min.css')}}">
+	<!-- Include external CSS. -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.css">
+
+	<!-- Include Editor style. -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.8.1/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.8.1/css/froala_style.min.css" rel="stylesheet" type="text/css" />
+
+	<!-- Dropify -->
+	<link rel="stylesheet" href="{{asset('backend/assets/plugin/dropify/css/dropify.min.css')}}">
 @section('css')
 @endsection
 
@@ -28,7 +38,7 @@
 				<!-- /.box-title -->
 
 				<div class="card-content">
-					<form class="form-horizontal" action="{{route('post.store')}}" id="category" method="post" enctype="multipart/form-data">
+					<form class="form-horizontal" action="{{route('post.store')}}" id="post" method="post" enctype="multipart/form-data">
 						<div class="form-group">
 							<label for="title" class="col-sm-2 control-label">Title</label>
 							<div class="col-sm-8">
@@ -70,7 +80,9 @@
 							<label for="topics" class="col-sm-2 control-label">Topics</label>
 							<div class="col-sm-8">
 								<select class="topics form-control" id="topics" name="topics[]" multiple="multiple">
-									{{ManagerCatalog::showTopicsOption($topics)}}
+									@foreach($topics as $topic)
+										<option value="{{$topic->id}}" {{  old('topic') ? ( in_array($topic->id, old('topic'))) ? "selected" : '' :'' }}>{{$topic->name}}</option>
+									@endforeach
 								</select>
 							</div>
 						</div>
@@ -105,17 +117,19 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="featured" class="col-sm-2 control-label">Content</label>
-							<div class="col-xs-1">
-								<textarea name="post_content" id="post_content" cols="30" rows="10">{{old('content') }}</textarea>
+							<label for="image" class="col-sm-2 control-label">Featured Image</label>
+							<div class="col-sm-8">
+								<!-- /.dropdown js__dropdown -->
+								<input type="file" name="image" id="input-file-now-custom-1" class="dropify" data-default-file="" />
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="image" class="col-sm-2 control-label">Image</label>
+							<label for="featured" class="col-sm-2 control-label">Content</label>
 							<div class="col-sm-8">
-								<input type="file" id="image" name="image">
+								<textarea name="post_content" id="post_content">{{old('post_content') }}</textarea>
 							</div>
 						</div>
+
 						{{ csrf_field() }}
 						<div class="form-group margin-bottom-0">
 							<div class="col-sm-offset-2 col-sm-8">
@@ -136,11 +150,35 @@
 @endsection
 
 @section('javascript')
+	<!--
+	***************************************LIBRARY*************************************************
+	_______________________________________________________________________________________________
+	-->
+
+
+	<!-- Include external JS libs. -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/xml/xml.min.js"></script>
+
+	<!-- Include Editor JS files. -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.8.1/js/froala_editor.pkgd.min.js"></script>
+
 	<!-- Select2 -->
 	<script src="{{asset('backend/assets/plugin/select2/js/select2.min.js')}}"></script>
 
 	<!-- Multi Select -->
 	<script src="{{asset('backend/assets/plugin/multiselect/multiselect.min.js')}}"></script>
+
+	<!-- Dropify -->
+	<script src="{{asset('backend/assets/plugin/dropify/js/dropify.min.js')}}"></script>
+	<script src="{{asset('backend/assets/scripts/fileUpload.demo.min.js')}}"></script>
+
+	<!--
+	***************************************MYJSCODE*************************************************
+	________________________________________________________________________________________________
+	-->
+
 
 	<script type="text/javascript">
         $(document).ready(function() {
@@ -156,9 +194,18 @@
                 allowClear: true
             });
 
-            previewImage('#file', 'imageThumb');
-            previewImages('#files', 'imageThumbs');
+//            previewImage('#file', 'imageThumb');
+//            previewImages('#files', 'imageThumbs');
         });
 
+	</script>
+
+	<!-- Initialize the editor. -->
+	<script>
+		$(function() {
+		    $('#post_content').froalaEditor({
+                heightMin: 300
+			});
+		});
 	</script>
 @endsection

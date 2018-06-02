@@ -29,6 +29,12 @@ Route::get('/danh-muc/{slug}', 'Frontend\ShopController@catalogCategory')->name(
 Route::get('/san-pham/{slug}', 'Frontend\ShopController@catalogProduct')->name('catalog.product');
 Route::get('/tim-kiem', 'Frontend\ShopController@search')->name('catalog.search');
 Route::get('/sort', 'Frontend\ShopController@search')->name('catalog.sort');
+Route::get('/quick-view', 'Frontend\ShopController@quickView')->name('catalog.quickview');
+
+
+Route::get('/bai-viet', 'Frontend\BlogController@index')->name('cms.post');
+Route::get('/bai-viet/{slug}', 'Frontend\BlogController@details')->name('cms.post.detail');
+Route::get('/chuyen-muc/{slug}', 'Frontend\BlogController@topic')->name('cms.topic');
 
 
 // route to show the login form
@@ -40,6 +46,7 @@ Route::post('customer/login', 'Auth\CustomerAuthController@login')->name('custom
 Route::get('/customer', 'Frontend\CustomerController@index')->name('customer.dashboard');
 
 Route::get('customer/logout','Auth\CustomerAuthController@logout')->name('customer.logout');
+
 Route::prefix('admin')->group(function () {
 
     Route::get('/', 'Backend\DashboardController@index')->name('admin');

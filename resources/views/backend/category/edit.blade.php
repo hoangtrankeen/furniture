@@ -3,6 +3,10 @@
 @section('title','Edit Category')
 
 @section('css')
+
+
+    <!-- Dropify -->
+    <link rel="stylesheet" href="{{asset('backend/assets/plugin/dropify/css/dropify.min.css')}}">
 @endsection
 
 @section('content')
@@ -28,7 +32,7 @@
                 <!-- /.box-title -->
 
                 <div class="card-content">
-                    <form class="form-horizontal" action="{{route('category.update', $thiscat->id)}}" id="category" method="post">
+                    <form class="form-horizontal" action="{{route('category.update', $thiscat->id)}}" id="category" method="post" enctype="multipart/form-data">
                         {{ method_field('PUT') }}
                         {{ csrf_field() }}
 
@@ -45,6 +49,12 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label for="slug" class="col-sm-2 control-label">Order</label>
+                            <div class="col-sm-8">
+                                <input type="number" class="form-control" id="order" name="order" value="{{$thiscat->order}}">
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label for="categories" class="col-sm-2 control-label">Parent Category</label>
                             <div class="col-sm-8">
                                 <select class=" categories form-control" id="parent_id" name="parent_id">
@@ -58,7 +68,13 @@
                                 </select>
                             </div>
                         </div>
-
+                        <div class="form-group">
+                            <label for="image" class="col-sm-2 control-label">Featured Image</label>
+                            <div class="col-sm-8">
+                                <!-- /.dropdown js__dropdown -->
+                                <input type="file" name="image" id="input-file-now-custom-1" class="dropify" data-default-file="{{getCategoryImgFeatured($thiscat->image)}}" />
+                            </div>
+                        </div>
                         <div class="form-group margin-bottom-0">
                             <div class="col-sm-offset-2 col-sm-8">
                                 <button type="submit" class="btn btn-info btn-sm waves-effect waves-light">Save</button>
@@ -78,5 +94,7 @@
 @endsection
 
 @section('javascript')
-
+    <!-- Dropify -->
+    <script src="{{asset('backend/assets/plugin/dropify/js/dropify.min.js')}}"></script>
+    <script src="{{asset('backend/assets/scripts/fileUpload.demo.min.js')}}"></script>
 @endsection

@@ -11,6 +11,8 @@ class Category extends Model
 
     protected $primaryKey = 'id';
 
+    public $photo_path = 'media/categories';
+
     public function products()
     {
         return $this->belongsToMany('App\Model\Product');

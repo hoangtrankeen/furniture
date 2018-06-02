@@ -43,15 +43,15 @@
 
                             {{--</ul>--}}
                         </li>
-                        <li class="menu-item menu-blog"><a href="#">Blog</a>
-                            <ul class="sub-menu">
-                                <li><a href="blog-3-columns.html">Blog 3 Columns</a></li>
-                                <li><a href="blog-3-columns.html">Blog Masonry</a></li>
-                                <li><a href="blog-2-columns.html">Blog 2 Columns</a></li>
-                                <li><a href="blog-2-columns-with-sidebar.html">Blog 2 Columns with Sidebar</a></li>
-                                <li><a href="blog-list-with-sidebar.html">Blog List with Sidebar</a></li>
-                                <li><a href="blog-detail.html">Blog Details</a></li>
-                            </ul>
+                        <li class="menu-item menu-blog"><a href="{{route('cms.post')}}">Bài viết</a>
+                            {{--<ul class="sub-menu">--}}
+                                {{--<li><a href="blog-3-columns.html">Blog 3 Columns</a></li>--}}
+                                {{--<li><a href="blog-3-columns.html">Blog Masonry</a></li>--}}
+                                {{--<li><a href="blog-2-columns.html">Blog 2 Columns</a></li>--}}
+                                {{--<li><a href="blog-2-columns-with-sidebar.html">Blog 2 Columns with Sidebar</a></li>--}}
+                                {{--<li><a href="blog-list-with-sidebar.html">Blog List with Sidebar</a></li>--}}
+                                {{--<li><a href="blog-detail.html">Blog Details</a></li>--}}
+                            {{--</ul>--}}
                         </li>
                         <li class="menu-item menu-shop"><a href="portfolio-fullwidth-slider.html">Portfolio</a>
                             <ul class="sub-menu">

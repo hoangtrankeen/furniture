@@ -49,7 +49,101 @@
                 </div>
                 <!-- /.box-title -->
                 <div class="card-content">
+                    <form class="form-horizontal" action="{{route('order.update', $order->id)}}" id="topic" method="post">
+                        {{ method_field('PUT') }}
+                        {{ csrf_field() }}
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="box-content">
+                                    <h4 class="box-title">Order # {{$order->id}}</h4>
+                                    <table class="table">
+                                        <tr>
+                                            <th>Order Date</th>
+                                            <td>{{$order->created_at}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Order Status</th>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Placed from IP</th>
+                                            <td></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="box-content">
+                                    <h4 class="box-title">Account information</h4>
+                                    <table class="table">
+                                        <tr>
+                                            <th>Customer Name</th>
+                                            <td>Guest</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Email</th>
+                                            <td>{{$order->billing_email}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Customer Group</th>
+                                            <td></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="box-content">
+                                    <h4 class="box-title">Address Information</h4>
+                                    <table class="table">
+                                        <tr>
+                                            <th>Billing Address</th>
+                                            <td>{{$order->billing_address}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Billing City</th>
+                                            <td>{{$order->billing_city}}</td>
+                                        </tr><tr>
+                                            <th>Billing Province</th>
+                                            <td>{{$order->billing_province}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Billing Postal Code</th>
+                                            <td>{{$order->billing_postalcode}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Billing Phone</th>
+                                            <td>{{$order->billing_phone}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
 
+                            <div class="col-md-6">
+
+                            </div>
+                        </div>
+
+                        {{--<div class="form-group">--}}
+                            {{--<label for="categories" class="col-sm-2 control-label">Parent Topic</label>--}}
+                            {{--<div class="col-sm-8">--}}
+                                {{--<select class=" topic form-control" id="parent_id" name="parent_id">--}}
+                                    {{--<option value="0">-----</option>--}}
+                                    {{--@foreach($categories as $category)--}}
+                                        {{--<option value="{{$category->id}}" {{($category->id) == ($thiscat->parent_id) ? 'selected':'' }}>{{$category->name}}</option>--}}
+                                        {{--@if(count($category->children))--}}
+                                            {{--@include('backend/topic/in_edit',['children' => $category->children, 'html'=>''])--}}
+                                        {{--@endif--}}
+                                    {{--@endforeach--}}
+                                {{--</select>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+
+                        <div class="form-group margin-bottom-0">
+                            <div class="col-sm-offset-2 col-sm-8">
+                                <button type="submit" class="btn btn-info btn-sm waves-effect waves-light">Save</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
                 <!-- /.card-content -->
             </div>

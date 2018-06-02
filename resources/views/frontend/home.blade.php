@@ -1,6 +1,6 @@
-@extends('layouts/frontend/home')
+@extends('frontend/layouts/home')
 
-@section('title', 'Products')
+@section('title', 'Royal')
 
 @section('css')
 
@@ -11,9 +11,5 @@
 @endsection
 
 @section('javascript')
-    <script type="text/javascript">
-        $("#carousel").owlCarousel({
-            lazyLoad:true
-        })
-    </script>
+
 @endsection

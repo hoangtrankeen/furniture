@@ -28,7 +28,7 @@ class TopicController extends Controller
      */
     public function create()
     {
-        $data['topics'] = Topic::all();
+        $data['categories'] = Topic::where('parent_id', 0)->get();
         return view('backend/topic/create', $data);
     }
 
@@ -43,7 +43,7 @@ class TopicController extends Controller
         $this->validate($request, array(
             // rules, criteria
             'name'           => 'required|max:190',
-            'slug'           => 'required|alpha_dash|unique:products,slug',
+            'slug'           => 'required|alpha_dash|unique:topics',
             'parent_id'      => 'required|max:255',
         ));
 
@@ -76,11 +76,9 @@ class TopicController extends Controller
      */
     public function edit($id)
     {
-        $topic = Topic::find($id);
-        $data['topics'] = Topic::all();
-        $data['topic'] = $topic;
-        $data['parents'] =  $topic->parents;
+        $data['thiscat'] = Topic::findOrFail($id);
 
+        $data['categories'] = Topic::where('parent_id', 0)->where('id','!=', $id)->get();
         return view('backend/topic/edit', $data);
     }
 
@@ -96,7 +94,7 @@ class TopicController extends Controller
         $this->validate($request, array(
             // rules, criteria
             'name'           => 'required|max:190',
-            'slug'           => 'required|alpha_dash|unique:products,slug,'.$id,
+            'slug'           => 'required|alpha_dash|unique:topics,slug,'.$id,
             'parent_id'      => 'required|max:255',
         ));
 

@@ -26,12 +26,43 @@ function getFeaturedImageProduct($image)
     return  getProductImagePath().'/'.$image;
 }
 
+function getPostImgPath()
+{
+    return '/media/posts';
+}
+
+function getPostImgFeatured($image)
+{
+    return  getPostImgPath().'/'.$image;
+}
+
+function getCategoryImgPath()
+{
+    return '/media/categories';
+}
+
+function getCategoryImgFeatured($image)
+{
+    return  getCategoryImgPath().'/'.$image;
+}
+
 function presentDateFormat($date = '')
 {
     if($date === null){
         $date = '';
     }else{
         $date = date_format($date,"h:i:s A, d-m-Y");
+    }
+
+    return $date;
+}
+
+function presentDate($date = '')
+{
+    if($date === null){
+        $date = '';
+    }else{
+        $date = date_format($date,"d/m/Y");
     }
 
     return $date;

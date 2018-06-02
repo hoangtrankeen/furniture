@@ -10,9 +10,12 @@
     script(src='https://oss.maxcdn.com/respond/1.4.2/respond.min.js')
 
     -->
+        <!-- Left bar -->
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/web/left-nav/css/left-nav.css')}}">
+
 </head>
 <body class="product-page product-grid product-3-columns-width-sidebar">
-<div id="preloaderKDZ"></div>
+{{--<div id="preloaderKDZ"></div>--}}
 <div class="sn-site">
     {{--Header--}}
     @include('partials/frontend/header')
@@ -50,6 +53,7 @@
 
 @include('partials/frontend/script')
 
+    <script type="text/javascript" src="{{asset('assets/web/left-nav/js/left-nav.js')}}"></script>
 
 </body>
 </html>

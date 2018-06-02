@@ -1,23 +1,21 @@
 <div class="sidebar-product">
-    <aside class="categorie">
-        <h4>Product Categories</h4>
-        <ul class="categories">
-            <li><a href="#">Chair</a></li>
-            <li><a href="#">Decoration</a></li>
-            <li><a href="#">Essential</a></li>
-            <li><a href="#">Lamp</a></li>
-            <li><a href="#">Sofas</a></li>
-        </ul>
-    </aside>
-    <aside class="categorie">
-        <h4>Product Categories</h4>
-        <ul class="categories">
-            <li><a href="#">Chair</a></li>
-            <li><a href="#">Decoration</a></li>
-            <li><a href="#">Essential</a></li>
-            <li><a href="#">Lamp</a></li>
-            <li><a href="#">Sofas</a></li>
-        </ul>
+    {{--@foreach($categories as $category)--}}
+    {{--<aside class="categorie">--}}
+        {{--<h4>{{$category->name}}</h4>--}}
+        {{--@if($category->childs() !== null)--}}
+            {{--<ul class="categories">--}}
+                {{--@foreach($category->childs as $child)--}}
+                {{--<li><a href="{{route('catalog.category', $child->slug)}}">{{$child->name}}</a></li>--}}
+                {{--@endforeach--}}
+            {{--</ul>--}}
+        {{--@endif--}}
+    {{--</aside>--}}
+    {{--@endforeach--}}
+    <aside>
+        <h4>Danh mục sản phẩm</h4>
+        <div id='cssmenu'>
+            {{ManagerCatalog::showLeftCategories()}}
+        </div>
     </aside>
     <aside class="tagcloud">
         <h4>tags</h4>

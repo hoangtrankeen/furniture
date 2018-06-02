@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Helpers\Manager\Catalog;
 use App\Model\Product;
+use App\Model\Post;
 use App\Model\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -18,10 +19,30 @@ class ShopController extends Controller
      */
     public function index()
     {
-        $data['products'] = Product::getAllProduct();
-        $data['featured'] = Product::where('featured',1)->take(6)->get();
-
+        $categories = Category::where('parent_id',0)->orderBy('order')->get();
+        $data['featured'] = Product::where('active',1)
+            ->where('featured', 1)
+            ->take(6)->get();
+//        foreach($categories as $category){
+//            $category['products'] = $category->products()->take(6)->get();
+//            $category['category'] = $category;
+//        }
+//
+        $data['categories'] = $categories;
         return view('frontend/home', $data);
+    }
+
+    public function quickView(Request $request)
+    {
+        $slug = $request->q;
+
+        $product = Product::where('slug', $slug)->first();
+        $product->image = getFeaturedImageProduct($product->image);
+        $data = [
+            'product' => $product,
+        ];
+
+        return response()->json($data, 200);
     }
 
     public function catalogCategory($slug, Request $request)

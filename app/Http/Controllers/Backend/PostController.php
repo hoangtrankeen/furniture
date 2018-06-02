@@ -120,7 +120,24 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = Post::find($id);
+
+        $post_tags = $post->tags->pluck('id')->toArray();
+
+        $post_topics = $post->topics->pluck('id')->toArray();
+
+        $topics = Topic::all();
+        $tags = Tag::all();
+
+        $data = [
+            'post' => $post,
+            'post_tags' => $post_tags,
+            'post_topics' => $post_topics,
+            'topics' => $topics,
+            'tags' => $tags
+        ];
+
+        return view('backend/post/edit', $data);
     }
 
     /**
@@ -132,7 +149,61 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $post = Post::findOrFail($id);
+        $this->validate($request, array(
+            // rules, criteria
+            'title'          => 'required|max:190',
+            'description'    => 'required|max:190',
+            'slug'           => 'required|alpha_dash|min:5|max:190|unique:posts,slug,'.$id,
+            'image'          => 'nullable|image',
+            'post_content'   => 'required',
+            'active'         => 'required',
+            'featured'       => 'required'
+        ));
+
+        //save image
+        if($request->hasFile('image')){
+            $photo = $request->file('image');
+
+            if (!is_dir($this->photo_path)) {
+                mkdir($this->photo_path, 0777);
+            }
+
+            $name = sha1(date('YmdHis') . str_random(30));
+            $resize_name = $name . str_random(2) . '.' . $photo->getClientOriginalExtension();
+            $feature_image = $resize_name;
+            Image::make($photo)->save($this->photo_path . '/' . $resize_name);
+
+            if($post->image){
+
+                if(\File::exists($this->photo_path.'/'.$post->image)){
+                    \File::delete($this->photo_path.'/'.$post->image);
+                }
+            }
+
+        }else{
+            $feature_image = $post->image;
+        }
+
+        //store in the database
+
+        $post->title = $request->title;
+        $post->description = $request->description;
+        $post->slug = $request->slug;
+        $post->active = $request->active;
+        $post->featured = $request->featured;
+        $post->content = $request->post_content;
+        $post->image = $feature_image;
+        $post->save();
+
+        $post->tags()->sync($request->tags);
+
+        $post->topics()->sync($request->topics);
+
+        Session::flash('success', 'The post was successfully updated!');
+
+        //redirect to another page
+        return redirect()->route('post.index');
     }
 
     /**
