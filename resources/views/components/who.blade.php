@@ -1,4 +1,4 @@
-@if(Auth::guard('web')->check())
+@if(Auth::guard('admin')->check())
     <p>You are logged in as <strong>admin</strong></p>
 @else
     <p class="text-danger">
@@ -7,7 +7,7 @@
 @endif
 
 
-@if(Auth::guard('customer')->check())
+@if(Auth::guard('web')->check())
     <p>You are logged in as <strong>customer</strong></p>
 @else
     <p class="text-danger">

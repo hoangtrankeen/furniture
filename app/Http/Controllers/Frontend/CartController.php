@@ -125,22 +125,44 @@ class CartController extends Controller
                 $rowId = $duplicates->first()->rowId;
                 $qty_incart = $duplicates->first()->qty;
                 Cart::update( $rowId, $qty_incart + $quantity);
-                $message = 'Bạn đã thêm '.$product->name.' (sl: '.$quantity.') vào giỏ hàng';
+                $message = 'Bạn đã thêm '.$quantity.' '.$product->name.' vào giỏ hàng';
             }else{
                 Cart::add($request->id, $request->name, $quantity, $request->final_price)
                     ->associate('App\Model\Product');
 
-                $message = 'Bạn đã thêm '.$product->name.' (sl: '.$quantity.') vào giỏ hàng';
+                $message = 'Bạn đã thêm '.$quantity.' '.$product->name.' vào giỏ hàng';
             }
 
+            $cart_content = Cart::content();
+
+            $cart_items = [];
+            $content = [];
+            foreach($cart_content as $item)
+            {
+                $cart_items['image'] = getFeaturedImageProduct($item->model->image);
+                $cart_items['name'] = $item->name;
+                $cart_items['qty'] = $item->qty;
+                $cart_items['price'] = presentPrice($item->price);
+
+                $content[] = $cart_items;
+            }
+
+//            dd($cart_content);
+
             return response()->json([
+                    'status' => 'success',
                     'message' => $message,
                     'count' => Cart::count(),
                     'subtotal' => presentPrice(Cart::subtotal()),
                     'image' => url(getFeaturedImageProduct($product->image)),
+                    'cart_items' => $content
                 ],200);
         }else{
-            return response()->json(['message' => 'Không thể thêm sản phẩm vào giỏ hàng'], 400);
+            return response()->json([
+                'message' => 'Không thể thêm sản phẩm vào giỏ hàng',
+                'status' => 'error'
+                ],
+                400);
         }
     }
 }

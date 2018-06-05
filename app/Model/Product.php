@@ -60,26 +60,6 @@ class Product extends Model
         return $product;
     }
 
-    public static function getAllImageProduct($id)
-    {
-        $product = new Product();
-
-        $images = $product->find($id)->images;
-
-        if(empty($images)){
-            return [1,2];
-        }
-
-        $arr = [];
-
-        foreach (json_decode($images) as $image)
-        {
-            $arr[] = '/'.$product->photo_path.'/'.$image;
-        }
-
-        return $arr;
-    }
-
     public static function getFinalPrice($product)
     {
         return $product->price;

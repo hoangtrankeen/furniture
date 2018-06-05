@@ -16,7 +16,6 @@ class CategoryController extends Controller
     public function __construct(Category $category)
     {
         $this->photo_path = $category->photo_path;
-        $this->middleware('auth');
     }
 
     /**
@@ -57,6 +56,7 @@ class CategoryController extends Controller
             'slug'           => 'required|alpha_dash|unique:products,slug',
             'parent_id'      => 'required|max:255',
             'order'          => 'required|integer',
+            'active'          => 'required|integer',
         ));
 
 
@@ -84,6 +84,8 @@ class CategoryController extends Controller
         $category->parent_id = $request->parent_id;
         $category->image = $feature_image;
         $category->order = $request->order;
+        $category->description = $request->description;
+        $category->active = $request->active;
         $category->save();
 
         Session::flash('success', 'The category was successfully save!');
@@ -130,6 +132,7 @@ class CategoryController extends Controller
             'slug'           => 'required|alpha_dash|max:255|unique:products,slug,'.$id,
             'parent_id'      => 'required|max:255',
             'order'          => 'required|integer',
+            'active'          => 'required|integer',
         ));
 
 
@@ -163,6 +166,8 @@ class CategoryController extends Controller
         $category->parent_id = $request->parent_id;
         $category->image = $feature_image;
         $category->order = $request->order;
+        $category->description = $request->description;
+        $category->active = $request->active;
 
         $category->save();
 

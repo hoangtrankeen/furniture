@@ -5,7 +5,9 @@
 </head>
 
 <body class="animsition">
-	@include('frontend/partials/header')
+    <header>
+        @include('frontend/partials/header')
+    </header>
 	@include('frontend/partials/panel-cart')
 	@include('frontend/partials/slider')
 	@include('frontend/partials/banner')

@@ -55,6 +55,13 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label for="order" class="col-sm-2 control-label">Description</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="description" name="description" value="{{$thiscat->description}}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             <label for="categories" class="col-sm-2 control-label">Parent Category</label>
                             <div class="col-sm-8">
                                 <select class=" categories form-control" id="parent_id" name="parent_id">
@@ -65,6 +72,15 @@
                                             @include('backend/category/in_edit',['childs' => $category->childs, 'html'=>''])
                                         @endif
                                     @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="active" class="col-sm-2 control-label">Active</label>
+                            <div class="col-xs-1">
+                                <select class="form-control" id="active" name="active">
+                                    <option value="0" {{ $thiscat->active == 0 ? 'selected': ''}}>No</option>
+                                    <option value="1" {{ $thiscat->active == 1 ? 'selected': ''}}>Yes</option>
                                 </select>
                             </div>
                         </div>

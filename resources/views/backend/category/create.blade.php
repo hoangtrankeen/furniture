@@ -50,6 +50,13 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label for="order" class="col-sm-2 control-label">Description</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="description" name="description" value="{{ old('description')}}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             <label for="categories" class="col-sm-2 control-label">Parent Category</label>
                             <div class="col-sm-8">
                                 <select class=" categories form-control" id="parent_id" name="parent_id">
@@ -60,6 +67,15 @@
                                             @include('backend/category/in_create',['childs' => $category->childs, 'html'=>''])
                                         @endif
                                     @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="active" class="col-sm-2 control-label">Active</label>
+                            <div class="col-xs-1">
+                                <select class="form-control" id="active" name="active">
+                                    <option value="0" {{ old('active') == 0 ? 'selected': ''}}>No</option>
+                                    <option value="1" {{ old('active') == 1 ? 'selected': ''}}>Yes</option>
                                 </select>
                             </div>
                         </div>

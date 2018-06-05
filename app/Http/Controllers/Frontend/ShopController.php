@@ -19,7 +19,10 @@ class ShopController extends Controller
      */
     public function index()
     {
-        $categories = Category::where('parent_id',0)->orderBy('order')->get();
+        $categories = Category::where('parent_id',0)
+            ->where('active',1)
+            ->orderBy('order')
+            ->get();
         $data['featured'] = Product::where('active',1)
             ->where('featured', 1)
             ->take(6)->get();
@@ -35,13 +38,15 @@ class ShopController extends Controller
     public function quickView(Request $request)
     {
         $slug = $request->q;
-
         $product = Product::where('slug', $slug)->first();
         $product->image = getFeaturedImageProduct($product->image);
+
+        $final_price = Product::getFinalPrice($product);
+        $product->priceformat = presentPrice($final_price);
+        $product->price = $final_price;
         $data = [
             'product' => $product,
         ];
-
         return response()->json($data, 200);
     }
 
@@ -51,25 +56,13 @@ class ShopController extends Controller
         $category = Category::where('slug', $slug)->first();
         $products = Product::whereHas('categories', function($query) use($slug){
             $query->where('slug', $slug);
-        });
-
-        if (request()->sort == 'low_high') {
-            $products = $products->orderBy('price')->paginate($pagination);
-        } elseif (request()->sort == 'high_low') {
-            $products = $products->orderBy('price', 'desc')->paginate($pagination);
-        } elseif (request()->sort == 'name') {
-            $products = $products->orderBy('name', 'asc')->paginate($pagination);
-        }elseif (request()->sort == 'best_seller') {
-            $products = $products->where('featured','1')->orderBy('name', 'asc')->paginate($pagination);
-        } else {
-            $products = $products->paginate($pagination);
-        }
+        })->paginate($pagination);
 
         foreach($products as $key =>  $product)
         {
-            $product->collect_img = Product::getAllImageProduct($product->id);
             $product->final_price = Product::getFinalPrice($product);
         }
+
         if($request->session()->has('category')){
             $request->session()->forget('category');
         }
@@ -83,6 +76,24 @@ class ShopController extends Controller
         return view('frontend/shop', $data);
     }
 
+    public function allProduct(Request $request)
+    {
+        $pagination = 9;
+        $products = Product::where('active',1)->paginate($pagination);
+
+        foreach($products as $key =>  $product)
+        {
+            $product->final_price = Product::getFinalPrice($product);
+        }
+
+        if($request->session()->has('category')){
+            $request->session()->forget('category');
+        }
+
+        $data['products'] = $products;
+        return view('frontend/shop', $data);
+    }
+
     /**
      * Display the specified resource.
      *
@@ -93,7 +104,6 @@ class ShopController extends Controller
     {
         $product = Product::where('slug', $slug)->firstOrFail();
 
-        $product->collect_img = Product::getAllImageProduct($product->id);
         $product->final_price = Product::getFinalPrice($product);
 
         $data['product'] = $product;
@@ -102,18 +112,33 @@ class ShopController extends Controller
 
     public function search(Request $request)
     {
+        $pagination = 9;
         $query = $request->input('q');
-
         $products = Product::where('name', 'like', "%$query%")
-                            ->orWhere('sku', 'like', "%$query%")
-                            ->paginate(10);
+                            ->orWhere('sku', 'like', "%$query%");
 
+        if($request->has('sort')) {
+            if (request()->sort == 'low_high') {
+                $products = $products->orderBy('price');
+            } elseif (request()->sort == 'high_low') {
+                $products = $products->orderBy('price', 'desc');
+            } elseif (request()->sort == 'name') {
+                $products = $products->orderBy('name', 'asc');
+            } elseif (request()->sort == 'best_seller') {
+                $products = $products->where('featured', '1')->orderBy('name', 'asc');
+            }
+        }
+        $products = $products ->paginate($pagination);;
         foreach($products as $key =>  $product)
         {
             $product->final_price = Product::getFinalPrice($product);
         }
 
         $data['products'] = $products;
+
+        if($request->session()->has('category')){
+            $request->session()->forget('category');
+        }
 //        $result = [];
 //
 //        foreach ($products as $product){
@@ -124,7 +149,7 @@ class ShopController extends Controller
 //            ];
 //        }
 
-        return view('frontend/search', $data);
+        return view('frontend/shop', $data);
     }
 
 }

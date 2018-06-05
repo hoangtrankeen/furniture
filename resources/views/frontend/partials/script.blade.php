@@ -70,14 +70,7 @@
         });
     });
 
-    /*---------------------------------------------*/
 
-    $('.js-addcart-detail').each(function(){
-        var nameProduct = $(this).parent().parent().parent().parent().find('.js-name-detail').html();
-        $(this).on('click', function(){
-            swal(nameProduct, "is added to cart !", "success");
-        });
-    });
 
 </script>
 <!--===============================================================================================-->
@@ -100,6 +93,10 @@
 <!--===============================================================================================-->
 <script src="{{asset('frontend/js/main.js')}}"></script>
 
+<!--Quick-view-->
 <script src="{{asset('frontend/js/quick-view.js')}}"></script>
+
+<!--Quick-view-->
+<script src="{{asset('frontend/js/addto.js')}}"></script>
 
 @yield('javascript')

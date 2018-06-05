@@ -52,17 +52,27 @@ class Handler extends ExceptionHandler
         return parent::render($request, $exception);
     }
 
+    /**
+     * Convert an authentication exception into a response.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Auth\AuthenticationException  $exception
+     * @return \Illuminate\Http\Response
+     */
     protected function unauthenticated($request, AuthenticationException $exception)
     {
-        if($request->expectsJson()) {
-            return response()->json(['message' => $exception->getMessage()], 401);
+//        return $request->expectsJson()
+//            ? response()->json(['message' => 'Unauthenticated.'], 401)
+//            : redirect()->guest(route('login'));
+
+        if ($request->expectsJson()) {
+            return response()->json(['error' => 'Unauthenticated.'], 401);
         }
 
         $guard = array_get($exception->guards(), 0);
-
-        switch ($guard){
-            case 'customer':
-                $login = 'customer.login';
+        switch ($guard) {
+            case 'admin':
+                $login = 'admin.login';
                 break;
 
             default:

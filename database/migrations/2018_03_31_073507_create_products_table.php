@@ -25,7 +25,7 @@ class CreateProductsTable extends Migration
 
             $table->integer('price');
             $table->integer('quantity');
-            $table->string('details')->nullable();
+            $table->text('details')->nullable();
             $table->text('description')->nullable();
 
             $table->boolean('featured')->default(false);

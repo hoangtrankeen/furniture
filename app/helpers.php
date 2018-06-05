@@ -68,7 +68,7 @@ function presentDate($date = '')
     return $date;
 }
 
-function getProductStatus($status)
+function getProductStockStatus($status)
 {
     if($status === 1){
         $status = 'Còn hàng';

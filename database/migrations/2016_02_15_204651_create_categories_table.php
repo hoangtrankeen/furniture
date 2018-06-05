@@ -20,6 +20,8 @@ class CreateCategoriesTable extends Migration
             $table->string('slug')->unique();
             $table->text('image')->nullable();
             $table->integer('order');
+            $table->string('description')->nullable();
+            $table->string('active');
             $table->timestamps();
         });
     }
