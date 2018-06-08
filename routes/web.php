@@ -17,29 +17,30 @@
 
 
 Route::get('/', 'Frontend\ShopController@index')->name('home');
-Route::resource('/cart', 'Frontend\CartController');
 
-Route::get('gio-hang', 'Frontend\CartController@index')->name('cart.index');
+Route::resource('/cart', 'Frontend\CartController');
+Route::get('cart', 'Frontend\CartController@index')->name('cart.index');
 Route::delete('/cart/remove/{id}', 'Frontend\CartController@destroyCartItem');
 Route::post('/add-to-cart','Frontend\CartController@addCartShopPage');
 Route::post('/cart/switchToSaveForLater/{product}', 'Frontend\CartController@switchToSaveForLater')->name('cart.switchToSaveForLater');
 
-Route::get('/san-pham', 'Frontend\ShopController@allProduct')->name('catalog.product.all');
-Route::get('/thanh-toan', 'Frontend\CheckoutController@index')->name('checkout');
-Route::post('/checkout', 'Frontend\CheckoutController@store')->name('checkout.store');
-Route::get('/danh-muc/{slug}', 'Frontend\ShopController@catalogCategory')->name('catalog.category');
-Route::get('/san-pham/{slug}', 'Frontend\ShopController@catalogProduct')->name('catalog.product');
+Route::get('/product', 'Frontend\ShopController@allProduct')->name('catalog.product.all');
+Route::get('/checkout', 'Frontend\CheckoutController@index')->name('checkout');
+Route::post('/checkout/store', 'Frontend\CheckoutController@store')->name('checkout.store');
+Route::get('/category/{slug}', 'Frontend\ShopController@catalogCategory')->name('catalog.category');
+Route::get('/product/{slug}', 'Frontend\ShopController@catalogProduct')->name('catalog.product');
 Route::get('/search', 'Frontend\ShopController@search')->name('catalog.search');
 Route::get('/quick-view', 'Frontend\ShopController@quickView')->name('catalog.quickview');
 
 
-Route::get('/bai-viet', 'Frontend\BlogController@index')->name('cms.post');
-Route::get('/bai-viet/{slug}', 'Frontend\BlogController@details')->name('cms.post.detail');
-Route::get('/chuyen-muc/{slug}', 'Frontend\BlogController@topic')->name('cms.topic');
+Route::get('/post', 'Frontend\BlogController@index')->name('cms.post');
+Route::get('/post/{slug}', 'Frontend\BlogController@details')->name('cms.post.detail');
+Route::get('/post-category/{slug}', 'Frontend\BlogController@topic')->name('cms.topic');
 
 Route::post('/user/logout', 'Auth\LoginController@userLogout')->name('user.logout');
-
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/customer/account', 'Frontend\CustomerController@index')->name('customer.dashboard');
+Route::get('/customer/account/edit', 'Frontend\CustomerController@accountEdit')->name('customer.account.edit');
+Route::post('/customer/account/update', 'Frontend\CustomerController@accountUpdate')->name('customer.account.update');
 
 Route::prefix('admin')->group(function () {
 

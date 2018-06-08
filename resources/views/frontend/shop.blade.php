@@ -80,7 +80,7 @@
 
             </div>
             <div class="row">
-                <div class="col-sm-6 col-md-4 col-lg-3 p-b-50">
+                <div class="col-sm-12 col-md-4 col-lg-3 p-b-50">
                     <div class="leftbar p-r-20 p-r-0-sm">
                         <div class="wrap-title">
                             <h4 class="mtext-112 cl2 p-b-23">
@@ -88,16 +88,14 @@
                             </h4>
                         </div>
                         <nav id="main-nav">
-                            <ul>
-                                {{ManagerCatalog::showLeftCategories()}}
-                            </ul>
+                            {{ManagerCatalog::showLeftCategories()}}
                         </nav>
                     </div>
                 </div>
-                <div class="col-sm-6 col-md-8 col-lg-9 p-b-50">
+                <div class="col-sm-12 col-md-8 col-lg-9 p-b-50">
                     <div class="row">
                         @forelse($products as $product)
-                            <div class="col-sm-6 col-md-4 col-lg-4 p-b-35">
+                            <div class="col-sm-6 col-md-6 col-lg-4 p-b-35">
                                 <!-- Block2 -->
                                 <div class="block2">
                                     <div class="block2-pic hov-img0">

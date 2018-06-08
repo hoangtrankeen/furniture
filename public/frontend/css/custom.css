@@ -1,0 +1,125 @@
+/*Header menu*/
+.header-v4 .fix-menu-desktop.container-menu-desktop{
+    z-index:1100;
+}
+/********************************Override color******************************/
+.wrap-menu-desktop{
+    background-color: rgba(255,255,255,1);
+}
+
+.top-bar , .topbar-mobile li{
+    background-color: #f5f5f5;
+}
+
+.main-menu > li:hover > a, .main-menu > li.active-menu > a, .sub-menu > li:hover > a,.hov-cl1:hover, .right-top-bar a:hover, .help-block{
+    color: #e65540 !important;
+}
+.icon-header-noti::after, .btn-back-to-top, .main-menu-m, .focus-input1{
+    background-color: #e65540;
+}
+
+.left-top-bar, .right-top-bar a{
+    color: #888888;
+}
+
+.show-search:hover:after, .show-filter:hover:after{
+    background-color: #e65540;
+    border-color: #e65540;
+}
+
+/*Button*/
+.hov-btn1, .hov-btn2:hover, .hov-btn2, .hov-btn3:hover, .swal-button{
+    background-color: #e65540;
+    color: #fff;
+}
+.hov-btn3:hover{
+    border-color:#e65540 ;
+}
+
+.btn-back-to-top:hover{
+    background-color: #e65540;
+}
+
+.btn-back-to-top{
+    bottom: 30px;
+}
+
+.alert{
+    padding: .35rem 1.25rem;
+}
+
+/*Header search*/
+.wrap-search-header input{
+    font-size: 35px;
+}
+
+.wrap-search-header{
+    height:100px;
+}
+
+
+/*Modal*/
+.wrap-modal1 .container{
+    max-width: 900px;
+}
+
+/*Cart Panel*/
+#side-cart-sample{
+   display: none;
+}
+
+.side-cart-wrap{
+    float: left;
+}
+.header-cart-item-img::after{
+    content: '';
+}
+
+/*Category page*/
+
+form#content{
+    width: 100%;
+}
+
+/*Banner Category page*/
+.banner-category {
+    width: 100%;
+    min-height: 239px;
+    padding-left: 15px;
+    padding-right: 15px;
+    background-repeat: no-repeat;
+    background-position: 50% 40%;
+    background-size: cover;
+    background-image: url(../../media/banner/banner3.jpg);
+}
+
+/*Leftnav smartmenu*/
+
+/*Sort field*/
+.sort-field, .sort-field:focus{
+    outline: none;
+    border: none;
+    padding:7px;
+    color: #888;
+}
+
+@media (min-width: 768px){
+    .sm-mint.sm-vertical {
+        border-right: none !important;
+    }
+}
+
+@media (max-width: 768px){
+    header{
+        position: fixed;
+        width:100%;
+        z-index:2000;
+        top:0;
+    }
+    .flex-change{
+        margin-top: 100px;
+    }
+
+
+}
+

@@ -52,7 +52,7 @@
 
             <div class="w-full">
                 <div class="header-cart-total w-full p-tb-40 side-cart-total">
-                    Tổng giỏ hàng: {{presentPrice(Cart::total())}}
+                    Tổng giỏ hàng: <span id="value-total">{{presentPrice(Cart::total())}}</span>
                 </div>
 
                 <div class="header-cart-buttons flex-w w-full ">

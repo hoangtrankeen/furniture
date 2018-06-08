@@ -28,7 +28,6 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $request->user()->authorizeRoles(['employee', 'manager']);
         $data['products'] = Product::all();
 
         return view('backend/product/index',$data);

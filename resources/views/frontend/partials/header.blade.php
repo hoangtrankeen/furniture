@@ -63,6 +63,44 @@
                     <i class="zmdi zmdi-search"></i>
                 </div>
 
+                <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 ">
+
+                    <ul class="main-menu">
+                        <li>
+                            <i class="zmdi zmdi-account-circle"></i>
+                            <ul class="sub-menu">
+
+                                @if(Auth::guard('web')->check())
+                                    <li>
+                                        <a href="{{route('customer.dashboard')}}">Thông tin tài khoản</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('logout') }}"
+                                           onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                            Đăng xuất
+                                        </a>
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                            {{ csrf_field() }}
+                                        </form>
+
+                                    </li>
+                                @else
+                                    <li>
+                                        <a href="{{ route('login') }}">Đăng nhập</a>
+                                    </li>
+
+                                    <li>
+                                        <a href="{{ route('register') }}">Đăng kí</a>
+                                    </li>
+                                @endif
+                            </ul>
+                        </li>
+
+
+                    </ul>
+                </div>
+
                 <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart" data-notify="{{Cart::count()}}">
                     <i class="zmdi zmdi-shopping-cart"></i>
                 </div>
@@ -86,6 +124,10 @@
     <div class="wrap-icon-header flex-w flex-r-m m-r-15">
         <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 js-show-modal-search">
             <i class="zmdi zmdi-search"></i>
+        </div>
+
+        <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11">
+            <i class="zmdi zmdi-account-circle"></i>
         </div>
 
         <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti js-show-cart" data-notify="2">
