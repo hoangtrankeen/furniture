@@ -1,7 +1,4 @@
 
-
-
-
 $(document).ready(function () {
     $.ajaxSetup({
         headers: {
@@ -10,7 +7,9 @@ $(document).ready(function () {
     });
 
     $(".form-cart").on('submit',function(e){
+        $(".form-cart").find(".help-block").remove();
         e.preventDefault();
+
         var values = $(this).serialize();
 
         console.log(values);
@@ -21,9 +20,13 @@ $(document).ready(function () {
             data: values,
             success: function( data ) {
                 // swal(data.message, "success");
-                disPlayMessage(data);
+                if(data.success === false){
+                    $(".form-cart").append("<span class='help-block'>"+data.message+"</span>");
+                }else{
+                    disPlayMessage(data);
+                    upDateCartPanel(data)
+                }
 
-                upDateCartPanel(data)
             },
 
             error: function(xhr, textStatus, error){
@@ -32,12 +35,10 @@ $(document).ready(function () {
                 console.log(error);
             }
         });
-
     });
 
-
     function upDateCartPanel(data) {
-        $(".js-show-cart").attr("data-notify",data.count);
+
         $('.side-cart-item').not(':first').remove();
 
         var i = 0;
@@ -55,7 +56,20 @@ $(document).ready(function () {
 
         });
 
+        $('.js-hide-modal1').trigger('click');
+
+        $(".js-show-cart").attr("data-notify",data.count);
+
         $('.side-cart-total').find('#value-total').text(data.subtotal);
+
+        //Update title has item or not
+        if(!(data.count > 0) ){
+            $('.side-cart-action').hide();
+            $('.side-cart-empty').show();
+        }else{
+            $('.side-cart-action').show();
+            $('.side-cart-empty').hide();
+        }
     }
 
     function disPlayMessage(data) {

@@ -7,10 +7,23 @@ $(document).ready(function () {
 
     /*==================================================================
     [ Show modal1 ]*/
+    var customElement = $("<div>", {
+        "class" : "loader05"
+    });
+
+
     $('.js-show-modal1').on('click',function(e){
 
+        $.LoadingOverlay("show", {
+            image       : "",
+            custom      : customElement
+        });
+
         e.preventDefault();
+
+
         var slug = $(this).attr('data-value');
+        setTimeout(function(){
         $.get( window.location.origin + '/quick-view?q=' +slug, function( data ) {
            console.log(data);
            upDateView(data);
@@ -18,8 +31,11 @@ $(document).ready(function () {
            $('.js-modal1').addClass('show-modal1');
 
         });
+        }, 1000);
 
-
+        setTimeout(function(){
+            $.LoadingOverlay("hide");
+        }, 1000);
     });
 
     $('.js-hide-modal1').on('click',function(){

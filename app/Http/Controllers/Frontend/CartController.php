@@ -53,21 +53,57 @@ class CartController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function updateCartItem(Request $request, $id)
     {
 
         $validator = Validator::make($request->all(), [
-            'quantity' => 'required|numeric|between:1,5'
+            'quantity' => 'required|numeric'
         ]);
+        //Check row id exist then update
+        $duplicates = Cart::search(function ($cartItem, $rowId) use ($id) {
+            return $cartItem->id === $id;
+        });
 
-        if ($validator->fails()) {
-            session()->flash('errors', collect(['Quantity must be between 1 and 5.']));
-            return response()->json(['success' => false], 400);
+        if ($validator->fails() || $duplicates->isEmpty()) {
+            return response()->json(['success' => false]);
         }
 
-        Cart::update($id, $request->quantity);
-        session()->flash('success_message', 'Quantity was updated successfully!');
-        return response()->json(['success' => true]);
+        $rowId = $duplicates->first()->rowId;
+
+        Cart::update($rowId, $request->quantity);
+
+        $zero = Cart::search(function ($cartItem, $rowId) use ($id) {
+            return $cartItem->id === $id;
+        });
+        if($zero->isEmpty()){
+            $zero = $id;
+        }else{
+            $zero = null;
+        }
+
+        $cart_content = Cart::content();
+
+        $cart_items = [];
+        $content = [];
+        foreach($cart_content as $item)
+        {
+            $cart_items['image'] = getFeaturedImageProduct($item->model->image);
+            $cart_items['name'] = $item->name;
+            $cart_items['qty'] = $item->qty;
+            $cart_items['price'] = presentPrice($item->price);
+
+            $content[] = $cart_items;
+        }
+
+        return response()->json([
+            'success' => true,
+            'count' => Cart::count(),
+            'subtotal' => presentPrice(Cart::subtotal()),
+            'cart_items' => $content,
+            'total' => presentPrice(Cart::total()),
+            'remove_id' => $zero,
+            'message' => 'Giỏ hàng đã được cập nhật'
+        ]);
     }
 
     /**
@@ -78,11 +114,46 @@ class CartController extends Controller
      */
     public function destroyCartItem($id)
     {
-        Cart::remove($id);
+        $duplicates = Cart::search(function ($cartItem, $rowId) use ($id) {
+            return $cartItem->id === $id;
+        });
 
-        return response()->json([
-            'message' => 'Giỏ hàng đã được cập nhật'
-        ]);
+        if ($duplicates->isNotEmpty()) {
+
+            $rowId = $duplicates->first()->rowId;
+            Cart::remove($rowId);
+
+            $cart_content = Cart::content();
+
+            $cart_items = [];
+            $content = [];
+            foreach($cart_content as $item)
+            {
+                $cart_items['image'] = getFeaturedImageProduct($item->model->image);
+                $cart_items['name'] = $item->name;
+                $cart_items['qty'] = $item->qty;
+                $cart_items['price'] = presentPrice($item->price);
+
+                $content[] = $cart_items;
+            }
+
+            return response()->json([
+                'success' => true,
+                'count' => Cart::count(),
+                'subtotal' => presentPrice(Cart::subtotal()),
+                'cart_items' => $content,
+                'total' => presentPrice(Cart::total()),
+                'message' => 'Giỏ hàng đã được cập nhật'
+            ]);
+        }else{
+
+            return response()->json([
+                'message' => 'Item không tồn tại',
+                'success' => false
+            ]);
+        }
+
+
     }
 
     /**
@@ -114,6 +185,17 @@ class CartController extends Controller
     public function addCartShopPage(Request $request)
     {
         if ($request->isMethod('post')){
+
+            $validator = Validator::make($request->all(), [
+                'quantity' => 'required|numeric|min:1'
+            ]);
+
+            if($validator->fails()){
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Số lượng nhỏ nhất là 1. Xin vui lòng nhập lại.'
+                ]);
+            }
 
             $product = Product::where('id',$request->id)->first();
             $quantity = $request->quantity ?? 1;

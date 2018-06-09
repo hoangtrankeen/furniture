@@ -1,8 +1,19 @@
 <?php
 
 function presentPrice($price)
-{
-    return number_format($price).' VNĐ';
+{   if(is_numeric($price)){
+        return number_format($price).' VNĐ';
+    }else{
+    return $price;
+    }
+}
+
+function priceNoUnit($price)
+{   if(is_numeric($price)){
+        return number_format($price);
+    }else{
+    return $price;
+    }
 }
 
 function setActiveCategory($category, $output = 'active')

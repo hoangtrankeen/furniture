@@ -32,8 +32,8 @@
 
 
                 </li>
-                @foreach(Cart::content() as $item)
-                    <li class="header-cart-item flex-w flex-t m-b-12 side-cart-item">
+                @forelse(Cart::content() as $item)
+                    <li class="header-cart-item flex-w flex-t m-b-12 side-cart-item " id="side-cart-item-{{$item->rowId}}">
                         <div class="header-cart-item-img">
                             <img src="{{asset(getFeaturedImageProduct($item->model->image))}}" class="side-cart-img" alt="IMG">
                         </div>
@@ -47,10 +47,16 @@
 						    </span>
                         </div>
                     </li>
-                @endforeach
+                @empty
+                    <h4 class="header-cart-total w-full p-b-40 side-cart-empty">Hiện tại không có sản phẩm nào trong giỏ hàng</h4>
+                @endforelse
             </ul>
 
-            <div class="w-full">
+            @php
+                $hide = (Cart::count() == 0 )  ? ' side-cart-hide' : '';
+            @endphp
+
+            <div class="w-full side-cart-action {{$hide}} ">
                 <div class="header-cart-total w-full p-tb-40 side-cart-total">
                     Tổng giỏ hàng: <span id="value-total">{{presentPrice(Cart::total())}}</span>
                 </div>
@@ -65,6 +71,7 @@
                     </a>
                 </div>
             </div>
+
         </div>
     </div>
 </div>

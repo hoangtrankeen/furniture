@@ -21,6 +21,7 @@ Route::get('/', 'Frontend\ShopController@index')->name('home');
 Route::resource('/cart', 'Frontend\CartController');
 Route::get('cart', 'Frontend\CartController@index')->name('cart.index');
 Route::delete('/cart/remove/{id}', 'Frontend\CartController@destroyCartItem');
+Route::post('/cart/update/{id}', 'Frontend\CartController@updateCartItem');
 Route::post('/add-to-cart','Frontend\CartController@addCartShopPage');
 Route::post('/cart/switchToSaveForLater/{product}', 'Frontend\CartController@switchToSaveForLater')->name('cart.switchToSaveForLater');
 

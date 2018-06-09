@@ -28,62 +28,27 @@
         </h2>
     </section>
 
-    <div class="bg0 m-t-20 p-b-140 flex-change">
+    <div class="container flex-top">
+        <div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
+            <a href="{{route('home')}}" class="stext-109 cl8 hov-cl1 trans-04">
+                Trang chủ
+                <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+            </a>
+            @if($breadname)
+                <span class="stext-109 cl4">{{ $breadname}}</span>
+            @else
+                <span class="stext-109 cl4">Sản phẩm</span>
+            @endif
+        </div>
+    </div>
+
+    <div class="bg0 m-t-20 p-b-140">
         <div class="container">
-            <div class="flex-w flex-sb-m p-b-20">
-                <div class="flex-w flex-l-m filter-tope-group m-tb-10">
-                    <div class="bread-crumb flex-w p-l-25 p-r-15 p-lr-0-lg">
-                        <a href="{{route('home')}}" class="stext-109 cl8 hov-cl1 trans-04">
-                            Trang chủ
-                            <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
-                        </a>
-                        @if($breadname)
-                            <span class="stext-109 cl4">{{ $breadname}}</span>
-                        @else
-                            <span class="stext-109 cl4">Sản phẩm</span>
-                        @endif
-
-                    </div>
-                </div>
-
-                <div class="flex-w flex-c-m m-tb-10">
-                    <div class="flex-c-m stext-106 cl6 size-104 bor4 pointer trans-04 m-r-8 m-tb-4">
-                        <select class="sort-field ">
-                            @php $sort = request()->get('sort') ?? ''; @endphp
-                            <option value="best-seller" {{ $sort  == 'best-seller' ? 'selected' :'' }}>Bán chạy nhất</option>
-                            <option value="low_high" {{ $sort == 'low_high' ? 'selected' :'' }}>Giá cao đến thấp</option>
-                            <option value="high_low" {{ $sort == 'high_low' ? 'selected' :'' }}>Giá thấp đến cao</option>
-                            <option value="name" {{ $sort == 'name' ? 'selected' :'' }}>Tên</option>
-                        </select>
-                    </div>
-
-                    <div class="flex-c-m stext-106 cl6 size-105 bor4 pointer hov-btn3 trans-04 m-tb-4 js-show-search">
-                        <i class="icon-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-search"></i>
-                        <i class="icon-close-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
-                        Tìm kiếm
-                    </div>
-                </div>
-
-                <!-- Search product -->
-                <div class="dis-none panel-search w-full p-t-10 p-b-15">
-                    <div class="bor8 dis-flex p-l-15">
-                        <button class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
-                            <i class="zmdi zmdi-search"></i>
-                        </button>
-                        <form id="content" action="{{route('catalog.search')}}" method="get">
-                            <input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="q" placeholder="Nhập từ khóa...">
-                            {{csrf_field()}}
-                        </form>
-                    </div>
-                </div>
-
-
-            </div>
             <div class="row">
                 <div class="col-sm-12 col-md-4 col-lg-3 p-b-50">
                     <div class="leftbar p-r-20 p-r-0-sm">
                         <div class="wrap-title">
-                            <h4 class="mtext-112 cl2 p-b-23">
+                            <h4 class="mtext-112 cl2 p-b-23 p-t-20">
                                 Danh mục sản phẩm
                             </h4>
                         </div>
@@ -94,6 +59,44 @@
                 </div>
                 <div class="col-sm-12 col-md-8 col-lg-9 p-b-50">
                     <div class="row">
+                        <div class="col-md-12 col-lg-12">
+                            <div class="flex-w flex-sb-m p-b-20 ">
+                                <div class="flex-w flex-l-m filter-tope-group m-tb-10">
+
+                                </div>
+                                <div class="flex-w flex-c-m m-tb-10">
+                                    <div class="flex-c-m stext-106 cl6 size-104 bor4 pointer trans-04 m-r-8 m-tb-4">
+                                        <select class="sort-field ">
+                                            @php $sort = request()->get('sort') ?? ''; @endphp
+                                            <option value="best-seller" {{ $sort  == 'best-seller' ? 'selected' :'' }}>Bán chạy nhất</option>
+                                            <option value="low_high" {{ $sort == 'low_high' ? 'selected' :'' }}>Giá cao đến thấp</option>
+                                            <option value="high_low" {{ $sort == 'high_low' ? 'selected' :'' }}>Giá thấp đến cao</option>
+                                            <option value="name" {{ $sort == 'name' ? 'selected' :'' }}>Tên</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="flex-c-m stext-106 cl6 size-105 bor4 pointer hov-btn3 trans-04 m-tb-4 js-show-search">
+                                        <i class="icon-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-search"></i>
+                                        <i class="icon-close-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
+                                        Tìm kiếm
+                                    </div>
+                                </div>
+
+                                <!-- Search product -->
+                                <div class="dis-none panel-search w-full p-t-10 p-b-15">
+                                    <div class="bor8 dis-flex p-l-15">
+                                        <button class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
+                                            <i class="zmdi zmdi-search"></i>
+                                        </button>
+                                        <form id="content" action="{{route('catalog.search')}}" method="get">
+                                            <input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="q" placeholder="Nhập từ khóa...">
+                                            {{csrf_field()}}
+                                        </form>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
                         @forelse($products as $product)
                             <div class="col-sm-6 col-md-6 col-lg-4 p-b-35">
                                 <!-- Block2 -->
