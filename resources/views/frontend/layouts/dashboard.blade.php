@@ -52,8 +52,8 @@
                 <div class="leftbar p-r-20 p-r-0-sm">
                     <nav id="main-nav">
                         <ul id="main-smartmenu" class="sm sm-vertical sm-mint">
-                            <li><h3><a href="">Đơn hàng của bạn</a></h3></li>
-                            <li><h3><a href="">Thông tin tài khoản</a></h3></li>
+                            <li><h3><a href="{{route('customer.order.list')}}">Đơn hàng của bạn</a></h3></li>
+                            <li><h3><a href="{{route('customer.account.edit')}}">Thông tin tài khoản</a></h3></li>
                         </ul>
                     </nav>
                 </div>

@@ -23,14 +23,15 @@ class CreateOrdersTable extends Migration
             $table->string('billing_province');
             $table->string('billing_postalcode');
             $table->string('billing_phone');
-            $table->string('billing_name_on_card');
+            $table->string('billing_name_on_card')->nullable();
             $table->integer('billing_discount')->default(0);
             $table->string('billing_discount_code')->nullable();
             $table->integer('billing_subtotal');
             $table->integer('billing_tax');
             $table->integer('billing_total');
-            $table->string('payment_gateway')->default('stripe');
-            $table->boolean('shipped')->default(false);
+            $table->string('payment_gateway')->nullable();
+            $table->integer('payment_method')->nullable();
+            $table->integer('status')->default(0);
             $table->string('error')->nullable();
             $table->timestamps();
         });

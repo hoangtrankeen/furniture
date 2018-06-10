@@ -54,7 +54,7 @@ $(document).ready(function () {
         var price = data.product.price;
         var sku = data.product.sku;
         var priceformat = data.product.priceformat;
-        var stock_status = data.product.in_stock ? 'Còn hàng': 'Hết hàng';
+        var stock_status = data.product.in_stock ? '': 'Hết hàng';
 
         $(".quick-view-img").attr('src', image);
         $(".quick-view-flex").attr('href', image);

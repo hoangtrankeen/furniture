@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 
 class CustomerController extends Controller
 {
+
     /**
      * Create a new controller instance.
      *
@@ -27,7 +28,13 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        return view('frontend/dashboard');
+        $customer_id = Auth::user()->id;
+
+        $customer = User::find($customer_id);
+
+        $data['orders'] = $customer->orders()->paginate(8);
+
+        return view('frontend/dashboard',$data);
     }
 
     /**
@@ -49,15 +56,15 @@ class CustomerController extends Controller
     public function accountUpdate(Request $request)
     {
 
-        if($request->has('change-password')){
+        if ($request->has('change-password')) {
             if (!(Hash::check($request->get('current_password'), Auth::user()->password))) {
                 // The passwords matches
-                return redirect()->back()->with("error","Mật khẩu hiện tại không đúng. Xin vui lòng nhập lại.");
+                return redirect()->back()->with("error", "Mật khẩu hiện tại không đúng. Xin vui lòng nhập lại.");
             }
 
-            if(strcmp($request->get('current_password'), $request->get('new_password')) == 0){
+            if (strcmp($request->get('current_password'), $request->get('new_password')) == 0) {
                 //Current password and new password are same
-                return redirect()->back()->with("error","Mật khẩu mới không thể giống mật khẩu hiện tại. Xin vui lòng chọn mật khẩu khác.");
+                return redirect()->back()->with("error", "Mật khẩu mới không thể giống mật khẩu hiện tại. Xin vui lòng chọn mật khẩu khác.");
             }
 
             $request->validate([
@@ -71,12 +78,12 @@ class CustomerController extends Controller
             //Change Password
             $user = Auth::user();
             $user->name = $request->name;
-            $user->address =  $request->address;
-            $user->phone =  $request->phone;
+            $user->address = $request->address;
+            $user->phone = $request->phone;
             $user->password = bcrypt($request->get('new_password'));
             $user->save();
-            return redirect()->back()->with("success","Thông tin tài khoản đã được cập nhật thành công !");
-        }else{
+            return redirect()->back()->with("success", "Thông tin tài khoản đã được cập nhật thành công !");
+        } else {
             $request->validate([
                 'name' => 'required|string|max:200',
                 'address' => 'nullable|string|max:200',
@@ -86,12 +93,24 @@ class CustomerController extends Controller
             //Change Only Info
             $user = Auth::user();
             $user->name = $request->name;
-            $user->address =  $request->address;
-            $user->phone =  $request->phone;
+            $user->address = $request->address;
+            $user->phone = $request->phone;
             $user->save();
-            return redirect()->back()->with("success","Thông tin tài khoản đã được cập nhật thành công !");
+            return redirect()->back()->with("success", "Thông tin tài khoản đã được cập nhật thành công !");
         }
+    }
 
+    /**
+     *Get list order
+     */
+    public function listOrder()
+    {
+        $customer_id = Auth::user()->id;
 
+        $customer = User::find($customer_id);
+
+        $data['orders'] = $customer->orders()->paginate(8);
+
+        return view('frontend.customer.order.list',$data);
     }
 }

@@ -46,21 +46,22 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($orders as $item)
-                            <tr>
-                                <td class="">#{{$item->id}}</td>
-                                <td class="">{{presentDate($item->created_at)}}</td>
-                                <td class="">{{presentPrice($item->billing_total)}}</td>
-                                <td class="">{{presentPrice($item->statuses->name)}}</td>
-                                <td class="">
-                                    <a href="" class="stext-103 cl2 size-102 bg0 bor2 hov-cl1 p-lr-15 trans-04">
-                                        Xem
-                                    </a>
-                                </td>
-                            </tr>
-                        @endforeach
+                            @foreach($orders as $item)
+                                <tr>
+                                    <td class="">#{{$item->id}}</td>
+                                    <td class="">{{presentDate($item->created_at)}}</td>
+                                    <td class="">{{presentPrice($item->billing_total)}}</td>
+                                    <td class="">{{presentPrice($item->statuses->name)}}</td>
+                                    <td class="">
+                                        <a href="" class="stext-103 cl2 size-102 bg0 bor2 hov-cl1 p-lr-15 trans-04">
+                                            Xem
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
+
                     {{ $orders->links('frontend.partials.pager.pager') }}
 
                 </div>

@@ -11,7 +11,7 @@ class Order extends Model
     protected $fillable = [
         'user_id', 'billing_email', 'billing_name', 'billing_address', 'billing_city',
         'billing_province', 'billing_postalcode', 'billing_phone', 'billing_name_on_card', 'billing_discount',
-        'billing_discount_code', 'billing_subtotal', 'billing_tax', 'billing_total', 'error',
+        'billing_discount_code', 'billing_subtotal', 'billing_tax', 'billing_total', 'error','payment_method', 'status',
     ];
 
     public function user()
@@ -22,6 +22,16 @@ class Order extends Model
     public function products()
     {
         return $this->belongsToMany('App\Model\Product')->withPivot('quantity');
+    }
+
+    public function statuses()
+    {
+        return $this->belongsTo('App\Model\OrderStatus', 'status');
+    }
+
+    public function payment_methods()
+    {
+        return $this->belongsTo('App\Model\PaymentMethod', 'payment_method');
     }
 
 }

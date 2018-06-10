@@ -4,7 +4,7 @@
     <div class="top-bar">
         <div class="content-topbar flex-sb-m h-full container">
             <div class="left-top-bar">
-                Free ship cho đơn hàng trên 2 000 000 đồng
+                +84 0123456789
             </div>
 
             <div class="right-top-bar flex-w h-full">
@@ -12,11 +12,7 @@
                     Câu hỏi thường gặp
                 </a>
 
-                <a href="#" class="flex-c-m trans-04 p-lr-25">
-                    Tài khoản
-                </a>
-
-                <a href="#" class="flex-c-m trans-04 p-lr-25">
+                <a href="{{route('checkout')}}" class="flex-c-m trans-04 p-lr-25">
                     Thanh toán
                 </a>
             </div>
@@ -72,7 +68,10 @@
 
                                 @if(Auth::guard('web')->check())
                                     <li>
-                                        <a href="{{route('customer.dashboard')}}">Thông tin tài khoản</a>
+                                        <a href="{{route('customer.order.list')}}">Đơn hàng</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{route('customer.dashboard')}}">Tài khoản</a>
                                     </li>
                                     <li>
                                         <a href="{{ route('logout') }}"

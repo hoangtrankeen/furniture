@@ -34,8 +34,8 @@
                                 <tr class="table_head">
                                     <th class="column-1">Sản phẩm</th>
                                     <th class="column-2"></th>
-                                    <th class="column-3">Giá (VNĐ)</th>
-                                    <th class="column-4">Số lượng</th>
+                                    <th class="column-3">Giá</th>
+                                    <th class="column-4 text-center">Số lượng</th>
                                     <th class="column-5"></th>
                                 </tr>
 
@@ -48,7 +48,7 @@
                                         </div>
                                     </td>
                                     <td class="column-2">{{ $item->model->name }}</td>
-                                    <td class="column-3">{{ priceNoUnit($item->price)}}</td>
+                                    <td class="column-3">{{ presentPrice($item->price)}}</td>
                                     <td class="column-4">
                                         <div class="wrap-num-product flex-w m-l-auto m-r-0">
                                             <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m change-number">
@@ -86,11 +86,11 @@
                                         <td><img src="{{getFeaturedImageProduct($item->model->image)}}" alt="IMG" width="100px"></td>
                                     </tr>
                                     <tr>
-                                        <th class="column-custom">Giá (VNĐ)</th>
+                                        <th class="column-custom">Giá</th>
                                         <td> {{ ($item->price) }}</td>
                                     </tr>
                                     <tr>
-                                        <th class="column-custom">Số lượng</th>
+                                        <th class="column-custom ">Số lượng</th>
                                         <td><div class="wrap-num-product flex-w ">
                                                 <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m change-number">
                                                     <i class="fs-16 zmdi zmdi-minus"></i>
@@ -149,9 +149,9 @@
                             </div>
                         </div>
 
-                        <button class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
+                        <a class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer" href="{{route('checkout')}}">
                             Tiến hành thanh toán
-                        </button>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -160,7 +160,7 @@
     @else
         <div class="bg0 m-b-300 p-t-25 p-b-25">
             <div class="container">
-                <h5 class="p-l-15">Hiện tại không có sản phẩm nào trong giỏ hàng</h5>
+                <h5 class="p-l-15 text-center w-full">Hiện tại không có sản phẩm nào trong giỏ hàng</h5>
             </div>
         </div>
     @endif

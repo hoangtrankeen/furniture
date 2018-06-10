@@ -1,5 +1,5 @@
 <?php
-
+use \App\Http\Middleware\CartMiddleware;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,7 +18,7 @@
 
 Route::get('/', 'Frontend\ShopController@index')->name('home');
 
-Route::resource('/cart', 'Frontend\CartController');
+//Route::resource('/cart', 'Frontend\CartController');
 Route::get('cart', 'Frontend\CartController@index')->name('cart.index');
 Route::delete('/cart/remove/{id}', 'Frontend\CartController@destroyCartItem');
 Route::post('/cart/update/{id}', 'Frontend\CartController@updateCartItem');
@@ -26,13 +26,14 @@ Route::post('/add-to-cart','Frontend\CartController@addCartShopPage');
 Route::post('/cart/switchToSaveForLater/{product}', 'Frontend\CartController@switchToSaveForLater')->name('cart.switchToSaveForLater');
 
 Route::get('/product', 'Frontend\ShopController@allProduct')->name('catalog.product.all');
-Route::get('/checkout', 'Frontend\CheckoutController@index')->name('checkout');
-Route::post('/checkout/store', 'Frontend\CheckoutController@store')->name('checkout.store');
+Route::get('/checkout', 'Frontend\CheckoutController@index')->name('checkout')->middleware(CartMiddleware::class);
+Route::post('/checkout/store', 'Frontend\CheckoutController@placeOrder')->name('checkout.placeorder')->middleware(CartMiddleware::class);
+Route::get('/checkout/success', 'Frontend\CheckoutController@checkoutSuccess')->name('checkout.success');
+
 Route::get('/category/{slug}', 'Frontend\ShopController@catalogCategory')->name('catalog.category');
 Route::get('/product/{slug}', 'Frontend\ShopController@catalogProduct')->name('catalog.product');
 Route::get('/search', 'Frontend\ShopController@search')->name('catalog.search');
 Route::get('/quick-view', 'Frontend\ShopController@quickView')->name('catalog.quickview');
-
 
 Route::get('/post', 'Frontend\BlogController@index')->name('cms.post');
 Route::get('/post/{slug}', 'Frontend\BlogController@details')->name('cms.post.detail');
@@ -42,6 +43,8 @@ Route::post('/user/logout', 'Auth\LoginController@userLogout')->name('user.logou
 Route::get('/customer/account', 'Frontend\CustomerController@index')->name('customer.dashboard');
 Route::get('/customer/account/edit', 'Frontend\CustomerController@accountEdit')->name('customer.account.edit');
 Route::post('/customer/account/update', 'Frontend\CustomerController@accountUpdate')->name('customer.account.update');
+
+Route::get('/customer/order/list', 'Frontend\CustomerController@listOrder')->name('customer.order.list');
 
 Route::prefix('admin')->group(function () {
 

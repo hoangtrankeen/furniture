@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Http\Middleware\CartMiddleware;
 use App\Model\Order;
 use App\Model\OrderProduct;
+use App\Model\PaymentMethod;
+use App\Model\OrderStatus;
 //use App\Mail\OrderPlaced;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -12,6 +15,7 @@ use Gloudemans\Shoppingcart\Facades\Cart;
 use Cartalyst\Stripe\Laravel\Facades\Stripe;
 use Cartalyst\Stripe\Exception\CardErrorException;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Session;
 
 class CheckoutController extends Controller
 {
@@ -84,6 +88,8 @@ class CheckoutController extends Controller
             'billing_subtotal' => $this->getNumbers()->get('newSubtotal'),
             'billing_tax' => $this->getNumbers()->get('newTax'),
             'billing_total' => $this->getNumbers()->get('newTotal'),
+            'payment_method' => 1,
+            'status' => 1,
             'error' => $error,
         ]);
 
@@ -95,6 +101,9 @@ class CheckoutController extends Controller
                 'quantity' => $item->qty,
             ]);
         }
+        $order->payment_method = PaymentMethod::find($order->payment_method)->name;
+        $order->status = OrderStatus::find($order->status)->name;
+
         return $order;
     }
 
@@ -116,5 +125,35 @@ class CheckoutController extends Controller
             'newTax' => $newTax,
             'newTotal' => $newTotal,
         ]);
+    }
+
+    public function placeOrder(CheckoutRequest $request)
+    {
+        if($request->session()->has('bill')){
+            $request->session()->forget('bill');
+        }
+
+        $order = $this->addToOrdersTables($request, null);
+
+        Cart::destroy();
+
+        return redirect()->route('checkout.success')
+            ->with([
+                'bill' => $order,
+
+            ]);
+
+    }
+
+    public function checkoutSuccess(Request $request)
+    {
+        $success = 'Đơn hàng của bạn đã được gửi đến chúng tôi. Xin cảm ơn!';
+        if(Session::has('bill')){
+            $bill = $request->session()->get('bill');
+            $order_products = $bill->products;
+            return view('frontend/checkout-success')->with('bill',$bill)->with('order_products', $order_products)->with('success', $success);
+        }else{
+            return redirect()->route('cart.index');
+        }
     }
 }

@@ -2,7 +2,7 @@
 
 function presentPrice($price)
 {   if(is_numeric($price)){
-        return number_format($price).' VNĐ';
+        return number_format($price).' đ';
     }else{
     return $price;
     }
