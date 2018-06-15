@@ -98,6 +98,7 @@
 
 <!--Quick-view-->
 <script src="{{asset('frontend/js/addto.js')}}"></script>
+{{--<script src="{{asset('frontend/js/addto-group.js')}}"></script>--}}
 
 <!--Loading-->
 <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.4/dist/loadingoverlay.min.js"></script>

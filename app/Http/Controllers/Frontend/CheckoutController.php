@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Middleware\CartMiddleware;
+use App\Jobs\SendOrderConfirmation;
 use App\Model\Order;
 use App\Model\OrderProduct;
 use App\Model\PaymentMethod;
 use App\Model\OrderStatus;
 //use App\Mail\OrderPlaced;
+use App\Model\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\CheckoutRequest;
@@ -135,6 +137,8 @@ class CheckoutController extends Controller
 
         $order = $this->addToOrdersTables($request, null);
 
+        $this->sendOrderEmailAction($order);
+
         Cart::destroy();
 
         return redirect()->route('checkout.success')
@@ -155,5 +159,31 @@ class CheckoutController extends Controller
         }else{
             return redirect()->route('cart.index');
         }
+    }
+
+    public function sendOrderEmailAction($order)
+    {
+        foreach ($order->products as $product)
+        {
+            $product->final_price = Product::getFinalPrice($product);
+        }
+        $details =[
+            'order_id' => $order->id,
+            'billing_email' => $order->billing_email,
+            'billing_name' => $order->billing_name,
+            'billing_address' => $order->billing_address,
+            'billing_city' => $order->billing_city,
+            'billing_province' => $order->billing_province,
+            'billing_postalcode' => $order->billing_postalcode,
+            'billing_phone' => $order->billing_phone,
+            'billing_total' => $order->billing_total,
+            'payment_method' => $order->payment_methods,
+            'created_at' => $order->created_at,
+            'ordered_products' => $order->products,
+            'customer' => auth()->user() ? auth()->user()->name : $order->billing_name,
+            'products' => $order->products,
+        ];
+
+        Mail::to($details['billing_email'])->send(new \App\Mail\SendOrderConfirmation($details));
     }
 }

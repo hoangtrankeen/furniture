@@ -40,11 +40,12 @@
                     </li>
 
                     <li>
-                        <a href="blog.html">Blog</a>
+                        <a href="{{route('cms.post')}}">Blog</a>
+                        {{ManagerCatalog::showTopic()}}
                     </li>
 
                     <li class="label1" data-label1="hot">
-                        <a href="about.html">Showroom</a>
+                        <a href="{{route('promote.combo')}}"  >Bộ sưu tập</a>
                     </li>
 
                     <li>
@@ -234,18 +235,8 @@
         </li>
 
         <li>
-            <a href="blog.html">Blog</a>
-            <ul class="sub-menu-m">
-                <li><a href="index.html">Homepage 1</a>
-                    <ul class="sub-menu-m">
-                        <li><a href="index.html">Homepage 1</a></li>
-                        <li><a href="home-02.html">Homepage 2</a></li>
-                        <li><a href="home-03.html">Homepage 3</a></li>
-                    </ul>
-                </li>
-                <li><a href="home-02.html">Homepage 2</a></li>
-                <li><a href="home-03.html">Homepage 3</a></li>
-            </ul>
+            <a href="{{route('cms.post')}}">Blog</a>
+            {{ManagerCatalog::showTopicMobile()}}
             <span class="arrow-main-menu-m">
 						<i class="fa fa-angle-right" aria-hidden="true"></i>
 					</span>

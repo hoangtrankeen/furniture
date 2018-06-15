@@ -72,6 +72,7 @@
                                             <option value="low_high" {{ $sort == 'low_high' ? 'selected' :'' }}>Giá cao đến thấp</option>
                                             <option value="high_low" {{ $sort == 'high_low' ? 'selected' :'' }}>Giá thấp đến cao</option>
                                             <option value="name" {{ $sort == 'name' ? 'selected' :'' }}>Tên</option>
+                                            <option value="combo" {{ $sort == 'combo' ? 'selected' :'' }}>Combo</option>
                                         </select>
                                     </div>
 

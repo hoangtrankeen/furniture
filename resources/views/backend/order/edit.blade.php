@@ -49,7 +49,31 @@
                 </div>
                 <!-- /.box-title -->
                 <div class="card-content">
+                    <form id="send-email" action="{{ route('admin.order.email') }}" method="POST" style="display: none;">
+                        {{ csrf_field() }}
+                        <input type="hidden" name="order_id" value="{{$order->id}}">
+                    </form>
+
                     <form class="form-horizontal" action="{{route('order.update', $order->id)}}" id="topic" method="post">
+                        <div class="box-content">
+                            @foreach($statuses as $status)
+
+                                @if($order->statuses->id == $status->id)
+                                    <input type="submit" class="btn btn-success" name="status_{{$status->id}}" value="{{$status->name}}">
+                                @else
+                                    <input type="submit" class="btn btn-light" name="status_{{$status->id}}" value="{{$status->name}}">
+                                @endif
+                            @endforeach
+
+                                <a href="{{ route('admin.order.email') }}" class="btn btn-info pull-right"
+                                   onclick="event.preventDefault();
+                                                     document.getElementById('send-email').submit();">
+                                    <i class="fa fa-send-o" aria-hidden="true"></i> Send Email
+                                </a>
+
+
+                        </div>
+
                         {{ method_field('PUT') }}
                         {{ csrf_field() }}
                         <div class="row">
@@ -63,7 +87,7 @@
                                         </tr>
                                         <tr>
                                             <th>Order Status</th>
-                                            <td></td>
+                                            <td>{{$order->statuses->name}}</td>
                                         </tr>
                                         <tr>
                                             <th>Placed from IP</th>
@@ -78,7 +102,7 @@
                                     <table class="table">
                                         <tr>
                                             <th>Customer Name</th>
-                                            <td>Guest</td>
+                                            <td>{{($order->user_id) ? $order->customer->name : $order->billing_name}} </td>
                                         </tr>
                                         <tr>
                                             <th>Email</th>
@@ -86,7 +110,7 @@
                                         </tr>
                                         <tr>
                                             <th>Customer Group</th>
-                                            <td></td>
+                                            <td>{{ ($order->user_id) ? 'General' : 'NOT LOGGED IN' }}</td>
                                         </tr>
                                     </table>
                                 </div>
@@ -138,11 +162,6 @@
                             {{--</div>--}}
                         {{--</div>--}}
 
-                        <div class="form-group margin-bottom-0">
-                            <div class="col-sm-offset-2 col-sm-8">
-                                <button type="submit" class="btn btn-info btn-sm waves-effect waves-light">Save</button>
-                            </div>
-                        </div>
                     </form>
                 </div>
                 <!-- /.card-content -->

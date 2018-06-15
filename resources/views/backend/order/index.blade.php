@@ -39,6 +39,20 @@
                     </ul>
                     <!-- /.sub-menu -->
                 </div>
+               <div class="row">
+                   <div class="col-md-offset-3 col-md-5">
+                       <div class="form-group">
+                           <label for="sort">Sorting Status Order</label>
+                           <select name="sort" class="form-control sort-status">
+                               @php $sort = request()->get('sort'); @endphp
+                               <option value="0" {{$sort == 0 ? 'selected':''}}>All Order</option>
+                               @foreach($statuses as $status)
+                                   <option value="{{$status->id}}" {{$sort == $status->id ? 'selected': ''}}>{{$status->name}}</option>
+                               @endforeach
+                           </select>
+                       </div>
+                   </div>
+               </div>
                 <!-- /.dropdown js__dropdown -->
                 <table id="example" class="table table-striped table-bordered display" style="width:100%">
                     <thead>
@@ -46,9 +60,8 @@
                         <th>id</th>
                         <th>Purchase Date</th>
                         <th>Billing Name</th>
-                        <th>Billing Subtotal</th>
                         <th>Billing Total</th>
-                        <th>Error</th>
+                        <th>Status</th>
                         <th>Action</th>
                     </tr>
                     </thead>
@@ -57,9 +70,8 @@
                         <th>id</th>
                         <th>Purchase Date</th>
                         <th>Billing Name</th>
-                        <th>Billing Subtotal</th>
                         <th>Billing Total</th>
-                        <th>Error</th>
+                        <th>Status</th>
                         <th>Action</th>
                     </tr>
                     </tfoot>
@@ -69,9 +81,8 @@
                             <td>{{$order->id}}</td>
                             <td>{{presentDateFormat($order->created_at)}}</td>
                             <td>{{$order->billing_name}}</td>
-                            <td>{{$order->billing_subtotal}}</td>
-                            <td>{{$order->billing_total}}</td>
-                            <td>{{$order->error}}</td>
+                            <td>{{presentPrice($order->billing_total)}}</td>
+                            <td>{{$order->statuses->name}}</td>
                             <td>
                                 <a href="{{route('order.edit', $order->id)}}" class="btn btn-xs btn-success">Edit</a>
                             </td>
@@ -94,4 +105,13 @@
     <script src="{{asset('backend/assets/plugin/datatables/extensions/Responsive/js/dataTables.responsive.min.js')}}"></script>
     <script src="{{asset('backend/assets/plugin/datatables/extensions/Responsive/js/responsive.bootstrap.min.js')}}"></script>
     <script src="{{asset('backend/assets/scripts/datatables.demo.min.js')}}"></script>
+
+
+    <script>
+        $(".sort-status").on("change", function () {
+            console.log('asdad');
+            var sort_value = $(this).val();
+            window.location.href = window.location.origin + '/admin/order' + '?sort='+sort_value;
+        });
+    </script>
 @endsection

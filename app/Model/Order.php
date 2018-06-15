@@ -14,9 +14,9 @@ class Order extends Model
         'billing_discount_code', 'billing_subtotal', 'billing_tax', 'billing_total', 'error','payment_method', 'status',
     ];
 
-    public function user()
+    public function customer()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\Model\User','user_id');
     }
 
     public function products()

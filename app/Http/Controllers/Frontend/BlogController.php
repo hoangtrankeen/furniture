@@ -19,21 +19,21 @@ class BlogController extends Controller
             $request->session()->forget('topic');
         }
 
-        return view('frontend/all-posts', $data);
+        return view('frontend/blog/list-post', $data);
     }
 
     public function details(Request $request, $slug)
     {
         $data['post'] = Post::where('slug', $slug)->first();
 
-        return view('frontend/post-detail',$data);
+        return view('frontend/blog/post-detail',$data);
     }
 
     public function topic(Request $request,$slug)
     {
         $topic = Topic::where('slug', $slug)->first();
 
-        $posts = $topic->posts;
+        $posts = $topic->posts()->paginate(3);
 
         $data['posts'] = $posts;
 
@@ -42,7 +42,7 @@ class BlogController extends Controller
             'slug' => $topic->slug
         ]);
 
-        return view('frontend/all-posts',$data);
+        return view('frontend/blog/list-post',$data);
     }
 
 

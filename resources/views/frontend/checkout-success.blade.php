@@ -89,7 +89,7 @@
                         @foreach($order_products as $item)
                             <p class="product-name"><strong>{{$item->name}}</strong> x {{$item->pivot->quantity}}</p>
                         @endforeach
-                        <p>Tổng: <strong>{{$bill->billing_total}}</strong></p>
+                        <p>Tổng: <strong>{{presentPrice($bill->billing_total)}}</strong></p>
                     </div>
                     <h2 class="mtext-106 w-full p-b-20 p-t-30 ">Địa chỉ thanh toán</h2>
                     <div class="billing-address">

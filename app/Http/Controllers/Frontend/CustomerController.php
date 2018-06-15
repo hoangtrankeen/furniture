@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Model\Order;
+use App\Model\Product;
 use App\Model\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -112,5 +114,28 @@ class CustomerController extends Controller
         $data['orders'] = $customer->orders()->paginate(8);
 
         return view('frontend.customer.order.list',$data);
+    }
+
+    /**
+     *Get list order
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function orderDetail($id)
+    {
+        $order = Order::find($id);
+
+        $products = $order->products;
+
+        foreach($products  as $product)
+        {
+            $product->final_price = Product::getFinalPrice($product);
+        }
+
+        $data['products'] = $products;
+
+        $data['order'] = $order;
+
+        return view('frontend.customer.order.detail',$data);
     }
 }

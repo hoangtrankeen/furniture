@@ -232,7 +232,7 @@
             $("#cart-count").text(data.count);
             $("#cart-total").text(data.total);
             if(!(data.count > 0)){
-                var html = ' <div class="bg0 m-b-300 p-t-25 p-b-25"><div class="container"><h5 class="p-l-15">Hiện tại không có sản phẩm nào trong giỏ hàng</h5></div></div>';
+                var html = ' <div class="bg0 m-b-300 p-t-25 p-b-25"><div class="container"><h5 class="p-l-15 text-center">Hiện tại không có sản phẩm nào trong giỏ hàng</h5></div></div>';
                 $(".form-cart-page").replaceWith(html);
             }
         }

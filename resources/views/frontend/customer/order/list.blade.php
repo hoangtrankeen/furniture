@@ -38,7 +38,7 @@
                     <table class="table-review">
                         <thead>
                         <tr>
-                            <th class=" mtext-106 cl2">Mã đơn hàng#</th>
+                            <th class=" mtext-106 cl2">#Mã đơn hàng</th>
                             <th class=" mtext-106 cl2">Ngày</th>
                             <th class=" mtext-106 cl2">Tổng</th>
                             <th class=" mtext-106 cl2">Trạng thái</th>
@@ -53,7 +53,7 @@
                                     <td class="">{{presentPrice($item->billing_total)}}</td>
                                     <td class="">{{presentPrice($item->statuses->name)}}</td>
                                     <td class="">
-                                        <a href="" class="stext-103 cl2 size-102 bg0 bor2 hov-cl1 p-lr-15 trans-04">
+                                        <a href="{{route('customer.order.detail', ['id' => $item->id])}}" class="stext-103 cl2 size-102 bg0 bor2 hov-cl1 p-lr-15 trans-04">
                                             Xem
                                         </a>
                                     </td>

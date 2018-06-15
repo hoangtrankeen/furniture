@@ -24,13 +24,16 @@ class ShopController extends Controller
             ->orderBy('order')
             ->get();
         $data['featured'] = Product::where('active',1)
-            ->where('featured', 1)
+            ->where('featured', 1)->where('type_id','simple')
             ->take(6)->get();
 //        foreach($categories as $category){
 //            $category['products'] = $category->products()->take(6)->get();
 //            $category['category'] = $category;
 //        }
-//
+        $data['group'] = Product::where('active',1)
+           ->where('type_id','group')
+            ->take(5)->get();
+
         $data['categories'] = $categories;
         return view('frontend/home', $data);
     }
@@ -107,7 +110,23 @@ class ShopController extends Controller
         $product->final_price = Product::getFinalPrice($product);
 
         $data['product'] = $product;
-        return view('frontend/product',$data);
+
+        if($product->type_id == 'group'){
+            $child_id = json_decode($product->child_id);
+
+            $child_products = Product::whereIn('id', $child_id)->get();
+
+            foreach($child_products as $product)
+            {
+                $product->final_price = Product::getFinalPrice($product);
+            }
+
+            $data['child_products'] = $child_products;
+
+            return view('frontend/catalog/product/group-product',$data);
+        }
+
+        return view('frontend/catalog/product/simple-product',$data);
     }
 
     public function search(Request $request)
@@ -125,7 +144,9 @@ class ShopController extends Controller
             } elseif (request()->sort == 'name') {
                 $products = $products->orderBy('name', 'asc');
             } elseif (request()->sort == 'best_seller') {
-                $products = $products->where('featured', '1')->orderBy('name', 'asc');
+                $products = Product::where('featured', '1')->orderBy('name', 'asc');
+            } elseif (request()->sort == 'combo') {
+                $products = Product::where('type_id','group');
             }
         }
         $products = $products ->paginate($pagination);;

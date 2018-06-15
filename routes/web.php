@@ -23,6 +23,7 @@ Route::get('cart', 'Frontend\CartController@index')->name('cart.index');
 Route::delete('/cart/remove/{id}', 'Frontend\CartController@destroyCartItem');
 Route::post('/cart/update/{id}', 'Frontend\CartController@updateCartItem');
 Route::post('/add-to-cart','Frontend\CartController@addCartShopPage');
+Route::post('/add-to-cart-group','Frontend\CartController@addCartGroupProduct');
 Route::post('/cart/switchToSaveForLater/{product}', 'Frontend\CartController@switchToSaveForLater')->name('cart.switchToSaveForLater');
 
 Route::get('/product', 'Frontend\ShopController@allProduct')->name('catalog.product.all');
@@ -45,6 +46,10 @@ Route::get('/customer/account/edit', 'Frontend\CustomerController@accountEdit')-
 Route::post('/customer/account/update', 'Frontend\CustomerController@accountUpdate')->name('customer.account.update');
 
 Route::get('/customer/order/list', 'Frontend\CustomerController@listOrder')->name('customer.order.list');
+Route::get('/customer/order/detail/{id}', 'Frontend\CustomerController@orderDetail')->name('customer.order.detail');
+
+
+Route::get('/combo', 'Frontend\PromoteController@getCombo')->name('promote.combo');
 
 Route::prefix('admin')->group(function () {
 
@@ -70,6 +75,8 @@ Route::prefix('admin')->group(function () {
     Route::resource('attribute','Backend\AttributeController');
 
     Route::resource('order','Backend\OrderController');
+
+    Route::post('order/email','Backend\OrderController@sendEmailOrder')->name('admin.order.email');
 
     Route::resource('topic','Backend\TopicController');
 
