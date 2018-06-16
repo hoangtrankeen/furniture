@@ -18,6 +18,7 @@ class CreateTopicsTable extends Migration
             $table->string('name');
             $table->integer('parent_id')->unsigned()->nullable();
             $table->string('slug')->unique();
+            $table->string('type_id')->nullable();
             $table->text('image')->nullable();
             $table->integer('created_by')->nullable();
             $table->timestamps();

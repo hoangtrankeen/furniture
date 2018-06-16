@@ -21,7 +21,7 @@ class CreateCategoriesTable extends Migration
             $table->text('image')->nullable();
             $table->integer('order');
             $table->string('description')->nullable();
-            $table->string('active');
+            $table->integer('active');
             $table->timestamps();
         });
     }

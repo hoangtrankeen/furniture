@@ -33,7 +33,7 @@
 			<div class="dropdown js__drop_down">
 				<a href="#" class="dropdown-icon glyphicon glyphicon-option-vertical js__drop_down_button"></a>
 				<ul class="sub-menu">
-					<li><a href="{{route('category.create')}}">Create Category</a></li>
+					<li><a href="{{route('topic.create')}}">Create Topic</a></li>
 					<li><a href="#">Another action</a></li>
 					<li><a href="#">Something else there</a></li>
 					<li class="split"></li>

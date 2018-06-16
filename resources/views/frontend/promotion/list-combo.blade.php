@@ -16,7 +16,7 @@
                             Trang chủ
                             <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
                         </a>
-                        <span class="stext-109 cl4">Showroom</span>
+                        <span class="stext-109 cl4">Bộ sưu tập</span>
                     </div>
                 </div>
             </div>

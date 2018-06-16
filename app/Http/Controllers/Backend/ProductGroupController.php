@@ -56,10 +56,8 @@ class ProductGroupController extends ProductController
                 $resize_name = $name . str_random(2) . '.' . $photo->getClientOriginalExtension();
                 $image_name[] =$resize_name;
 
-                Image::make($photo)
-                    ->resize(250, null, function ($constraints) {
-                        $constraints->aspectRatio();
-                    })->save($this->photos_path . '/' . $resize_name);
+                Image::make($photo)->save($this->photos_path . '/' . $resize_name);
+
             }
 
             $image_name = json_encode($image_name);
@@ -82,9 +80,7 @@ class ProductGroupController extends ProductController
             $feature_image = $resize_name;
 
             Image::make($photo)
-                ->resize(250, null, function ($constraints) {
-                    $constraints->aspectRatio();
-                })->save($this->photos_path . '/' . $resize_name);
+                ->save($this->photos_path . '/' . $resize_name);
         }else{
             $feature_image = null;
         }
@@ -236,9 +232,7 @@ class ProductGroupController extends ProductController
                 $image_name[] =$resize_name;
 
                 Image::make($photo)
-                    ->resize(250, null, function ($constraints) {
-                        $constraints->aspectRatio();
-                    })->save($this->photos_path . '/' . $resize_name);
+                    ->save($this->photos_path . '/' . $resize_name);
             }
             $image_name = json_encode($image_name);
 
@@ -270,9 +264,7 @@ class ProductGroupController extends ProductController
             $feature_image = $resize_name;
 
             Image::make($photo)
-                ->resize(250, null, function ($constraints) {
-                    $constraints->aspectRatio();
-                })->save($this->photos_path . '/' . $resize_name);
+                ->save($this->photos_path . '/' . $resize_name);
             if(\File::exists($this->photos_path.'/'.$product->image)){
                 \File::delete($this->photos_path.'/'.$product->image);
             }

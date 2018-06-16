@@ -67,37 +67,27 @@
 
                         <div class="p-t-32">
 							<span class="flex-w flex-m stext-111 cl2 p-b-19">
+
 								<span>
-									<span class="cl4">By</span> Admin
+									{{presentDateFormat($post->created_at)}}
 									<span class="cl12 m-l-4 m-r-6">|</span>
 								</span>
 
-								<span>
-									22 Jan, 2018
-									<span class="cl12 m-l-4 m-r-6">|</span>
-								</span>
+								{{--<span>--}}
+									{{--StreetStyle, Fashion, <Couple></Couple>--}}
+									{{--<span class="cl12 m-l-4 m-r-6">|</span>--}}
+								{{--</span>--}}
 
-								<span>
-									StreetStyle, Fashion, Couple
-									<span class="cl12 m-l-4 m-r-6">|</span>
-								</span>
-
-								<span>
-									8 Comments
-								</span>
 							</span>
 
                             <h4 class="ltext-109 cl2 p-b-28">
-                                8 Inspiring Ways to Wear Dresses in the Winter
+                                {{$post->title}}
                             </h4>
 
                             <p class="stext-117 cl6 p-b-26">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet est vel orci luctus sollicitudin. Duis eleifend vestibulum justo, varius semper lacus condimentum dictum. Donec pulvinar a magna ut malesuada. In posuere felis diam, vel sodales metus accumsan in. Duis viverra dui eu pharetra pellentesque. Donec a eros leo. Quisque sed ligula vitae lorem efficitur faucibus. Praesent sit amet imperdiet ante. Nulla id tellus auctor, dictum libero a, malesuada nisi. Nulla in porta nibh, id vestibulum ipsum. Praesent dapibus tempus erat quis aliquet. Donec ac purus id sapien condimentum feugiat.
+                                {!! $post->content !!}
                             </p>
 
-                            <p class="stext-117 cl6 p-b-26">
-                                Praesent vel mi bibendum, finibus leo ac, condimentum arcu. Pellentesque sem ex, tristique sit amet suscipit in, mattis imperdiet enim. Integer tempus justo nec velit fringilla, eget eleifend neque blandit. Sed tempor magna sed congue auctor. Mauris eu turpis eget tortor ultricies elementum. Phasellus vel placerat orci, a venenatis justo. Phasellus faucibus venenatis nisl vitae vestibulum. Praesent id nibh arcu. Vivamus sagittis accumsan felis, quis vulputate
-                            </p>
                         </div>
 
                         <div class="flex-w flex-t p-t-16">
@@ -114,7 +104,7 @@
                             </div>
                         </div>
 
-                        <!--  -->
+                        <!--
                         <div class="p-t-40">
                             <h5 class="mtext-113 cl2 p-b-12">
                                 Leave a Comment
@@ -145,21 +135,21 @@
                                     Post Comment
                                 </button>
                             </form>
-                        </div>
+                        </div>-->
                     </div>
                 </div>
 
                 <div class="col-md-4 col-lg-3 p-b-80">
                     <div class="side-menu">
-                        <div class="bor17 of-hidden pos-relative">
+                        <!--<div class="bor17 of-hidden pos-relative">
                             <input class="stext-103 cl2 plh4 size-116 p-l-28 p-r-55" type="text" name="search" placeholder="Search">
 
                             <button class="flex-c-m size-122 ab-t-r fs-18 cl4 hov-cl1 trans-04">
                                 <i class="zmdi zmdi-search"></i>
                             </button>
-                        </div>
+                        </div>-->
 
-                        <div class="p-t-55">
+                        <!--<div class="p-t-55">
                             <h4 class="mtext-112 cl2 p-b-33">
                                 Categories
                             </h4>
@@ -195,65 +185,31 @@
                                     </a>
                                 </li>
                             </ul>
-                        </div>
+                        </div>-->
 
-                        <div class="p-t-65">
+                        <div class="">
                             <h4 class="mtext-112 cl2 p-b-33">
-                                Featured Products
+                                Combo Nổi bật
                             </h4>
 
                             <ul>
-                                <li class="flex-w flex-t p-b-30">
-                                    <a href="#" class="wrao-pic-w size-214 hov-ovelay1 m-r-20">
-                                        <img src="images/product-min-01.jpg" alt="PRODUCT">
-                                    </a>
-
-                                    <div class="size-215 flex-col-t p-t-8">
-                                        <a href="#" class="stext-116 cl8 hov-cl1 trans-04">
-                                            White Shirt With Pleat Detail Back
+                               @foreach(ManagerCatalog::getFeaturedProduct() as $product)
+                                    <li class="flex-w flex-t p-b-30">
+                                        <a href="{{route('catalog.product',['slug'=>$product->slug])}}" class="wrao-pic-w size-214 hov-ovelay1 m-r-20">
+                                            <img src="{{getFeaturedImageProduct($product->image)}}" alt="PRODUCT" width="90" height="100">
                                         </a>
 
-                                        <span class="stext-116 cl6 p-t-20">
-											$19.00
-										</span>
-                                    </div>
-                                </li>
-
-                                <li class="flex-w flex-t p-b-30">
-                                    <a href="#" class="wrao-pic-w size-214 hov-ovelay1 m-r-20">
-                                        <img src="images/product-min-02.jpg" alt="PRODUCT">
-                                    </a>
-
-                                    <div class="size-215 flex-col-t p-t-8">
-                                        <a href="#" class="stext-116 cl8 hov-cl1 trans-04">
-                                            Converse All Star Hi Black Canvas
-                                        </a>
-
-                                        <span class="stext-116 cl6 p-t-20">
-											$39.00
-										</span>
-                                    </div>
-                                </li>
-
-                                <li class="flex-w flex-t p-b-30">
-                                    <a href="#" class="wrao-pic-w size-214 hov-ovelay1 m-r-20">
-                                        <img src="images/product-min-03.jpg" alt="PRODUCT">
-                                    </a>
-
-                                    <div class="size-215 flex-col-t p-t-8">
-                                        <a href="#" class="stext-116 cl8 hov-cl1 trans-04">
-                                            Nixon Porter Leather Watch In Tan
-                                        </a>
-
-                                        <span class="stext-116 cl6 p-t-20">
-											$17.00
-										</span>
-                                    </div>
-                                </li>
+                                        <div class="size-215 flex-col-t p-t-8">
+                                            <a href="{{route('catalog.product',['slug'=>$product->slug])}}" class="stext-116 cl8 hov-cl1 trans-04">
+                                                {{$product->name}}
+                                            </a>
+                                        </div>
+                                    </li>
+                               @endforeach
                             </ul>
                         </div>
 
-                        <div class="p-t-55">
+                        <!--<div class="p-t-55">
                             <h4 class="mtext-112 cl2 p-b-20">
                                 Archive
                             </h4>
@@ -355,7 +311,7 @@
                                     </a>
                                 </li>
                             </ul>
-                        </div>
+                        </div>-->
 
                         <div class="p-t-50">
                             <h4 class="mtext-112 cl2 p-b-27">

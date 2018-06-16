@@ -121,7 +121,7 @@
                                                 <form action="" class="form-cart">
                                                     <tr>
                                                         <td>
-                                                            <p class=" stext-103 cl2 js-name-detail p-b-14">{{$product->name}}</p>
+                                                            <a href="{{route('catalog.product', ['slug'=> $product->slug])}}" class=" stext-103 cl2 hov-cl1 p-b-14">{{$product->name}}</a>
                                                             <p class="stext-105 cl3">{{presentPrice($product->final_price)}}</p>
                                                         </td>
                                                         <td class="data">

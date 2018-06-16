@@ -39,6 +39,7 @@ Route::get('/quick-view', 'Frontend\ShopController@quickView')->name('catalog.qu
 Route::get('/post', 'Frontend\BlogController@index')->name('cms.post');
 Route::get('/post/{slug}', 'Frontend\BlogController@details')->name('cms.post.detail');
 Route::get('/post-category/{slug}', 'Frontend\BlogController@topic')->name('cms.topic');
+Route::get('/sale/post', 'Frontend\BlogController@getSalePost')->name('cms.sale.post');
 
 Route::post('/user/logout', 'Auth\LoginController@userLogout')->name('user.logout');
 Route::get('/customer/account', 'Frontend\CustomerController@index')->name('customer.dashboard');

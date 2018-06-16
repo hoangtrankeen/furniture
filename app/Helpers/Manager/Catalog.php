@@ -8,11 +8,21 @@
 namespace App\Helpers\Manager;
 
 use App\Model\Category;
+use App\Model\Product;
 use App\Model\Topic;
 use  Illuminate\Support\ServiceProvider;
 
 class Catalog extends ServiceProvider
 {
+
+    /**
+     * @return mixed
+     */
+    public static function getAllCategories()
+    {
+        return Category::where('active',1)->take(6)->get();
+    }
+
     /**
      * @param $attr
      * @param $product
@@ -307,6 +317,7 @@ class Catalog extends ServiceProvider
         return Topic::take(6)->get();
     }
 
+
 //    public static function showTopics( $parent_id = 0, $char = '')
 //    {
 //
@@ -339,8 +350,6 @@ class Catalog extends ServiceProvider
 //            echo '</ul>';
 //        }
 //    }
-
-
 
     public static function showTopicsTable($topics, $parent_id = 0, $char = '')
     {
@@ -380,6 +389,11 @@ class Catalog extends ServiceProvider
     public static function getAllProductCategories()
     {
         return Category::where('parent_id', 0)->get();
+    }
+
+    public static function getFeaturedProduct()
+    {
+        return Product::where('type_id','group')->where('featured',1)->take(3)->get();
     }
 
 }
