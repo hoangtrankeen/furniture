@@ -246,7 +246,7 @@ class ProductSimpleController extends ProductController
             if($product->images){
                 foreach (json_decode($product->images) as $image){
                     if(\File::exists($this->photos_path.'/'.$image)){
-//                    \File::delete($this->photos_path.'/'.$image);
+                    \File::delete($this->photos_path.'/'.$image);
                     }
                 }
             }

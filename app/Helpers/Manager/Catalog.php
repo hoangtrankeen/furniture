@@ -317,7 +317,6 @@ class Catalog extends ServiceProvider
         return Topic::take(6)->get();
     }
 
-
 //    public static function showTopics( $parent_id = 0, $char = '')
 //    {
 //
@@ -391,9 +390,9 @@ class Catalog extends ServiceProvider
         return Category::where('parent_id', 0)->get();
     }
 
-    public static function getFeaturedProduct()
+    public static function getFeaturedProduct($num = 3)
     {
-        return Product::where('type_id','group')->where('featured',1)->take(3)->get();
+        return Product::where('type_id','group')->where('featured',1)->take($num)->get();
     }
 
 }

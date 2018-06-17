@@ -16,12 +16,13 @@
 @yield('content')
 
 
+@include('frontend/partials/shop-block/featured-group-slider')
 @include('frontend/partials/footer')
 @include('frontend/partials/modal')
 @include('frontend/partials/script')
 
 <script>
-    $(".wrap-menu-desktop").addClass("how-shadow1");
+    $(".wrap-menu-desktop").addClass("");
 </script>
 </body>
 

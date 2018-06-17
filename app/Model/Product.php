@@ -26,7 +26,7 @@ class Product extends Model
 
     public function attributeValue()
     {
-        return $this->belongsToMany('App\Model\AttributeValue', 'product_attribute', 'product_id', 'attribute_value_id');
+        return $this->belongsToMany('App\Model\AttributeValue', 'product_attribute', 'product_id', 'attribute_value_id')->withPivot('status');
     }
 
     public function presentPrice()

@@ -55,6 +55,28 @@
                         <nav id="main-nav">
                             {{ManagerCatalog::showLeftCategories()}}
                         </nav>
+
+                        <div class="m-t-30">
+                            <h4 class="mtext-112 cl2 p-b-33">
+                                Combo Nổi bật
+                            </h4>
+
+                            <ul>
+                                @foreach(ManagerCatalog::getFeaturedProduct() as $product)
+                                    <li class="flex-w flex-t p-b-30">
+                                        <a href="{{route('catalog.product',['slug'=>$product->slug])}}" class="wrao-pic-w size-214 hov-ovelay1 m-r-20">
+                                            <img src="{{getFeaturedImageProduct($product->image)}}" alt="PRODUCT" width="90" height="100">
+                                        </a>
+
+                                        <div class="size-215 flex-col-t p-t-8">
+                                            <a href="{{route('catalog.product',['slug'=>$product->slug])}}" class="stext-116 cl8 hov-cl1 trans-04">
+                                                {{$product->name}}
+                                            </a>
+                                        </div>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-8 col-lg-9 p-b-50">

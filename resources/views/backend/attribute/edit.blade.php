@@ -53,6 +53,15 @@
                                 <input type="text" name="type" value="{{ $attribute->type}}" class="form-control" >
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label for="status" class="col-sm-2 control-label">Status</label>
+                            <div class="col-sm-8">
+                                <select name="status" id="status" class="form-control">
+                                    <option value="1" {{$attribute->status == 1 ? 'selected':''}}>On</option>
+                                    <option value="0" {{$attribute->status == 0 ? 'selected':''}}>Off</option>
+                                </select>
+                            </div>
+                        </div>
                         <!--<div class="form-group">
                             <label for="inform_name" class="col-sm-2 control-label">Name in form</label>
                             <div class="col-sm-8">

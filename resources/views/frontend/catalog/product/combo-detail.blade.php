@@ -3,6 +3,44 @@
 @section('title', 'Royal')
 
 @section('css')
+    <style>
+
+
+        .table-group{
+
+            /*border: 1px solid #e9ecef;*/
+            width: 100%;
+        }
+
+        .table-group th, .table-group td {
+            border-bottom: 1px solid #e9ecef;
+            padding: 10px;
+            border-width: 0 0 1px 0;
+        }
+
+        .table-group table{
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 1.5em 0 1.75em;
+            width: 100%;
+            border-width: 1px;
+        }
+        .table-group .product-thumb img{
+            width: 95px;
+        }
+        .logo-sale{
+            position: absolute;
+            left: -104px;
+            width: 95px;
+            top: -18px;
+        }
+        .original-price{
+            text-decoration: line-through;
+        }
+        .discout-price{
+            color: red;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -45,99 +83,52 @@
             <section class="sec-product-detail bg0 p-t-65 p-b-60">
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-6 col-lg-7 p-b-30">
-                            <div class="p-l-25 p-r-30 p-lr-0-lg">
-                                <div class="wrap-slick3 flex-sb flex-w">
-                                    <div class="wrap-slick3-dots"></div>
-                                    <div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
-
-                                    <div class="slick3 gallery-lb">
-                                        @if($product->images)
-                                            @foreach(json_decode($product->images) as $image)
-                                                <div class="item-slick3" data-thumb="{{getFeaturedImageProduct($image)}}">
-                                                    <div class="wrap-pic-w pos-relative">
-                                                        <img src="{{getFeaturedImageProduct($image)}}" alt="IMG-PRODUCT">
-
-                                                        <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="{{getFeaturedImageProduct($image)}}">
-                                                            <i class="fa fa-expand"></i>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            @endforeach
-                                        @endif
-                                    </div>
-                                </div>
+                        <div class="col-md-12 col-lg-7 p-b-30 combo-lightbox">
+                            <div class="combo-gallery">
+                                @foreach(json_decode($product->images) as $image)
+                                    <a href="{{getFeaturedImageProduct($image)}}" title=""><img src="{{getFeaturedImageProduct($image)}}" width="205" height="230" /></a>
+                                @endforeach
                             </div>
                         </div>
 
-                        <div class="col-md-6 col-lg-5 p-b-30">
+                        <div class="col-md-12 col-lg-5 p-b-30">
                             <div class="p-r-50 p-t-5 p-lr-0-lg">
-                                <h4 class="mtext-105 cl2 js-name-detail p-b-14">
-                                    {{$product->name}}
-                                </h4>
-                                <h4 class="mtext-105 cl2 js-name-detail p-b-14">
-                                    {{$product->sku}}
-                                </h4>
+                                <h1 class="mtext-105 cl2 js-name-detail p-b-14">
+                                    Combo 1
+                                </h1>
+                                <img  class="logo-sale" src="{{asset('frontend/images/logo/sale_tag_256.png')}}" alt="">
 
-                                <span class="mtext-106 cl2">
-                                    {{presentPrice($product->final_price)}}
-                                </span>
+                                <h3 class="mtext-106 cl2 p-tb-14 original-price" >
+                                    Giá niêm yết: 11.560.000đ
+                                </h3>
 
-                                <p class="stext-102 cl3 p-t-23">
-                                    {{$product->description}}
-                                </p>
+                                <h3 class="mtext-105 cl2 discout-price" style="color: red;">
+                                    Giá khuyến mại: {{presentPrice($product->final_price)}}
+                                </h3>
+                                <hr>
 
-                                <!--  -->
-                                @if($product->in_stock !== 1)
-                                    <p>Hết hàng</p>
-                                @else
-                                    <form action="" class="form-cart">
-                                        <div class="flex-w flex-r-m p-b-10">
-                                            <div class="size-204 flex-w flex-m respon6-next">
-                                                <div class="wrap-num-product flex-w m-r-20 m-tb-10">
-                                                    <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
-                                                        <i class="fs-16 zmdi zmdi-minus"></i>
-                                                    </div>
+                            </div>
 
-                                                    <input class="mtext-104 cl3 txt-center num-product" type="number" name="quantity" value="1">
+                            @if($product->in_stock !== 1)
+                                <p>Hết hàng</p>
+                            @else
+                                <form action="" class="form-cart">
+                                    <div class=" p-b-10">
+                                        <div class="size-204 flex-w flex-m respon6-next">
 
-                                                    <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
-                                                        <i class="fs-16 zmdi zmdi-plus"></i>
-                                                    </div>
-                                                </div>
 
-                                                <input type="hidden" name="id" id="product_id" value="{{$product->id}}">
-                                                <input type="hidden" name="name" id="product_name" value="{{$product->name}}">
-                                                <input type="hidden" name="final_price" id="product_final_price" value="{{$product->final_price}}">
-                                                <button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
-                                                    Thêm vào giỏ hàng
-                                                </button>
-                                            </div>
+                                            <input type="hidden" class="mtext-104 cl3 txt-center num-product" type="number" name="quantity" value="1"/>
+                                            <input type="hidden" name="id" id="product_id" value="{{$product->id}}">
+                                            <input type="hidden" name="name" id="product_name" value="{{$product->name}}">
+                                            <input type="hidden" name="final_price" id="product_final_price" value="{{$product->final_price}}">
+                                            <button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
+                                                Thêm vào giỏ hàng
+                                            </button>
                                         </div>
-                                    </form>
+                                    </div>
+                                </form>
                             @endif
 
-                            <!--  -->
-                                <div class="flex-w flex-m p-l-100 p-t-40 respon7">
-                                    <div class="flex-m bor9 p-r-10 m-r-11">
-                                        <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 js-addwish-detail tooltip100" data-tooltip="Add to Wishlist">
-                                            <i class="zmdi zmdi-favorite"></i>
-                                        </a>
-                                    </div>
-
-                                    <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Facebook">
-                                        <i class="fa fa-facebook"></i>
-                                    </a>
-
-                                    <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Twitter">
-                                        <i class="fa fa-twitter"></i>
-                                    </a>
-
-                                    <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Google Plus">
-                                        <i class="fa fa-google-plus"></i>
-                                    </a>
-                                </div>
-                            </div>
                         </div>
                     </div>
 
@@ -164,9 +155,33 @@
                                 <!-- - -->
                                 <div class="tab-pane fade show active" id="description" role="tabpanel">
                                     <div class="how-pos2 p-lr-15-md">
-                                        <p class="stext-102 cl6">
-                                            {{$product->details}}
-                                        </p>
+                                        <div class="m-tb-30">
+                                            <h4 class="mtext-106 cl4">Bộ combo bao gồm</h4>
+                                            <table class="table-group m-tb-20">
+                                                <thead>
+                                                <tr>
+                                                    <th class="name">#</th>
+                                                    <th class="name">Tên sản phẩm</th>
+                                                    <th class="name">Mô tả</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                @php $i = 1;@endphp
+                                                @foreach($child_products as $child)
+
+                                                    <tr>
+                                                        <td>{{$i++}}</td>
+                                                        <td>
+                                                            <a href="{{route('catalog.product', ['slug'=> $child->slug])}}" class=" stext-103 cl2 hov-cl1 p-b-14">{{$child->name}}</a>
+                                                        </td>
+                                                        <td>
+                                                            <p class="stext-105 cl3">{{presentPrice($child->description)}}</p>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -176,19 +191,17 @@
                                         <div class="col-sm-10 col-md-8 col-lg-6 m-lr-auto">
                                             <ul class="p-lr-28 p-lr-15-sm">
                                                 @foreach($product->attributeValue as $attr)
-                                                    @if($attr->attribute->status == 1)
                                                     <li class="flex-w flex-t p-b-7">
                                                         <span class="stext-102 cl3 size-205">{{$attr->attribute->name}}</span>
                                                         <span class="stext-102 cl6 size-206">{{$attr->name}}</span>
                                                     </li>
-                                                    @endif
                                                 @endforeach
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
 
-                                <!--
+                                <!-- -
                                 <div class="tab-pane fade" id="reviews" role="tabpanel">
                                     <div class="row">
                                         <div class="col-sm-10 col-md-8 col-lg-6 m-lr-auto">
@@ -282,8 +295,6 @@
 
                     <span class="stext-107 cl6 p-lr-25">
 				Categories: @foreach($product->categories as $category){{$category->name}} @endforeach
-
-
 			</span>
                 </div>
             </section>
@@ -293,5 +304,26 @@
 @endsection
 
 @section('javascript')
-
+    <script>
+        $(document).ready(function() {
+            $('.combo-gallery').magnificPopup({
+                delegate: 'a',
+                type: 'image',
+                tLoading: 'Loading image #%curr%...',
+                mainClass: 'mfp-img-mobile',
+                gallery: {
+                    enabled: true,
+                    navigateByImgClick: true,
+                    preload: [0,1] // Will preload 0 - before current, and 1 after the current image
+                },
+                image: {
+                    tError: '<a href="%url%">The image #%curr%</a> could not be loaded.',
+                    titleSrc: function(item) {
+                        return item.el.attr('title') + '';
+                    }
+                }
+            });
+        });
+    </script>
 @endsection
+

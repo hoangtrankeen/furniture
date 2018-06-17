@@ -45,10 +45,10 @@
     </div>
 
     <!-- Content page -->
-    <section class="bg0 p-t-62 p-b-60">
+    <section class="bg0 p-t-62 p-b-20">
         <div class="container">
             <div class="row">
-                <div class="col-md-8 col-lg-9 p-b-80">
+                <div class="col-md-8 col-lg-9 ">
                     <div class="p-r-45 p-r-0-lg">
                         <!-- item blog -->
                         @foreach($posts as $post)

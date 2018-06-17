@@ -54,6 +54,7 @@ class AttributeController extends Controller
             'name'           => 'required|max:190',
             'type'           => 'required|max:190|in:'.$types,
             'inform_name'    => 'required|max:190',
+            'status'         => 'required|integer',
         ));
 
 
@@ -61,6 +62,7 @@ class AttributeController extends Controller
         $attribute->name = $request->name;
         $attribute->type = $request->type;
         $attribute->inform_name = $request->inform_name;
+        $attribute->status = $request->status;
         $attribute->save();
 
         // Get Attribute value in form
@@ -119,11 +121,13 @@ class AttributeController extends Controller
         //$types = implode(",", $this->type);
         $this->validate($request, array(
             'name'   => 'required|max:190',
+            'status'   => 'required|integer',
         ));
 
         $attribute = Attribute::findOrFail($id);
 
         $attribute->name = $request->name;
+        $attribute->status = $request->status;
 
         $attribute->save();
 

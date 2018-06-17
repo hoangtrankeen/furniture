@@ -174,10 +174,10 @@
                                         <div class="col-sm-10 col-md-8 col-lg-6 m-lr-auto">
                                             <ul class="p-lr-28 p-lr-15-sm">
                                                 @foreach($product->attributeValue as $attr)
-                                                    <li class="flex-w flex-t p-b-7">
-                                                    <span class="stext-102 cl3 size-205">{{$attr->attribute->name}}</span>
-                                                    <span class="stext-102 cl6 size-206">{{$attr->name}}</span>
-                                                    </li>
+                                                        <li class="flex-w flex-t p-b-7">
+                                                        <span class="stext-102 cl3 size-205">{{$attr->attribute->name}}</span>
+                                                        <span class="stext-102 cl6 size-206">{{$attr->name}}</span>
+                                                        </li>
                                                 @endforeach
                                             </ul>
                                         </div>

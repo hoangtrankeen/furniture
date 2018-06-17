@@ -123,7 +123,7 @@ class ShopController extends Controller
 
             $data['child_products'] = $child_products;
 
-            return view('frontend/catalog/product/group-product',$data);
+            return view('frontend/catalog/product/combo-detail',$data);
         }
 
         return view('frontend/catalog/product/simple-product',$data);

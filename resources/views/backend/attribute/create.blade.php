@@ -52,6 +52,15 @@
                                 <input type="text" class="form-control" id="inform_name" name="inform_name" value="{{ old('inform_name')}}">
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label for="status" class="col-sm-2 control-label">Status</label>
+                            <div class="col-sm-8">
+                                <select name="status" id="status" class="form-control">
+                                    <option value="1" {{old('status') ==1 ? 'selected':''}}>On</option>
+                                    <option value="0" {{old('status') == 0 ? 'selected':''}}>Off</option>
+                                </select>
+                            </div>
+                        </div>
 
                         <div class="form-group type-toggle">
                             <div class="col-sm-offset-2 col-sm-8">
