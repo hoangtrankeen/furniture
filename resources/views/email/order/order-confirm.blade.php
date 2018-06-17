@@ -24,6 +24,7 @@
     </style>
 </head><body style="margin: 0; padding: 0;background-color:#EEEEEE;"><div style="display:none;font-size:1px;color:#333333;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;">
 @php $details = (object) $details; @endphp
+
 </div>
 <table cellspacing="0" style="margin:0 auto; width:100%; border-collapse:collapse; background-color:#EEEEEE;">
     <tbody>
@@ -44,7 +45,7 @@
                                     <h4>Kính chào quý khách {{$details->customer}}</h4>
                                     @if($details->status == 'Pending')
                                         <p>Công ty Royal đã nhận được đơn hàng mã #{{$details->order_id}}, đặt ngày {{$details->created_at}}.</p>
-                                        <p>Chúng tôi sẽ gửi thông báo đến quý khách qua một email khác ngay khi sản phẩm được giao cho đơn vị vận chuyển</p>
+                                        <p>Xin quý khách vui lòng liên hệ với chúng tôi qua hotline <span style="color: red"><strong>0912229992</strong></span> để xác nhận đơn hàng.</p>
                                     @elseif($details->status == 'Processing')
                                         <p>Công ty Royal xác nhận đơn hàng mã #{{$details->order_id}}, đặt ngày {{$details->created_at}} đang trong quá trình xử lý.</p>
                                         <p>Chúng tôi sẽ gửi thông báo đến quý khách qua một email khác ngay khi sản phẩm được giao cho đơn vị vận chuyển</p>
@@ -228,7 +229,7 @@
                                     <td align="center" width="80" style="font-family:'Roboto', Arial !important;padding:0 10px 0 0;">
 
                                         <p style="font-size:18px; color:#bc0101; margin:0;;text-align:center;font-weight:bold;text-align: right;">
-                                            <a>{{$product->final_price}}</a>
+                                            <a>{{presentPrice($product->final_price)}}</a>
                                         </p>
                                     </td>
                                 </tr>
@@ -250,7 +251,7 @@
                                 </td>
                                 <td align="right" style="padding-bottom:15px;">
                                     <p style="font-size:18px; color:#bc0101; font-weight:bold; margin:0;">
-                                        {{$details->billing_total}}
+                                        {{presentPrice($details->billing_total)}}
                                     </p>
                                 </td>
                             </tr>

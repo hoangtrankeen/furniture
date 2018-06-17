@@ -182,6 +182,7 @@ class CheckoutController extends Controller
             'ordered_products' => $order->products,
             'customer' => auth()->user() ? auth()->user()->name : $order->billing_name,
             'products' => $order->products,
+            'status' => $order->status,
         ];
 
         Mail::to($details['billing_email'])->send(new \App\Mail\SendOrderConfirmation($details));

@@ -25,6 +25,16 @@
     <div class="row small-spacing">
         <div class="col-xs-12">
             <div class="box-content">
+
+                <h3>Total Sales Amount</h3>
+                <div class="col-md-offset-9 col-md-3">
+                    <select name="month" id="month" class="  form-control">
+                        @foreach($months as  $k => $m)
+                            <option value="{{$k}}" {{request()->get('month') == $k ? 'selected':''}}>{{$m}}</option>
+                        @endforeach
+                    </select>
+                </div>
+
                   <div>{!! $chart->container() !!}</div>
             </div>
             <!-- /.box-content -->
@@ -37,4 +47,11 @@
 @section('javascript')
     <script src=//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js charset=utf-8></script>
      {!! $chart->script() !!}
+
+    <script>
+        $("#month").on("change", function () {
+            var month = $(this).val();
+            window.location.href = window.location.origin + '/'+'admin/chart/order/amount/'+ '?month='+month;
+        });
+    </script>
 @endsection

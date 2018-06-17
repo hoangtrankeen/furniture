@@ -77,6 +77,10 @@ Route::prefix('admin')->group(function () {
 
     Route::resource('order','Backend\OrderController');
 
+    Route::get('chart/order/amount','Backend\ChartController@chartOrderAmount')->name('chart.order.amount');
+
+    Route::get('chart/order/quantity','Backend\ChartController@chartOrderQuantity')->name('chart.order.quantity');
+
     Route::post('order/email','Backend\OrderController@sendEmailOrder')->name('admin.order.email');
 
     Route::resource('topic','Backend\TopicController');

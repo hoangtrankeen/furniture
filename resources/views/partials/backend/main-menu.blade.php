@@ -57,11 +57,19 @@
 			</ul>
 			<ul class="menu js__accordion">
 				<li class="current active">
-					<a class="waves-effect parent-item js__control" href="#"><i class="menu-icon fa fa-table"></i><span>Sale</span><span class="menu-arrow fa fa-angle-down"></span></a>
+					<a class="waves-effect parent-item js__control" href="#"><i class="menu-icon fa fa-cart-plus"></i><span>Sale</span><span class="menu-arrow fa fa-angle-down"></span></a>
 					<ul class="sub-menu js__content">
 						<li><a href="{{route('order.index')}}">Order</a></li>
-						<li><a href="">Shipping</a></li>
-						<li><a href="">Invoice</a></li>
+					</ul>
+					<!-- /.sub-menu js__content -->
+				</li>
+			</ul>
+			<ul class="menu js__accordion">
+				<li class="current active">
+					<a class="waves-effect parent-item js__control" href="#"><i class="menu-icon fa fa-bar-chart"></i><span>Chart</span><span class="menu-arrow fa fa-angle-down"></span></a>
+					<ul class="sub-menu js__content">
+						<li><a href="{{route('chart.order.amount',['month' => date('m')])}}">Total Sales Amount</a></li>
+						<li><a href="{{route('chart.order.quantity',['month' => date('m')])}}">Total Order</a></li>
 					</ul>
 					<!-- /.sub-menu js__content -->
 				</li>

@@ -8,10 +8,12 @@ use App\Model\OrderProduct;
 use App\Model\OrderStatus;
 use App\Model\Product;
 use Carbon\Carbon;
+use ConsoleTVs\Charts\Classes\Chartjs\Chart;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
-
+use App\Charts\OrderChart;
 
 class OrderController extends Controller
 {
@@ -144,4 +146,10 @@ class OrderController extends Controller
 
         return redirect()->back()->with('success', 'Order Email has been sent successfully!');
     }
+
+    public function getOrderTotalByMonth()
+    {
+    }
+
+
 }
