@@ -29,6 +29,7 @@ class CreateOrdersTable extends Migration
             $table->integer('billing_subtotal');
             $table->integer('billing_tax');
             $table->integer('billing_total');
+            $table->string('delivery_date')->nullable();
             $table->string('payment_gateway')->nullable();
             $table->integer('payment_method')->nullable();
             $table->integer('status')->default(0);

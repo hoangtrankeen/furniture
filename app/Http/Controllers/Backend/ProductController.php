@@ -28,8 +28,12 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $data['products'] = Product::all();
-
+        if($request->has('stock')){
+            $stock = $request->stock;
+            $data['products'] = Product::where('in_stock',$stock)->get();
+        }else{
+            $data['products'] = Product::all();
+        }
         return view('backend/product/index',$data);
     }
     
@@ -86,6 +90,12 @@ class ProductController extends Controller
 
         Session::flash('error', 'The Product Type not exist');
         return redirect()->back();
+    }
+
+    public function sortInStock()
+    {
+        $products = Product::where('in_stock',1)->get();
+
     }
 
 

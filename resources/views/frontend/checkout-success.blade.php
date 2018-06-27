@@ -79,25 +79,58 @@
                     <div class="info-bill">
                         <ul>
                             <li>Mã đơn hàng: <strong>{{$bill->id}}</strong></li>
-                            <li>Ngày đặt hàng: <strong>{{presentDateFormat($bill->created_at)}}</strong></li>
+                            <li>Ngày đặt hàng: <strong>{{presentDate($bill->created_at)}}</strong></li>
                             <li>Email: <strong>{{$bill->billing_email}}</strong></li>
-                            <li>Phương thức thanh toán: <strong>{{$bill->payment_method}}</strong></li>
+                            <li>Phương thức thanh toán: <strong>{{$bill->payment_methods->name}}</strong></li>
+                            <li>Ngày nhận hàng: <strong>{{presentDate($bill->delivery_date)}}</strong></li>
                         </ul>
                     </div>
+
+
+
+                    <div class="instruction m-t-20">
+                        <p>{!!$bill->payment_methods->detail!!}</p>
+                    </div>
+
                     <h2 class="mtext-106 w-full p-b-20 p-t-30">Chi tiết đơn hàng</h2>
                     <div class="bill-product">
-                        @foreach($order_products as $item)
-                            <p class="product-name"><strong>{{$item->name}}</strong> x {{$item->pivot->quantity}}</p>
-                        @endforeach
-                        <p>Tổng: <strong>{{presentPrice($bill->billing_total)}}</strong></p>
+                        <table class="table-review">
+                            <tr>
+                                <th>Sản phẩm</th>
+                                <th>Số lượng</th>
+                            </tr>
+                            @foreach($order_products as $item)
+                                <tr>
+                                    <td class="product-name">{{$item->name}}</td>
+                                    <td>{{$item->pivot->quantity}}</td>
+                                </tr>
+                            @endforeach
+                                <tr>
+                                    <th>Tổng</th>
+                                    <td>{{presentPrice($bill->billing_total)}}</td>
+                                </tr>
+                        </table>
                     </div>
                     <h2 class="mtext-106 w-full p-b-20 p-t-30 ">Địa chỉ thanh toán</h2>
                     <div class="billing-address">
-                        <p>{{$bill->billing_address}}</p>
-                        <p>{{$bill->billing_city}}</p>
-                        <p>{{$bill->billing_province}}</p>
-                        <p>{{$bill->billing_postalcode}}</p>
-
+                        <table class="table-review">
+                            <tr>
+                                <td>Địa chỉ </td>
+                                <td>{{$bill->billing_address}}</td>
+                            </tr>
+                            <tr>
+                                <td>Thành phố</td>
+                                <td>{{$bill->billing_city}}</td>
+                            </tr>
+                            <tr>
+                                <td>Quận/ Huyện</td>
+                                <td>{{$bill->billing_province}}</td>
+                            </tr>
+                            <tr>
+                                <td>Postal code</td>
+                                <td>{{$bill->billing_postalcode}}</td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
             </div>

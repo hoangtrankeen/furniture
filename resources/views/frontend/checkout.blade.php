@@ -3,7 +3,7 @@
 @section('title', 'Royal')
 
 @section('css')
-    <style>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">    <style>
         input[type=text], input[type=password], input[type=url], input[type=tel], input[type=search], input[type=number], input[type=datetime], input[type=email] {
             background: #fff;
             border: 1px solid #ccc;
@@ -61,6 +61,11 @@
             padding: 1em;
             width: 100%;
         }
+
+        input[type=checkbox]{
+            display: initial;
+        }
+        .ui-datepicker-trigger { position:relative;top:-31px ; width: 20px; right: -630px; }
     </style>
 @endsection
 
@@ -189,6 +194,14 @@
                                     <span class="help-block"> {{ $errors->first('postalcode') }}</span>
                                 @endif
                             </div>
+                            <div class="form-group ">
+                                <label for="delivery_date">Ngày nhận hàng</label>
+                                <input type="text" name="delivery_date" id="delivery_date" value="{{old('delivery_date')}}" required />
+
+                                @if ($errors->has('delivery_date'))
+                                    <span class="help-block"> {{ $errors->first('delivery_date') }}</span>
+                                @endif
+                            </div>
                         @endif
                     </div>
                     <div class="col-md-5 col-lg-5 col-sm-12 ">
@@ -216,6 +229,11 @@
                                         @endforeach
 
                                         <tr>
+                                            <th class="mtext-106 cl2">Free Ship</th>
+                                            <td></td>
+                                            <td class="">0</td>
+                                        </tr>
+                                        <tr>
                                             <th class="mtext-106 cl2">Tổng cộng</th>
                                             <td></td>
                                             <th class="mtext-106 cl2">{{presentPrice(Cart::total())}}</th>
@@ -227,10 +245,17 @@
                             <div class="col-md-12 col-lg-12 m-t-20">
                                 <div class="place-order-wrapper p-t-30 p-b-20 p-lr-15">
                                     <div class="shipping-method">
-                                        <h4 class="mtext-101 cl2">Phương thức thanh toán</h4>
-                                        <div class="description m-t-15 m-b-20">
-                                            Thanh toán trả sau tại địa chỉ khách hàng cung cấp
+                                        <h4 class="mtext-101 cl2 p-b-20">Phương thức thanh toán</h4>
+                                        @foreach($payments as $payment)
+                                        <label for="cod">
+                                            <input type="checkbox" name="payment_method" value="{{$payment->id}}" class="payment_method"/>
+                                            {{$payment->name}}
+                                        </label>
+                                        <div class="description m-t-15 m-b-20 cod-desc .trans-04" style="">
+                                            {{$payment->description}}
                                         </div>
+                                        @endforeach
+
                                     </div>
                                     <div class="place-order-action ">
                                         <button type="submit" class="flex-c-m stext-101 cl0 size-115 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">Đặt hàng</button>
@@ -253,5 +278,20 @@
 
 
 @section('javascript')
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script>
+            $(".payment_method").click(function () {
+                if ($(this).is(":checked")) {
+                    $(".payment_method").prop('checked', false);
+                    $(this).prop('checked', true);
+                }
+            });
 
+            $('#delivery_date').datepicker({
+                showOn: "button",
+                buttonImage: "frontend/images/icons/calendar.svg",
+                buttonImageOnly: true,
+                buttonText: "Select date"
+            });
+        </script>
 @endsection

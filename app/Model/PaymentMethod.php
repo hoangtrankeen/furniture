@@ -10,7 +10,7 @@ class PaymentMethod extends Model
 
     protected $primaryKey = 'id';
 
-    protected $fillable = ['name', 'id'];
+    protected $fillable = ['name', 'id','description','detail'];
     public function order()
     {
         return $this->hasMany('App\Model\Order');

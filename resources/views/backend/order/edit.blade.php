@@ -3,6 +3,11 @@
 @section('title','Create Product')
 
 @section('css')
+    <!-- Datepicker -->
+    <link rel="stylesheet" href="{{asset('backend/assets/plugin/datepicker/css/bootstrap-datepicker.min.css')}}">
+
+    <!-- DateRangepicker -->
+    <link rel="stylesheet" href="{{asset('backend/assets/plugin/daterangepicker/daterangepicker.css')}}">
     <!-- Select2 -->
     <!-- Remodal -->
     <link rel="stylesheet" href="{{asset('backend/assets/plugin/modal/remodal/remodal.css')}}">
@@ -65,12 +70,15 @@
                                 @endif
                             @endforeach
 
-                                <a href="{{ route('admin.order.email') }}" class="btn btn-info pull-right"
-                                   onclick="event.preventDefault();
-                                                     document.getElementById('send-email').submit();">
-                                    <i class="fa fa-send-o" aria-hidden="true"></i> Send Email
-                                </a>
 
+                            <input type="submit" class="btn btn-danger pull-right" value="Cập nhật đơn hàng">
+
+
+                            <a href="{{ route('admin.order.email') }}" class="btn btn-info pull-right"
+                               onclick="event.preventDefault();
+                                                     document.getElementById('send-email').submit();">
+                                <i class="fa fa-send-o" aria-hidden="true"></i> Gửi Email
+                            </a>
 
                         </div>
 
@@ -82,26 +90,23 @@
                                     <h4 class="box-title">Order # {{$order->id}}</h4>
                                     <table class="table">
                                         <tr>
-                                            <th>Order Date</th>
-                                            <td>{{$order->created_at}}</td>
+                                            <th>Ngày đặt hàng</th>
+                                            <td>{{presentDate($order->created_at)}}</td>
                                         </tr>
                                         <tr>
-                                            <th>Order Status</th>
+                                            <th>Trạng thái</th>
                                             <td>{{$order->statuses->name}}</td>
                                         </tr>
-                                        <tr>
-                                            <th>Placed from IP</th>
-                                            <td></td>
-                                        </tr>
+
                                     </table>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="box-content">
-                                    <h4 class="box-title">Account information</h4>
+                                    <h4 class="box-title">Thông tin khách hàng</h4>
                                     <table class="table">
                                         <tr>
-                                            <th>Customer Name</th>
+                                            <th>Tên</th>
                                             <td>{{($order->user_id) ? $order->customer->name : $order->billing_name}} </td>
                                         </tr>
                                         <tr>
@@ -109,41 +114,74 @@
                                             <td>{{$order->billing_email}}</td>
                                         </tr>
                                         <tr>
-                                            <th>Customer Group</th>
-                                            <td>{{ ($order->user_id) ? 'General' : 'NOT LOGGED IN' }}</td>
+                                            <th>Loại</th>
+                                            <td>{{ ($order->user_id) ? 'Có tài khoản' : 'không đăng nhập' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Di động</th>
+                                            <td>{{$order->billing_phone}}</td>
                                         </tr>
                                     </table>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="box-content">
-                                    <h4 class="box-title">Address Information</h4>
+                                    <h4 class="box-title">Địa chỉ nhận hàng</h4>
                                     <table class="table">
                                         <tr>
-                                            <th>Billing Address</th>
-                                            <td>{{$order->billing_address}}</td>
+                                            <th>Địa chỉ</th>
+                                            <td>
+                                                <input type="text" name="billing_address" value="{{$order->billing_address}}">
+                                            </td>
                                         </tr>
                                         <tr>
-                                            <th>Billing City</th>
-                                            <td>{{$order->billing_city}}</td>
+                                            <th>Tỉnh/Thành phố</th>
+                                            <td>
+                                                <input type="text" name="billing_city" value="{{$order->billing_city}}">
+                                            </td>
                                         </tr><tr>
-                                            <th>Billing Province</th>
-                                            <td>{{$order->billing_province}}</td>
+                                            <th>Quận/ Huyện</th>
+                                            <td>
+                                                <input type="text" name="billing_province" value="{{$order->billing_province}}">
+                                            </td>
                                         </tr>
                                         <tr>
-                                            <th>Billing Postal Code</th>
-                                            <td>{{$order->billing_postalcode}}</td>
+                                            <th>Postal Code</th>
+                                            <td>
+                                                <input type="text" name="billing_postalcode" value="{{$order->billing_postalcode}}">
+                                            </td>
                                         </tr>
+
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="box-content">
+                                    <h4 class="box-title">Phương thức thanh toán</h4>
+                                    <table class="table">
                                         <tr>
-                                            <th>Billing Phone</th>
-                                            <td>{{$order->billing_phone}}</td>
+                                            <th>{{$order->payment_methods->name}}</th>
                                         </tr>
                                     </table>
                                 </div>
                             </div>
 
                             <div class="col-md-6">
+                                <div class="box-content">
+                                    <h4 class="box-title">Thông tin thêm</h4>
+                                    <table class="table">
+                                        <tr>
+                                            <th>Ngày nhận hàng</th>
+                                            <td>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" placeholder="mm/dd/yyyy" id="datepicker" name="delivery_date" value="{{($order->delivery_date)}}">
+                                                    <span class="input-group-addon bg-primary text-white"><i class="fa fa-calendar"></i></span>
+                                                </div>
+                                            </td>
+                                        </tr>
 
+                                    </table>
+                                </div>
                             </div>
                         </div>
 
@@ -186,5 +224,18 @@
     <script src="{{asset('backend/assets/plugin/datatables/extensions/Responsive/js/dataTables.responsive.min.js')}}"></script>
     <script src="{{asset('backend/assets/plugin/datatables/extensions/Responsive/js/responsive.bootstrap.min.js')}}"></script>
     <script src="{{asset('backend/assets/scripts/datatables.demo.min.js')}}"></script>
+    <!-- Timepicker -->
+    <script src="{{asset('backend/assets/plugin/timepicker/bootstrap-timepicker.min.js')}}"></script>
 
+    <!-- Colorpicker -->
+    <script src="{{asset('backend/assets/plugin/colorpicker/js/bootstrap-colorpicker.min.js')}}"></script>
+
+    <!-- Datepicker -->
+    <script src="{{asset('backend/assets/plugin/datepicker/js/bootstrap-datepicker.min.js')}}"></script>
+
+    <script>
+        $('#datepicker').datepicker({
+            date: new Date()
+        });
+    </script>
 @endsection

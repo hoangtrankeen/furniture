@@ -28,9 +28,9 @@ class CheckoutController extends Controller
      */
     public function index()
     {
-        return view('frontend/checkout');
+        $payments = PaymentMethod::all();
+        return view('frontend/checkout')->with('payments', $payments);
     }
-
 
     /**
      * Store a newly created resource in storage.
@@ -74,6 +74,8 @@ class CheckoutController extends Controller
 
     protected function addToOrdersTables($request, $error)
     {
+
+        $delivery_date =  date('Y-m-d', strtotime($request->delivery_date));
         // Insert into orders table
         $order = Order::create([
             'user_id' => auth()->user() ? auth()->user()->id : null,
@@ -90,7 +92,8 @@ class CheckoutController extends Controller
             'billing_subtotal' => $this->getNumbers()->get('newSubtotal'),
             'billing_tax' => $this->getNumbers()->get('newTax'),
             'billing_total' => $this->getNumbers()->get('newTotal'),
-            'payment_method' => 1,
+            'delivery_date' => $delivery_date,
+            'payment_method' => $request->payment_method,
             'status' => 1,
             'error' => $error,
         ]);
@@ -103,8 +106,8 @@ class CheckoutController extends Controller
                 'quantity' => $item->qty,
             ]);
         }
-        $order->payment_method = PaymentMethod::find($order->payment_method)->name;
-        $order->status = OrderStatus::find($order->status)->name;
+
+        $order = Order::find($order->id);
 
         return $order;
     }
@@ -183,6 +186,7 @@ class CheckoutController extends Controller
             'customer' => auth()->user() ? auth()->user()->name : $order->billing_name,
             'products' => $order->products,
             'status' => $order->status,
+            'payment_methods' => $order->payment_methods
         ];
 
         Mail::to($details['billing_email'])->send(new \App\Mail\SendOrderConfirmation($details));

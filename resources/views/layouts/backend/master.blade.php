@@ -6,6 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 	<meta name="description" content="">
 	<meta name="author" content="">
+	<meta name="csrf-token" content="{{ csrf_token() }}">
 
 	<title>Royal | @yield('title')</title>
 
@@ -52,10 +53,7 @@
 			<!-- /.row small-spacing -->		
 			<footer class="footer">
 				<ul class="list-inline">
-					<li>2016 © NinjaAdmin.</li>
-					<li><a href="#">Privacy</a></li>
-					<li><a href="#">Terms</a></li>
-					<li><a href="#">Help</a></li>
+					<li>2018 © Showroom Royal.</li>
 				</ul>
 			</footer>
 		</div>

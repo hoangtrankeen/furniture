@@ -41,6 +41,16 @@
 				</ul>
 				<!-- /.sub-menu -->
 			</div>
+
+			<div class="row">
+				<div class="col-md-offset-3 col-md-5">
+					<label for="">Sort In Stock</label>
+					<select name="stock" id="stock" class="form-control">
+						<option value="1" {{request()->get('stock') == 1 ? 'selected':''}}>In stock</option>
+						<option value="0" {{request()->get('stock') == 0 ? 'selected':''}}>Out Of stock</option>
+					</select>
+				</div>
+			</div>
 			<!-- /.dropdown js__dropdown -->
 			<table id="example" class="table table-striped table-bordered display" style="width:100%">
 				<thead>
@@ -101,4 +111,12 @@
 	<script src="{{asset('backend/assets/plugin/datatables/extensions/Responsive/js/dataTables.responsive.min.js')}}"></script>
 	<script src="{{asset('backend/assets/plugin/datatables/extensions/Responsive/js/responsive.bootstrap.min.js')}}"></script>
 	<script src="{{asset('backend/assets/scripts/datatables.demo.min.js')}}"></script>
+
+
+	<script>
+        $("#stock").on("change", function () {
+            var stock = $(this).val();
+            window.location.href = window.location.origin + '/'+'admin/product/'+ '?stock='+stock;
+        });
+	</script>
 @endsection

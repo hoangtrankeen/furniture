@@ -51,13 +51,14 @@ Route::get('/customer/order/detail/{id}', 'Frontend\CustomerController@orderDeta
 
 
 Route::get('/combo', 'Frontend\PromoteController@getCombo')->name('promote.combo');
-
-Route::prefix('admin')->group(function () {
+Auth::routes();
+Route::get('admin/login', 'AuthAdmin\LoginController@showLoginForm')->name('admin.login');
+Route::post('admin/login', 'AuthAdmin\LoginController@login')->name('admin.login.submit');
+Route::group(['prefix'=>'admin', 'middleware' => 'auth:admin'], function () {
 
     Route::get('/', 'Backend\DashboardController@index')->name('admin.home');
 
-    Route::get('/login', 'AuthAdmin\LoginController@showLoginForm')->name('admin.login');
-    Route::post('/login', 'AuthAdmin\LoginController@login')->name('admin.login.submit');
+
     Route::post('/logout', 'AuthAdmin\LoginController@logout')->name('admin.logout');
     Route::get('/password/reset', 'AuthAdmin\ForgotPasswordController@showLinkRequestForm')->name('admin.password.request');
     Route::post('/password/email', 'AuthAdmin\ForgotPasswordController@sendResetLinkEmail')->name('admin.password.email');
@@ -66,7 +67,9 @@ Route::prefix('admin')->group(function () {
 
 
     Route::get('product/create/{type}','Backend\ProductController@create')->name('product.create');
+
     Route::resource('product-simple','Backend\ProductSimpleController');
+
     Route::resource('product-group','Backend\ProductGroupController');
 
     Route::resource('product','Backend\ProductController');
@@ -76,6 +79,8 @@ Route::prefix('admin')->group(function () {
     Route::resource('attribute','Backend\AttributeController');
 
     Route::resource('order','Backend\OrderController');
+
+    Route::post('order/update/cart','Backend\OrderController@upDateCart');
 
     Route::get('chart/order/amount','Backend\ChartController@chartOrderAmount')->name('chart.order.amount');
 
@@ -94,7 +99,6 @@ Route::prefix('admin')->group(function () {
 
 });
 
-Auth::routes();
 
 
 

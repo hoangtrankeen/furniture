@@ -16,6 +16,6 @@ class DashboardController extends ChartController
 
     public function index(Request $request)
     {
-
+        return view('backend/dashboard');
     }
 }

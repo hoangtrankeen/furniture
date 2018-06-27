@@ -6,6 +6,7 @@ use App\Mail\SendOrderConfirmation;
 use App\Model\Order;
 use App\Model\OrderProduct;
 use App\Model\OrderStatus;
+use App\Model\PaymentMethod;
 use App\Model\Product;
 use Carbon\Carbon;
 use ConsoleTVs\Charts\Classes\Chartjs\Chart;
@@ -14,6 +15,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use App\Charts\OrderChart;
+use Gloudemans\Shoppingcart\Facades\Cart;
 
 class OrderController extends Controller
 {
@@ -46,7 +48,10 @@ class OrderController extends Controller
      */
     public function create()
     {
-        //
+        $data['payments'] = PaymentMethod::all();
+        $data['products'] = Product::all();
+
+        return view('backend/order/create', $data);
     }
 
     /**
@@ -57,18 +62,96 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,array(
+                'email' => 'required',
+                'name' => 'required',
+                'address' => 'required',
+                'city' => 'required',
+                'province' => 'required',
+                'postalcode' => 'required',
+                'phone' => 'required',
+                'payment_method' => 'required',
+                'delivery_date' => 'required|date',
+                'order_product' => 'required'
+            )
+        );
+
+        $this->addToOrdersTables($request);
+        Cart::destroy();
+
+        return redirect()->back()->with('success','Tạo đơn hàng thành công');
     }
 
+
     /**
-     * Display the specified resource.
+     * Update the cart .
      *
-     * @param  int  $id
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function upDateCart(Request $request)
     {
-        //
+        foreach($request->arr as $item)
+        {
+            $item = (int) $item;
+            $product = Product::find($item);
+
+            $quantity = $request->quantity ?? 1;
+            $duplicates = Cart::search(function ($cartItem, $rowId) use ($item) {
+                return $cartItem->id === $item;
+            });
+
+            if ($duplicates->isNotEmpty()) {
+                $rowId = $duplicates->first()->rowId;
+                $qty_incart = $duplicates->first()->qty;
+                Cart::update( $rowId, $qty_incart + $quantity);
+            }else{
+                Cart::add($item, $product->name, $quantity, Product::getFinalPrice($product))
+                    ->associate('App\Model\Product');
+            }
+        }
+
+        return response()->json(['message' => $request->all()]);
+
+    }
+
+    protected function addToOrdersTables($request)
+    {
+
+        $delivery_date =  date('Y-m-d', strtotime($request->delivery_date));
+        // Insert into orders table
+        $order = Order::create([
+            'user_id' => null,
+            'billing_email' => $request->email,
+            'billing_name' => $request->name,
+            'billing_address' => $request->address,
+            'billing_city' => $request->city,
+            'billing_province' => $request->province,
+            'billing_postalcode' => $request->postalcode,
+            'billing_phone' => $request->phone,
+            'billing_name_on_card' => $request->name_on_card,
+            'billing_discount' => $this->getNumbers()->get('discount'),
+            'billing_discount_code' => $this->getNumbers()->get('code'),
+            'billing_subtotal' => $this->getNumbers()->get('newSubtotal'),
+            'billing_tax' => $this->getNumbers()->get('newTax'),
+            'billing_total' => $this->getNumbers()->get('newTotal'),
+            'delivery_date' => $delivery_date,
+            'payment_method' => $request->payment_method,
+            'status' => 1,
+        ]);
+
+        // Insert into order_product table
+        foreach (Cart::content() as $item) {
+            OrderProduct::create([
+                'order_id' => $order->id,
+                'product_id' => $item->model->id,
+                'quantity' => $item->qty,
+            ]);
+        }
+
+        $order = Order::find($order->id);
+
+        return $order;
     }
 
     /**
@@ -93,15 +176,34 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request, array(
+            // rules, criteria
+            'billing_address' => 'required|string',
+            'billing_city' => 'required|string',
+            'billing_province' => 'required|string',
+            'billing_postalcode' => 'required|string',
+            'delivery_date' => 'required|date'
+        ));
+
         $order = Order::find($id);
         $statuses = OrderStatus::all();
         foreach($statuses as $status){
             if($request->has('status_'.$status->id)){
                 $order->status = $status->id;
                 $order->save();
-                return redirect()->back();
             }
         }
+
+        $order->billing_city = $request->billing_city;
+        $order->billing_address = $request->billing_address;
+        $order->billing_province = $request->billing_province;
+        $order->billing_postalcode = $request->billing_postalcode;
+        $order->delivery_date = $request->delivery_date;
+
+        $order->save();
+
+        return redirect()->back()->with('success', 'Order is updated successfully');
+
     }
 
     /**
@@ -147,9 +249,24 @@ class OrderController extends Controller
         return redirect()->back()->with('success', 'Order Email has been sent successfully!');
     }
 
-    public function getOrderTotalByMonth()
+    private function getNumbers()
     {
-    }
 
+        $tax = config('cart.tax') / 100;
+        $discount = session()->get('coupon')['discount'] ?? 0;
+        $code = session()->get('coupon')['name'] ?? null;
+        $newSubtotal = (Cart::subtotal() - $discount);
+        $newTax = $newSubtotal * $tax;
+        $newTotal = $newSubtotal * (1 + $tax);
+
+        return collect([
+            'tax' => $tax,
+            'discount' => $discount,
+            'code' => $code,
+            'newSubtotal' => $newSubtotal,
+            'newTax' => $newTax,
+            'newTotal' => $newTotal,
+        ]);
+    }
 
 }

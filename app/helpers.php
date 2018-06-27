@@ -62,7 +62,8 @@ function presentDateFormat($date = '')
     if($date === null){
         $date = '';
     }else{
-        $date = date_format($date,"h:i:s A, d-m-Y");
+        $date = new DateTime($date);
+        $date = date_format($date,"d-m-Y");
     }
 
     return $date;
@@ -73,6 +74,7 @@ function presentDate($date = '')
     if($date === null){
         $date = '';
     }else{
+        $date = new DateTime($date);
         $date = date_format($date,"d/m/Y");
     }
 

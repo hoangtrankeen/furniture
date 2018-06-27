@@ -126,10 +126,11 @@
                                                         </td>
                                                         <td align="left" style="font-family:'Roboto', Arial !important">
                                                             <p style="font-size:16px; color:#000; margin:0 0 10px 0;">
-                                                                {{$details->payment_method}}
+                                                                {{$details->payment_methods->name}}
                                                             </p>
                                                         </td>
                                                     </tr>
+
                                                     </tbody>
                                                 </table>
                                             </td>
@@ -154,11 +155,21 @@
                                                     <tr>
                                                         <td style="font-family:'Roboto', Arial !important">
                                                             <p style="font-size:16px; color:#000; margin:0 0 5px 0;">
+                                                                Địa chỉ
+                                                            </p>
+                                                        </td>
+                                                        <td style="font-family:'Roboto', Arial !important">
+                                                            <p style="font-size:16px; color:#000; margin:0 0 5px 0;">
                                                                 {{$details->billing_address}}
                                                             </p>
                                                         </td>
                                                     </tr>
                                                     <tr>
+                                                        <td style="font-family:'Roboto', Arial !important">
+                                                            <p style="font-size:16px; color:#000; margin:0 0 5px 0;">
+                                                                Quận / Huyện
+                                                            </p>
+                                                        </td>
                                                         <td style="font-family:'Roboto', Arial !important">
                                                             <p style="font-size:16px; color:#000; margin:0 0 5px 0;">
                                                                 {{$details->billing_province}}
@@ -167,6 +178,11 @@
                                                     </tr>
 
                                                     <tr>
+                                                        <td style="font-family:'Roboto', Arial !important;">
+                                                            <p style="font-size:16px; color:#000; margin:0;padding:0;">
+                                                                Thành phố
+                                                            </p>
+                                                        </td>
                                                         <td style="font-family:'Roboto', Arial !important;">
                                                             <p style="font-size:16px; color:#000; margin:0;padding:0;">
                                                                 {{$details->billing_city}}
@@ -246,6 +262,16 @@
                             <tr>
                                 <td align="right" style="padding-bottom:15px;">
                                     <p style="font-size:18px; color:#000; font-weight:900; margin:0;">
+                                        Miễn phí giao hàng :
+                                    </p>
+                                </td>
+                                <td align="right" style="padding-bottom:15px;">
+                                    <p style="font-size:18px; color:#bc0101; font-weight:bold; margin:0;">
+                                       0
+                                    </p>
+                                </td>
+                                <td align="right" style="padding-bottom:15px;">
+                                    <p style="font-size:18px; color:#000; font-weight:900; margin:0;">
                                         Tổng cộng:
                                     </p>
                                 </td>
@@ -258,7 +284,9 @@
                             </tbody>
                         </table>
                     </td>
-                </tr>                </tbody>
+                </tr>
+
+                </tbody>
             </table>
         </td>
     </tr>
