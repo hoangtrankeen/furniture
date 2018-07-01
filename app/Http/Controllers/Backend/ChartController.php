@@ -33,7 +33,6 @@ class ChartController extends Controller
             ]
         ]);
 
-
         $chart->labels($list)
             ->options([
                 'legend' => [
@@ -89,9 +88,9 @@ class ChartController extends Controller
         $list=array();
         for($d=1; $d<=31; $d++)
         {
-            $time=mktime(12, 0, 0, date($month), $d, date('Y'));
-            if (date('m', $time)==date('m'))
-                $list[]=date('Y-m-d', $time);
+            $time=mktime(12, 0, 0, $month, $d, date('Y'));
+            if (date('m', $time) == $month)
+                $list[] = date('Y-m-d', $time);
         }
 
         return $list;

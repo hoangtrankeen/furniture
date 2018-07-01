@@ -371,7 +371,7 @@ class Catalog extends ServiceProvider
                 echo '</td>';
 
                 echo '<td>';
-                echo '<a href="'.route('topic.edit', $item['id']).'" class="btn btn-xs btn-info">Edit</a>';
+                echo '<a href="'.route('topic.edit', $item['id']).'" class="btn btn-xs btn-info">Sửa</a>';
                 echo '</td>';
 
                 echo '</tr>';

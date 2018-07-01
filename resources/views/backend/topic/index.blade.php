@@ -28,16 +28,12 @@
 <div class="row small-spacing">
 	<div class="col-xs-12">
 		<div class="box-content">
-			<h4 class="box-title">Default</h4>
+			<h4 class="box-title">Danh mục bài viết</h4>
 			<!-- /.box-title -->
 			<div class="dropdown js__drop_down">
 				<a href="#" class="dropdown-icon glyphicon glyphicon-option-vertical js__drop_down_button"></a>
 				<ul class="sub-menu">
-					<li><a href="{{route('topic.create')}}">Create Topic</a></li>
-					<li><a href="#">Another action</a></li>
-					<li><a href="#">Something else there</a></li>
-					<li class="split"></li>
-					<li><a href="#">Separated link</a></li>
+					<li><a href="{{route('topic.create')}}">Tạo danh mục bài viết</a></li>
 				</ul>
 				<!-- /.sub-menu -->
 			</div>
@@ -45,22 +41,24 @@
 			<table id="example" class="table table-striped table-bordered display" style="width:100%">
 				<thead>
 					<tr>
-						<th>Name</th>
+						<th>Tên</th>
 						<th>Slug</th>
-						<th>Created date</th>
-						<th>Action</th>
+						<th>Ngày tạo</th>
+						<th>Hành động</th>
 					</tr>
 				</thead>
 				<tfoot>
 					<tr>
-						<th>Name</th>
+						<th>Tên</th>
 						<th>Slug</th>
-						<th>Created date</th>
-						<th>Action</th>
+						<th>Ngày tạo</th>
+						<th>Hành động</th>
 					</tr>
 				</tfoot>
 				<tbody>
 					{{ManagerCatalog::showTopicsTable($topics)}}
+
+
 				</tbody>
 			</table>
 		</div>

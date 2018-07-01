@@ -26,13 +26,13 @@
     <div class="row">
         <div class="col-md-12 col-xs-12">
             <div class="box-content card white">
-                <h4 class="box-title">Create Category</h4>
+                <h4 class="box-title">Tạo danh mục sản phẩm</h4>
                 <!-- /.box-title -->
 
                 <div class="card-content">
                     <form class="form-horizontal" action="{{route('category.store')}}" id="category" method="post" enctype="multipart/form-data">
                         <div class="form-group">
-                            <label for="name" class="col-sm-2 control-label">Name</label>
+                            <label for="name" class="col-sm-2 control-label">Tên</label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="name" name="name" value="{{ old('name')}}">
                             </div>
@@ -44,20 +44,20 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="order" class="col-sm-2 control-label">Order</label>
+                            <label for="order" class="col-sm-2 control-label">Thứ tự</label>
                             <div class="col-sm-8">
                                 <input type="number" class="form-control" id="order" name="order" value="{{ old('order')}}">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="order" class="col-sm-2 control-label">Description</label>
+                            <label for="order" class="col-sm-2 control-label">Mô tả</label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="description" name="description" value="{{ old('description')}}">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="categories" class="col-sm-2 control-label">Parent Category</label>
+                            <label for="categories" class="col-sm-2 control-label">Danh mục cha</label>
                             <div class="col-sm-8">
                                 <select class=" categories form-control" id="parent_id" name="parent_id">
                                     <option value="0" selected>-----</option>
@@ -71,7 +71,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="active" class="col-sm-2 control-label">Active</label>
+                            <label for="active" class="col-sm-2 control-label">Bật</label>
                             <div class="col-xs-1">
                                 <select class="form-control" id="active" name="active">
                                     <option value="0" {{ old('active') == 0 ? 'selected': ''}}>No</option>
@@ -80,7 +80,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="image" class="col-sm-2 control-label">Featured Image</label>
+                            <label for="image" class="col-sm-2 control-label">Ảnh</label>
                             <div class="col-sm-8">
                                 <!-- /.dropdown js__dropdown -->
                                 <input type="file" name="image" id="input-file-now-custom-1" class="dropify" data-default-file="" />
@@ -89,7 +89,7 @@
                         {{ csrf_field() }}
                         <div class="form-group margin-bottom-0">
                             <div class="col-sm-offset-2 col-sm-8">
-                                <button type="submit" class="btn btn-info btn-sm waves-effect waves-light">Save</button>
+                                <button type="submit" class="btn btn-info btn-sm waves-effect waves-light">Lưu</button>
                             </div>
                         </div>
 

@@ -26,7 +26,7 @@
         <div class="col-xs-12">
             <div class="box-content">
 
-                <h3>Total Sales Amount</h3>
+                <h3>Tổng giá trị các đơn hàng</h3>
                 <div class="col-md-offset-9 col-md-3">
                     <select name="month" id="month" class="  form-control">
                         @foreach($months as  $k => $m)

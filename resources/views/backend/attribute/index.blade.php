@@ -28,16 +28,13 @@
 <div class="row small-spacing">
 	<div class="col-xs-12">
 		<div class="box-content">
-			<h4 class="box-title">Default</h4>
+			<h4 class="box-title">Thuộc tính sản phẩm</h4>
 			<!-- /.box-title -->
 			<div class="dropdown js__drop_down">
 				<a href="#" class="dropdown-icon glyphicon glyphicon-option-vertical js__drop_down_button"></a>
 				<ul class="sub-menu">
-					<li><a href="{{route('attribute.create')}}">Create attribute</a></li>
-					<li><a href="#">Another action</a></li>
-					<li><a href="#">Something else there</a></li>
-					<li class="split"></li>
-					<li><a href="#">Separated link</a></li>
+					<li><a href="{{route('attribute.create')}}">Tạo thuộc tính</a></li>
+
 				</ul>
 				<!-- /.sub-menu -->
 			</div>
@@ -45,20 +42,20 @@
 			<table id="example" class="table table-striped table-bordered display" style="width:100%">
 				<thead>
 					<tr>
-						<th>Name</th>
-						<th>Type</th>
-						<th>Name In Form</th>
-						<th>Created date</th>
-						<th>Action</th>
+						<th>Thuộc tính</th>
+						<th>Loại</th>
+						<th>Tên trong form</th>
+						<th>Ngày tạo</th>
+						<th>Hành động</th>
 					</tr>
 				</thead>
 				<tfoot>
 					<tr>
-						<th>Name</th>
-						<th>Type</th>
-						<th>Name In Form</th>
-						<th>Created date</th>
-						<th>Action</th>
+						<th>Thuộc tính</th>
+						<th>Loại</th>
+						<th>Tên trong form</th>
+						<th>Ngày tạo</th>
+						<th>Hành động</th>
 					</tr>
 				</tfoot>
 				<tbody>
@@ -69,11 +66,11 @@
 						<td>{{$attribute->inform_name}}</td>
 						<td>{{$attribute->created_at}}</td>
 						<td>
-							<a href="{{route('attribute.edit', $attribute->id)}}" class="btn btn-xs btn-info">Edit</a>
+							<a href="{{route('attribute.edit', $attribute->id)}}" class="btn btn-xs btn-info">Sửa</a>
 							<form action="{{route('attribute.destroy', $attribute->id)}}" method="post">
 								{{method_field('DELETE')}}
 								{{csrf_field()}}
-								{{--<button type="submit" class="btn btn-xs btn-danger">Delete</button>--}}
+								<button type="submit" class="btn btn-xs btn-danger">Xóa</button>
 							</form>
 						</td>
 					</tr>

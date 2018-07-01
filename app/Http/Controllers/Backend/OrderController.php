@@ -162,8 +162,21 @@ class OrderController extends Controller
      */
     public function edit($id)
     {
-        $data['order'] = Order::find($id);
+        $order = Order::find($id);
         $data['statuses'] = OrderStatus::all();
+
+        $products = $order->products;
+
+        foreach($products as $product)
+        {
+            $product->final_price = Product::getFinalPrice($product);
+        }
+
+        $data['order'] = $order;
+
+        $data['products'] = $products;
+
+
         return view('backend/order/edit', $data);
     }
 

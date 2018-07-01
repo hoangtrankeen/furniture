@@ -25,7 +25,7 @@
     <div class="row">
         <div class="col-md-12 col-xs-12">
             <div class="box-content card white">
-                <h4 class="box-title">Edit Topic</h4>
+                <h4 class="box-title">Chỉnh sửa danh mục bài viết</h4>
                 <!-- /.box-title -->
 
                 <div class="card-content">
@@ -34,7 +34,7 @@
                         {{ csrf_field() }}
 
                         <div class="form-group">
-                            <label for="name" class="col-sm-2 control-label">Name</label>
+                            <label for="name" class="col-sm-2 control-label">Tên</label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="name" name="name" value="{{$thiscat->name}}">
                             </div>
@@ -46,7 +46,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="categories" class="col-sm-2 control-label">Parent Topic</label>
+                            <label for="categories" class="col-sm-2 control-label">Danh mục cha</label>
                             <div class="col-sm-8">
                                 <select class=" topic form-control" id="parent_id" name="parent_id">
                                     <option value="0">-----</option>
@@ -62,7 +62,7 @@
 
                         <div class="form-group margin-bottom-0">
                             <div class="col-sm-offset-2 col-sm-8">
-                                <button type="submit" class="btn btn-info btn-sm waves-effect waves-light">Save</button>
+                                <button type="submit" class="btn btn-info btn-sm waves-effect waves-light">Lưu</button>
                             </div>
                         </div>
 

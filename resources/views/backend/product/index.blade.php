@@ -28,26 +28,23 @@
 <div class="row small-spacing">
 	<div class="col-xs-12">
 		<div class="box-content">
-			<h4 class="box-title">Default</h4>
+			<h4 class="box-title">Danh sách sản phẩm</h4>
 			<!-- /.box-title -->
 			<div class="dropdown js__drop_down">
 				<a href="#" class="dropdown-icon glyphicon glyphicon-option-vertical js__drop_down_button"></a>
 				<ul class="sub-menu">
-					<li><a href="{{route('product.create', ['type' => 'simple'])}}">Create Simple Product</a></li>
-					<li><a href="{{route('product.create', ['type' => 'group'])}}">Create Group Product</a></li>
-					<li><a href="#">Something else there</a></li>
-					<li class="split"></li>
-					<li><a href="#">Separated link</a></li>
+					<li><a href="{{route('product.create', ['type' => 'simple'])}}">Tạo sản phẩm lẻ</a></li>
+					<li><a href="{{route('product.create', ['type' => 'group'])}}">Tạo nhóm sản phẩm</a></li>
 				</ul>
 				<!-- /.sub-menu -->
 			</div>
 
 			<div class="row">
 				<div class="col-md-offset-3 col-md-5">
-					<label for="">Sort In Stock</label>
+					<label for="">Lọc</label>
 					<select name="stock" id="stock" class="form-control">
-						<option value="1" {{request()->get('stock') == 1 ? 'selected':''}}>In stock</option>
-						<option value="0" {{request()->get('stock') == 0 ? 'selected':''}}>Out Of stock</option>
+						<option value="1" {{request()->get('stock') == 1 ? 'selected':''}}>Trong kho</option>
+						<option value="0" {{request()->get('stock') == 0 ? 'selected':''}}>Hết hàng</option>
 					</select>
 				</div>
 			</div>
@@ -55,24 +52,22 @@
 			<table id="example" class="table table-striped table-bordered display" style="width:100%">
 				<thead>
 					<tr>
-						<th>Name</th>
+						<th>Tên</th>
 						<th>Slug</th>
-						<th>Type</th>
-						<th>Price</th>
-						<th>Featured</th>
-						<th>Created date</th>
-						<th>Action</th>
+						<th>Loại</th>
+						<th>Giá</th>
+						<th>Ngày tạo</th>
+						<th>Hành động</th>
 					</tr>
 				</thead>
 				<tfoot>
 					<tr>
-						<th>Name</th>
+						<th>Tên</th>
 						<th>Slug</th>
-						<th>Type</th>
-						<th>Price</th>
-						<th>Featured</th>
-						<th>Created date</th>
-						<th>Action</th>
+						<th>Loại</th>
+						<th>Giá</th>
+						<th>Ngày tạo</th>
+						<th>Hành động</th>
 					</tr>
 				</tfoot>
 				<tbody>
@@ -82,15 +77,24 @@
 						<td>{{$product->slug}}</td>
 						<td>{{$product->type_id}}</td>
 						<td>{{presentPrice($product->price)}}</td>
-						<td>{{$product->featured}}</td>
-						<td>{{$product->created_at}}</td>
+						<td>{{presentDate($product->created_at)}}</td>
 						<td>
-							<a href="{{route('product.edit', $product->id)}}" class="btn btn-xs btn-info">Edit</a>
-							<form action="{{route('product.destroy', $product->id)}}" method="post">
-								{{method_field('DELETE')}}
-								{{csrf_field()}}
-								<button type="submit" class="btn btn-xs btn-danger">Delete</button>
-							</form>
+							<a href="{{route('product.edit', $product->id)}}" class="btn btn-xs btn-info">Sửa</a>
+							@if($product->type_id == 'simple')
+								<form action="{{route('product-simple.destroy', $product->id)}}" method="post">
+									{{method_field('DELETE')}}
+									{{csrf_field()}}
+									<button type="submit" class="btn btn-xs btn-danger">Xóa</button>
+								</form>
+
+								@elseif($product->type_id == 'group')
+
+								<form action="{{route('product-group.destroy', $product->id)}}" method="post">
+									{{method_field('DELETE')}}
+									{{csrf_field()}}
+									<button type="submit" class="btn btn-xs btn-danger">Xóa</button>
+								</form>
+							@endif
 						</td>
 					</tr>
 					@endforeach

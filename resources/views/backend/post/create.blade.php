@@ -34,13 +34,13 @@
 	<div class="row">
 		<div class="col-md-12 col-xs-12">
 			<div class="box-content card white">
-				<h4 class="box-title">Create Post</h4>
+				<h4 class="box-title">Tạo bài viết</h4>
 				<!-- /.box-title -->
 
 				<div class="card-content">
 					<form class="form-horizontal" action="{{route('post.store')}}" id="post" method="post" enctype="multipart/form-data">
 						<div class="form-group">
-							<label for="title" class="col-sm-2 control-label">Title</label>
+							<label for="title" class="col-sm-2 control-label">Tiêu đề</label>
 							<div class="col-sm-8">
 								<input type="text" class="form-control" id="title" name="title" value="{{ old('title')}}">
 							</div>
@@ -52,7 +52,7 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="description" class="col-sm-2 control-label">Description</label>
+							<label for="description" class="col-sm-2 control-label">Mô tả</label>
 							<div class="col-sm-8">
 								<input type="text" class="form-control" id="description" name="description" value="{{ old('description')}}" />
 							</div>
@@ -77,7 +77,7 @@
 						</div>
 
 						<div class="form-group">
-							<label for="topics" class="col-sm-2 control-label">Topics</label>
+							<label for="topics" class="col-sm-2 control-label">Danh mục bài viết</label>
 							<div class="col-sm-8">
 								<select class="topics form-control" id="topics" name="topics[]" multiple="multiple">
 									@foreach($topics as $topic)
@@ -88,7 +88,7 @@
 						</div>
 
 						<div class="form-group">
-							<label for="categories" class="col-sm-2 control-label">Tags</label>
+							<label for="categories" class="col-sm-2 control-label">Gán thẻ</label>
 							<div class="col-sm-8">
 								<select class=" tags form-control" id="tags" name="tags[]" multiple="multiple">
 									@foreach($tags as $tag)
@@ -107,8 +107,19 @@
 								</select>
 							</div>
 						</div>
+
 						<div class="form-group">
-							<label for="featured" class="col-sm-2 control-label">Featured</label>
+							<label for="active" class="col-sm-2 control-label">Bật</label>
+							<div class="col-xs-1">
+								<select class="form-control" id="active" name="active">
+									<option value="0" {{ old('active') == 0 ? 'selected': ''}}>No</option>
+									<option value="1" {{ old('active') == 1 ? 'selected': ''}}>Yes</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="featured" class="col-sm-2 control-label">Nổi bật</label>
 							<div class="col-xs-1">
 								<select class="form-control" id="featured" name="featured">
 									<option value="0" {{ old('featured') == 0 ? 'selected': ''}}>No</option>
@@ -117,23 +128,25 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="image" class="col-sm-2 control-label">Featured Image</label>
+							<label for="image" class="col-sm-2 control-label">Ảnh</label>
 							<div class="col-sm-8">
 								<!-- /.dropdown js__dropdown -->
 								<input type="file" name="image" id="input-file-now-custom-1" class="dropify" data-default-file="" />
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="featured" class="col-sm-2 control-label">Content</label>
+							<label for="featured" class="col-sm-2 control-label">Nội dung</label>
 							<div class="col-sm-8">
 								<textarea name="post_content" id="post_content">{{old('post_content') }}</textarea>
 							</div>
 						</div>
 
+
+
 						{{ csrf_field() }}
 						<div class="form-group margin-bottom-0">
 							<div class="col-sm-offset-2 col-sm-8">
-								<button type="submit" class="btn btn-info btn-sm waves-effect waves-light">Save</button>
+								<button type="submit" class="btn btn-info btn-sm waves-effect waves-light">Lưu</button>
 							</div>
 						</div>
 

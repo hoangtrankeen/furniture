@@ -185,6 +185,31 @@
                             </div>
                         </div>
 
+                        <div class="col-md-6">
+                            <div class="box-content">
+                                <h4 class="box-title">Sản phẩm</h4>
+                                <table class="table">
+                                    <tr>
+                                        <th>Tên sản phẩm</th>
+                                        <th>Số lượng</th>
+                                        <th>Tổng</th>
+                                    </tr>
+                                    @foreach($products as $product)
+                                    <tr>
+                                        <td>{{$product->name}}</td>
+                                        <td>{{$product->pivot->quantity}}</td>
+                                        <td>{{presentPrice($product->final_price * $product->pivot->quantity)}}</td>
+                                    </tr>
+                                    @endforeach
+                                    <tr>
+                                        <th>Tổng</th>
+                                        <td></td>
+                                        <td>{{presentPrice($order->billing_total)}}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
                         {{--<div class="form-group">--}}
                             {{--<label for="categories" class="col-sm-2 control-label">Parent Topic</label>--}}
                             {{--<div class="col-sm-8">--}}

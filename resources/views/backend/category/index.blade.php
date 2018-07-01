@@ -28,16 +28,12 @@
 <div class="row small-spacing">
 	<div class="col-xs-12">
 		<div class="box-content">
-			<h4 class="box-title">Default</h4>
+			<h4 class="box-title">Danh mục sản phẩm</h4>
 			<!-- /.box-title -->
 			<div class="dropdown js__drop_down">
 				<a href="#" class="dropdown-icon glyphicon glyphicon-option-vertical js__drop_down_button"></a>
 				<ul class="sub-menu">
 					<li><a href="{{route('category.create')}}">Create Category</a></li>
-					<li><a href="#">Another action</a></li>
-					<li><a href="#">Something else there</a></li>
-					<li class="split"></li>
-					<li><a href="#">Separated link</a></li>
 				</ul>
 				<!-- /.sub-menu -->
 			</div>
@@ -45,20 +41,20 @@
 			<table id="example" class="table table-striped table-bordered display" style="width:100%">
 				<thead>
 					<tr>
-						<th>Name</th>
+						<th>Tên</th>
 						<th>Slug</th>
-						<th>Parent Category</th>
-						<th>Created date</th>
-						<th>Action</th>
+						<th>Danh mục cha</th>
+						<th>Ngày tạo</th>
+						<th>Hành động</th>
 					</tr>
 				</thead>
 				<tfoot>
 					<tr>
-						<th>Name</th>
+						<th>Tên</th>
 						<th>Slug</th>
-						<th>Parent Category</th>
-						<th>Created date</th>
-						<th>Action</th>
+						<th>Danh mục cha</th>
+						<th>Ngày tạo</th>
+						<th>Hành động</th>
 					</tr>
 				</tfoot>
 				<tbody>
@@ -67,13 +63,13 @@
 						<td><a href="{{route('category.edit', $category->id )}}">{{$category->name}}</a></td>
 						<td>{{$category->slug}}</td>
 						<td>{{$category->parent_id}}</td>
-						<td>{{$category->created_at}}</td>
+						<td>{{presentDate($category->created_at)}}</td>
 						<td>
-							<a href="{{route('category.edit', $category->id)}}" class="btn btn-xs btn-info">Edit</a>
+							<a href="{{route('category.edit', $category->id)}}" class="btn btn-xs btn-info">Sửa</a>
 							<form action="{{route('category.destroy', $category->id)}}" method="post">
 								{{method_field('DELETE')}}
 								{{csrf_field()}}
-								<button type="submit" class="btn btn-xs btn-danger">Delete</button>
+								<button type="submit" class="btn btn-xs btn-danger">Xóa</button>
 							</form>
 						</td>
 					</tr>

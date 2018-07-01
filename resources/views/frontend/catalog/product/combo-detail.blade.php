@@ -85,9 +85,11 @@
                     <div class="row">
                         <div class="col-md-12 col-lg-7 p-b-30 combo-lightbox">
                             <div class="combo-gallery">
-                                @foreach(json_decode($product->images) as $image)
-                                    <a href="{{getFeaturedImageProduct($image)}}" title=""><img src="{{getFeaturedImageProduct($image)}}" width="205" height="230" /></a>
-                                @endforeach
+                                @if($product->images)
+                                    @foreach(json_decode($product->images) as $image)
+                                        <a href="{{getFeaturedImageProduct($image)}}" title=""><img src="{{getFeaturedImageProduct($image)}}" width="205" height="230" /></a>
+                                    @endforeach
+                                @endif
                             </div>
                         </div>
 

@@ -35,15 +35,15 @@
     <div class="row">
         <div class="col-md-12 col-xs-12">
             <div class="box-content">
-                <h4 class="box-title">Edit Group Product</h4>
+                <h4 class="box-title">Chỉnh sửa nhóm sản phẩm</h4>
                 <div class="dropdown js__drop_down">
                     <a href="#" class="dropdown-icon glyphicon glyphicon-option-vertical js__drop_down_button"></a>
                     <ul class="sub-menu">
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else there</a></li>
-                        <li class="split"></li>
-                        <li><a href="#">Separated link</a></li>
+                        {{--<li><a href="#">Action</a></li>--}}
+                        {{--<li><a href="#">Another action</a></li>--}}
+                        {{--<li><a href="#">Something else there</a></li>--}}
+                        {{--<li class="split"></li>--}}
+                        {{--<li><a href="#">Separated link</a></li>--}}
                     </ul>
                     <!-- /.sub-menu -->
                 </div>
@@ -51,13 +51,13 @@
                 <div class="card-content">
                     <form class="form-horizontal" action="{{route('product-group.update', $product->id)}}" id="product" enctype="multipart/form-data" method="post">
                         <div class="form-group">
-                            <label for="name" class="col-sm-2 control-label">Name</label>
+                            <label for="name" class="col-sm-2 control-label">Tên</label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="name" name="name" value="{{ $product->name }}">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="sku" class="col-sm-2 control-label">SKU</label>
+                            <label for="sku" class="col-sm-2 control-label">Mã Sản phẩm</label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="sku" name="sku" value="{{ $product->sku }}">
                             </div>
@@ -71,32 +71,32 @@
 
 
                         <div class="form-group">
-                            <label for="price" class="col-sm-2 control-label">Price</label>
+                            <label for="price" class="col-sm-2 control-label">Giá</label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="price" name="price" value="{{ $product->price }}">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="quantity" class="col-sm-2 control-label">Quantity</label>
+                            <label for="quantity" class="col-sm-2 control-label">Số lượng</label>
                             <div class="col-sm-8">
                                 <input type="number" class="form-control" id="quantity" name="quantity" value="{{ $product->quantity }}">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="details" class="col-sm-2 control-label">Details</label>
+                            <label for="details" class="col-sm-2 control-label">Mô tả</label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="details" name="details" value="{{ $product->details }}">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="description" class="col-sm-2 control-label">Description</label>
+                            <label for="description" class="col-sm-2 control-label">Chi tiết</label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="description" name="description" value="{{ $product->description }}">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="categories" class="col-sm-2 control-label">Categories</label>
+                            <label for="categories" class="col-sm-2 control-label">Danh mục</label>
                             <div class="col-sm-8">
                                 <select class=" categories form-control" id="categories" name="categories[]" multiple="multiple">
                                     @foreach($categories as $category)
@@ -106,7 +106,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="featured" class="col-sm-2 control-label">Featured</label>
+                            <label for="featured" class="col-sm-2 control-label">Nổi bật</label>
                             <div class="col-xs-1">
                                 <select class="form-control" id="featured" name="featured">
                                     <option value="0" {{$product->featured == 0 ? 'selected' : ''}} >No</option>
@@ -115,7 +115,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="visibility" class="col-sm-2 control-label">Visibility</label>
+                            <label for="visibility" class="col-sm-2 control-label">Hiển thị</label>
                             <div class="col-xs-1">
                                 <select class="form-control" id="visibility" name="visibility">
                                     <option value="0" {{$product->visibility == 0 ? 'selected' : ''}} >No</option>
@@ -124,7 +124,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="active" class="col-sm-2 control-label">Active</label>
+                            <label for="active" class="col-sm-2 control-label">Bật</label>
                             <div class="col-xs-1">
                                 <select class="form-control" id="active" name="active">
                                     <option value="0" {{$product->active == 0 ? 'selected' : ''}} >No</option>
@@ -133,7 +133,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="in_stock" class="col-sm-2 control-label">In Stock</label>
+                            <label for="in_stock" class="col-sm-2 control-label">Trong kho</label>
                             <div class="col-xs-1">
                                 <select class="form-control" id="in_stock" name="in_stock">
                                     <option value="0" {{$product->in_stock == 0 ? 'selected' : ''}} >No</option>
@@ -143,7 +143,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="images" class="col-sm-2 control-label">Featured Image</label>
+                            <label for="images" class="col-sm-2 control-label">Ảnh nổi bật</label>
                             <div class=" col-xs-8">
                                 <input type="file" name="image" id="file" />
                                 <img class="imageThumb" id="imageThumb" src="{{getFeaturedImageProduct($product->image)}}">
@@ -152,7 +152,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="images" class="col-sm-2 control-label">Images</label>
+                            <label for="images" class="col-sm-2 control-label">Ảnh phụ</label>
                             <div class=" col-xs-8">
                                 <input type="file" name="images[]" multiple  id="files" />
                                 @if($product->images)
@@ -164,7 +164,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="sort_order" class="col-sm-2 control-label">Sort order</label>
+                            <label for="sort_order" class="col-sm-2 control-label">Thứ tự</label>
                             <div class="col-sm-8">
                                 <input type="number" min="1" class="form-control" id="sort_order" name="sort_order" value="{{ $product->sort_order }}">
                             </div>
@@ -191,7 +191,7 @@
 
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-8">
-                                <button type="button" class="btn btn-success margin-bottom-10 waves-effect waves-light" data-toggle="modal" data-target="#boostrapModal-2">Select Product for Group</button>
+                                <button type="button" class="btn btn-success margin-bottom-10 waves-effect waves-light" data-toggle="modal" data-target="#boostrapModal-2">Chọn sản phẩm con</button>
                             </div>
                         </div>
                         <!-- Button trigger modal -->
@@ -202,7 +202,7 @@
                         {{ method_field('PUT') }}
                         <div class="form-group margin-bottom-0">
                             <div class="col-sm-offset-2 col-sm-8">
-                                <button type="submit" class="btn btn-info btn-sm waves-effect waves-light">Save</button>
+                                <button type="submit" class="btn btn-info btn-sm waves-effect waves-light">Lưu</button>
                             </div>
                         </div>
                     </form>
@@ -222,48 +222,31 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel-1">Modal title</h4>
+                    <h4 class="modal-title" id="myModalLabel-1">Sản phẩm</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row small-spacing">
                         <div class="col-xs-12">
                             <div class="box-content">
-                                <h4 class="box-title">Default</h4>
-                                <!-- /.box-title -->
-                                <div class="dropdown js__drop_down">
-                                    <a href="#" class="dropdown-icon glyphicon glyphicon-option-vertical js__drop_down_button"></a>
-                                    <ul class="sub-menu">
-                                        <li><a href="#">Create Product</a></li>
-                                        <li><a href="#">Another action</a></li>
-                                        <li><a href="#">Something else there</a></li>
-                                        <li class="split"></li>
-                                        <li><a href="#">Separated link</a></li>
-                                    </ul>
-                                    <!-- /.sub-menu -->
-                                </div>
                                 <!-- /.dropdown js__dropdown -->
                                 <table id="product-table" class="table table-bordered display" style="width:100%">
                                     <thead>
                                     <tr>
-                                        <th>Name</th>
-                                        <th>SKU</th>
-                                        <th>Price</th>
-                                        <th>Featured</th>
-                                        <th>Created date</th>
+                                        <th>Tên </th>
+                                        <th>Mã sản phẩm</th>
+                                        <th>Giá</th>
                                     </tr>
                                     </thead>
                                     <tfoot>
                                     <tr>
-                                        <th>Name</th>
-                                        <th>SKU</th>
-                                        <th>Price</th>
-                                        <th>Featured</th>
-                                        <th>Created date</th>
+                                        <th>Tên </th>
+                                        <th>Mã sản phẩm</th>
+                                        <th>Giá</th>
                                     </tr>
                                     </tfoot>
                                     <tbody>
                                     @php
-                                        $child_list = json_decode($product->child_id);
+                                        $child_list = json_decode($product->child_id, true);
 
                                         $child_list = ($child_list)? $child_list : [];
 
@@ -274,8 +257,6 @@
                                             <td><a href="{{route('product-group.edit', $product->id )}}"  data-value="{{$product->id}}">{{$product->name}}</a></td>
                                             <td>{{$product->sku}}</td>
                                             <td>{{$product->price}}</td>
-                                            <td>{{$product->featured}}</td>
-                                            <td>{{$product->created_at}}</td>
                                         </tr>
                                     @endforeach
                                     </tbody>
@@ -288,7 +269,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default btn-sm waves-effect waves-light" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default btn-sm waves-effect waves-light" data-dismiss="modal">Đóng</button>
                 </div>
             </div>
         </div>
@@ -340,13 +321,11 @@
 
             if(ChildProduct.val().length > 0){
                 arr = JSON.parse(ChildProduct.val());
-
-                arr = arr.map(function (x) {
-                    return parseInt(x,10);
+                arr =   Object.keys(arr).map(function(key) {
+                    return parseInt(arr[key],10);
                 });
             }
 
-            console.log(arr);
 
             var table = $('#product-table').DataTable();
 

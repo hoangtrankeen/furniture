@@ -347,7 +347,31 @@ class ProductGroupController extends ProductController
     {
         $product = Product::findOrFail($id);
 
+
         $product->categories()->detach();
+        $product->attributeValue()->detach();
+        $product->orders()->detach();
+
+        $simples = Product::where('type_id','simple')->get();
+
+        foreach($simples as $simple)
+        {
+            $parent_id = json_decode($simple->parent_id);
+
+            if(is_array($parent_id) ){
+                $key = array_search($id,$parent_id);
+
+                if($key!==false){
+
+                    unset($parent_id[$key]);
+
+                    $update = Product::find($simple->id);
+
+                    $update->parent_id = json_encode($parent_id);
+                    $update->save();
+                }
+            }
+        }
 
         $product->delete();
 

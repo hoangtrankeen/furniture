@@ -28,16 +28,12 @@
 	<div class="row small-spacing">
 		<div class="col-xs-12">
 			<div class="box-content">
-				<h4 class="box-title">Default</h4>
+				<h4 class="box-title">Bài viết</h4>
 				<!-- /.box-title -->
 				<div class="dropdown js__drop_down">
 					<a href="#" class="dropdown-icon glyphicon glyphicon-option-vertical js__drop_down_button"></a>
 					<ul class="sub-menu">
-						<li><a href="{{route('category.create')}}">Create Category</a></li>
-						<li><a href="#">Another action</a></li>
-						<li><a href="#">Something else there</a></li>
-						<li class="split"></li>
-						<li><a href="#">Separated link</a></li>
+						<li><a href="{{route('post.create')}}">Tạo bài viết</a></li>
 					</ul>
 					<!-- /.sub-menu -->
 				</div>
@@ -45,24 +41,24 @@
 				<table id="example" class="table table-striped table-bordered display" style="width:100%">
 					<thead>
 					<tr>
-						<th>Image</th>
-						<th>Title</th>
-						<th>Description</th>
-						<th>Active</th>
-						<th>Featured</th>
-						<th>Created At</th>
-						<th>Action</th>
+						<th></th>
+						<th>Tiêu đề</th>
+						<th>Mô tả</th>
+						<th>Bật</th>
+						<th>Nổi bật</th>
+						<th>Ngày tạo</th>
+						<th>Hành động</th>
 					</tr>
 					</thead>
 					<tfoot>
 					<tr>
-						<th>Image</th>
-						<th>Title</th>
-						<th>Description</th>
-						<th>Active</th>
-						<th>Featured</th>
-						<th>Created At</th>
-						<th>Action</th>
+						<th></th>
+						<th>Tiêu đề</th>
+						<th>Mô tả</th>
+						<th>Bật</th>
+						<th>Nổi bật</th>
+						<th>Ngày tạo</th>
+						<th>Hành động</th>
 					</tr>
 					</tfoot>
 					<tbody>
@@ -71,11 +67,16 @@
 							<td>{{$post->id}}</td>
 							<td>{{$post->title}}</td>
 							<td>{{formatStr($post->description)}}</td>
-							<td>{{$post->active ? 'Active' : ''}}</td>
-							<td>{{$post->featured ? 'Featured' : ''}}</td>
-							<td>{{$post->created_at}}</td>
+							<td>{{$post->active ? 'Bật' : ''}}</td>
+							<td>{{$post->featured ? 'Nổi bật' : ''}}</td>
+							<td>{{presentDate($post->created_at)}}</td>
 							<td>
-								<a href="{{route('post.edit', $post->id)}}" class="btn btn-xs btn-success">Edit</a>
+								<a href="{{route('post.edit', $post->id)}}" class="btn btn-xs btn-info">Sửa</a>
+								<form action="{{route('post.destroy', $post->id)}}" method="post">
+									{{method_field('DELETE')}}
+									{{csrf_field()}}
+									<button type="submit" class="btn btn-xs btn-danger">Xóa</button>
+								</form>
 							</td>
 						</tr>
 					@endforeach

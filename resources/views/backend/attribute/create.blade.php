@@ -24,19 +24,19 @@
     <div class="row">
         <div class="col-md-12 col-xs-12">
             <div class="box-content card white">
-                <h4 class="box-title">Create Attribute</h4>
+                <h4 class="box-title">Tạo thuộc tính</h4>
                 <!-- /.box-title -->
 
                 <div class="card-content">
                     <form class="form-horizontal" action="{{route('attribute.store')}}" id="category" method="post">
                         <div class="form-group">
-                            <label for="name" class="col-sm-2 control-label">Name</label>
+                            <label for="name" class="col-sm-2 control-label">Tên thuộc tính</label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="name" name="name" value="{{ old('name')}}">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="type" class="col-sm-2 control-label">Type</label>
+                            <label for="type" class="col-sm-2 control-label">Loại</label>
                             <div class="col-sm-8">
                                 <select class="form-control" id="type" name="type">
                                     @foreach($attr_types as $type)
@@ -47,13 +47,13 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="inform_name" class="col-sm-2 control-label">Name in form</label>
+                            <label for="inform_name" class="col-sm-2 control-label">Tên trong form</label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="inform_name" name="inform_name" value="{{ old('inform_name')}}">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="status" class="col-sm-2 control-label">Status</label>
+                            <label for="status" class="col-sm-2 control-label">Trạng thái</label>
                             <div class="col-sm-8">
                                 <select name="status" id="status" class="form-control">
                                     <option value="1" {{old('status') ==1 ? 'selected':''}}>On</option>
@@ -69,14 +69,14 @@
                         </div>
                         <div class="form-group type-toggle">
                             <div class="col-sm-offset-2 col-sm-8">
-                                <button class="btn btn-danger waves-effect waves-light btn-icon btn-icon-left " id="add-attr"><i class="ico fa fa-plus" aria-hidden="true"></i>Add attribute value</button>
+                                <button class="btn btn-danger waves-effect waves-light btn-icon btn-icon-left " id="add-attr"><i class="ico fa fa-plus" aria-hidden="true"></i>Gán giá trị cho thuộc tính</button>
                             </div>
                         </div>
 
                         {{ csrf_field() }}
                         <div class="form-group margin-bottom-0">
                             <div class="col-sm-offset-2 col-sm-8">
-                                <button type="submit" class="btn btn-info btn-sm waves-effect waves-light">Save</button>
+                                <button type="submit" class="btn btn-info btn-sm waves-effect waves-light">Lưu</button>
                             </div>
                         </div>
                     </form>

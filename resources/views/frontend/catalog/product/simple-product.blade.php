@@ -84,7 +84,7 @@
                                 </span>
 
                                 <p class="stext-102 cl3 p-t-23">
-                                    {{$product->description}}
+                                    {!! $product->description !!}
                                 </p>
 
                                 <!--  -->
@@ -165,7 +165,7 @@
                                 <div class="tab-pane fade show active" id="description" role="tabpanel">
                                     <div class="how-pos2 p-lr-15-md">
                                         <p class="stext-102 cl6">
-                                            {{$product->details}}
+                                            {!! $product->details !!}
                                         </p>
                                     </div>
                                 </div>

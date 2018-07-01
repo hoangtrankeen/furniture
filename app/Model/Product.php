@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    use Searchable;
-
     protected $table = 'products';
 
     //path to save images
@@ -63,6 +61,11 @@ class Product extends Model
     public static function getFinalPrice($product)
     {
         return $product->price;
+    }
+
+    public function orders()
+    {
+        return $this->belongsToMany('App\Model\Order');
     }
 
 }

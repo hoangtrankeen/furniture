@@ -129,26 +129,30 @@ class AttributeController extends Controller
         $attribute->name = $request->name;
         $attribute->status = $request->status;
 
+
         $attribute->save();
 
         // Get Attribute value in form
         if($request->type == 'select'){
-            $i = 0;
-            while ($request->has('attr_value_'.($i+1)) && $request->input('attr_value_'.($i+1)) !== null && is_integer((int)$request->input('attr_value_'.($i+1)))) {
 
-                if(!empty($attribute->attributeValue)){
-
-                   AttributeValue::where('id', $i+1)
-                       ->where( 'attribute_id', $attribute->id)
-                       ->update([
-                        'name' => $request->input('attr_value_'.($i+1))
-                        ]);
+            foreach($attribute->attributeValue as $value){
+                if ($request->has('attr_value_'.$value->id) && $request->input('attr_value_'.$value->id) !== null && is_integer((int)$request->input('attr_value_'.$value->id))) {
+                    if(!empty($attribute->attributeValue)){
+                        AttributeValue::where('id', $value->id)
+                            ->where( 'attribute_id', $attribute->id)
+                            ->update([
+                                'name' => $request->input('attr_value_'.$value->id)
+                            ]);
+                    }
+                }else{
+                    $del_attr = AttributeValue::find($value->id);
+                    $del_attr->product()->detach();
+                    $del_attr->delete();
                 }
-
-                $i++;
             }
 
-            $i = 0;
+
+            $i = $attribute->attributeValue()->count();
             while ($request->has('new_attr_value_'.($i+1)) && $request->input('new_attr_value_'.($i+1)) !== null && is_integer((int)$request->input('new_attr_value_'.($i+1)))) {
 
                 $attr_val = new AttributeValue;
@@ -162,7 +166,7 @@ class AttributeController extends Controller
 
 
         Session::flash('success', 'The attribute was successfully save!');
-        return redirect()->route('attribute.index');
+        return redirect()->back();
     }
 
     /**
@@ -173,13 +177,16 @@ class AttributeController extends Controller
      */
     public function destroy($id)
     {
-//        $attribute = Attribute::findOrFail($id);
-//        $attribute->attributeValue()->update([
-//            'attribute_id' => null
-//        ]);
-//        $attribute->delete();
+        $attribute = Attribute::findOrFail($id);
+        foreach($attribute->attributeValue as $value)
+        {
+            $value->product()->detach();
+            $value->delete();
+        }
 
-        Session::flash('success', 'Not Allow to delete. It may cause problem!');
+        $attribute->delete();
+
+        Session::flash('success', 'ok');
         return redirect()->route('attribute.index');
     }
 }

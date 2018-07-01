@@ -278,20 +278,20 @@
 
 
 @section('javascript')
-        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-        <script>
-            $(".payment_method").click(function () {
-                if ($(this).is(":checked")) {
-                    $(".payment_method").prop('checked', false);
-                    $(this).prop('checked', true);
-                }
-            });
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(".payment_method").click(function () {
+            if ($(this).is(":checked")) {
+                $(".payment_method").prop('checked', false);
+                $(this).prop('checked', true);
+            }
+        });
 
-            $('#delivery_date').datepicker({
-                showOn: "button",
-                buttonImage: "frontend/images/icons/calendar.svg",
-                buttonImageOnly: true,
-                buttonText: "Select date"
-            });
-        </script>
+        $('#delivery_date').datepicker({
+            showOn: "button",
+            buttonImage: "frontend/images/icons/calendar.svg",
+            buttonImageOnly: true,
+            buttonText: "Select date"
+        });
+    </script>
 @endsection

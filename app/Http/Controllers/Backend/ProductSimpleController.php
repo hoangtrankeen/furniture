@@ -33,8 +33,8 @@ class ProductSimpleController extends ProductController
             'categories'     => 'required',
             'price'          => 'required|integer',
             'quantity'       => 'required|integer',
-            'description'    => 'required|max:255',
-            'details'        => 'required|max:255',
+            'description'    => 'required',
+            'details'        => 'required',
             'images.*'       => 'sometimes|required|image',
             'image'          => 'sometimes|required|image',
             'sort_order'     => 'required|integer',
@@ -209,8 +209,8 @@ class ProductSimpleController extends ProductController
             'categories'     => 'required',
             'price'          => 'required|integer',
             'quantity'       => 'required|integer',
-            'description'    => 'required|max:255',
-            'details'        => 'required|max:255',
+            'description'    => 'required',
+            'details'        => 'required',
             'images.*'       => 'sometimes|required|image',
             'image'          => 'sometimes|required|image',
             'sort_order'     => 'required|integer',
@@ -387,9 +387,32 @@ class ProductSimpleController extends ProductController
      */
     public function destroy($id)
     {
+        $groups = Product::where('type_id', 'group')->get();
         $product = Product::findOrFail($id);
 
         $product->categories()->detach();
+        $product->attributeValue()->detach();
+        $product->orders()->detach();
+
+        foreach($groups as $group)
+        {
+            $child_id = json_decode($group->child_id);
+
+            if(is_array($child_id) ){
+                $key = array_search($id,$child_id);
+
+                if($key!==false){
+
+                    unset($child_id[$key]);
+
+                    $update = Product::find($group->id);
+
+                    $update->child_id = json_encode($child_id);
+
+                    $update->save();
+                }
+            }
+        }
 
         $product->delete();
 
