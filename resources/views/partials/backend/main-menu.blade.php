@@ -30,6 +30,16 @@
 
 			<ul class="menu js__accordion">
 				<li class="current active">
+					<a class="waves-effect parent-item js__control" href="#"><i class="menu-icon fa fa-table"></i><span>Tài khoản</span><span class="menu-arrow fa fa-angle-down"></span></a>
+					<ul class="sub-menu js__content">
+						<li><a href="{{route('product.index')}}">Admin</a></li>
+						<li><a href="{{route('customer.index')}}">Khách hàng</a></li>
+					</ul>
+					<!-- /.sub-menu js__content -->
+				</li>
+			</ul>
+			<ul class="menu js__accordion">
+				<li class="current active">
 					<a class="waves-effect parent-item js__control" href="#"><i class="menu-icon fa fa-table"></i><span>Danh mục</span><span class="menu-arrow fa fa-angle-down"></span></a>
 					<ul class="sub-menu js__content">
 						<li><a href="{{route('product.index')}}">Sản phẩm</a></li>

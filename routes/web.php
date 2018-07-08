@@ -34,6 +34,7 @@ Route::get('/checkout/success', 'Frontend\CheckoutController@checkoutSuccess')->
 Route::get('/category/{slug}', 'Frontend\ShopController@catalogCategory')->name('catalog.category');
 Route::get('/product/{slug}', 'Frontend\ShopController@catalogProduct')->name('catalog.product');
 Route::get('/search', 'Frontend\ShopController@search')->name('catalog.search');
+Route::get('/filter', 'Frontend\ShopController@filter')->name('catalog.filter');
 Route::get('/quick-view', 'Frontend\ShopController@quickView')->name('catalog.quickview');
 
 Route::get('/post', 'Frontend\BlogController@index')->name('cms.post');
@@ -49,15 +50,17 @@ Route::post('/customer/account/update', 'Frontend\CustomerController@accountUpda
 Route::get('/customer/order/list', 'Frontend\CustomerController@listOrder')->name('customer.order.list');
 Route::get('/customer/order/detail/{id}', 'Frontend\CustomerController@orderDetail')->name('customer.order.detail');
 
+Route::get('/contact', 'Frontend\ShopInfoController@contactPage')->name('contact');
 
 Route::get('/combo', 'Frontend\PromoteController@getCombo')->name('promote.combo');
+
 Auth::routes();
 Route::get('admin/login', 'AuthAdmin\LoginController@showLoginForm')->name('admin.login');
 Route::post('admin/login', 'AuthAdmin\LoginController@login')->name('admin.login.submit');
+
 Route::group(['prefix'=>'admin', 'middleware' => 'auth:admin'], function () {
 
     Route::get('/', 'Backend\DashboardController@index')->name('admin.home');
-
 
     Route::post('/logout', 'AuthAdmin\LoginController@logout')->name('admin.logout');
     Route::get('/password/reset', 'AuthAdmin\ForgotPasswordController@showLinkRequestForm')->name('admin.password.request');
@@ -65,6 +68,7 @@ Route::group(['prefix'=>'admin', 'middleware' => 'auth:admin'], function () {
     Route::get('/password/reset/{token}', 'AuthAdmin\ResetPasswordController@showResetForm')->name('admin.password.reset');
     Route::post('/password/reset', 'AuthAdmin\ResetPasswordController@reset');
 
+    Route::resource('customer','Backend\CustomerController');
 
     Route::get('product/create/{type}','Backend\ProductController@create')->name('product.create');
 

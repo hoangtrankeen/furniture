@@ -140,6 +140,14 @@
                                     <span class="help-block"> {{ $errors->first('postalcode') }}</span>
                                 @endif
                             </div>
+                            <div class="form-group ">
+                                <label for="delivery_date">Ngày nhận hàng</label>
+                                <input type="text" name="delivery_date" id="delivery_date" value="{{old('delivery_date')}}" required />
+
+                                @if ($errors->has('delivery_date'))
+                                    <span class="help-block"> {{ $errors->first('delivery_date') }}</span>
+                                @endif
+                            </div>
                         @else
                             <div class="form-group">
                                 <label for="name">Họ Tên*</label>

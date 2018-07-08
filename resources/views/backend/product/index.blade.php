@@ -56,6 +56,7 @@
 						<th>Slug</th>
 						<th>Loại</th>
 						<th>Giá</th>
+						<th>Nổi bật</th>
 						<th>Ngày tạo</th>
 						<th>Hành động</th>
 					</tr>
@@ -66,6 +67,7 @@
 						<th>Slug</th>
 						<th>Loại</th>
 						<th>Giá</th>
+						<th>Nổi bật</th>
 						<th>Ngày tạo</th>
 						<th>Hành động</th>
 					</tr>
@@ -77,6 +79,7 @@
 						<td>{{$product->slug}}</td>
 						<td>{{$product->type_id}}</td>
 						<td>{{presentPrice($product->price)}}</td>
+						<td>{{($product->featured) ? 'Nổi bật' :''}}</td>
 						<td>{{presentDate($product->created_at)}}</td>
 						<td>
 							<a href="{{route('product.edit', $product->id)}}" class="btn btn-xs btn-info">Sửa</a>

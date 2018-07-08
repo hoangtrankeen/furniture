@@ -35,12 +35,13 @@
                     </li>
 
                     <li>
-                        <a href="{{route('catalog.product.all')}}">Sản phẩm</a>
+                        <a href="javascript:void(0)">Danh mục sản phẩm</a>
                         {{ManagerCatalog::showCategories()}}
                     </li>
 
                     <li>
-                        <a href="{{route('cms.sale.post')}}">Khuyến mãi</a>
+                        <a href="javascript:void(0)">Tin tức</a>
+                        {{ManagerCatalog::showTopic()}}
                     </li>
 
                     <li class="label1" data-label1="hot">
@@ -48,7 +49,7 @@
                     </li>
 
                     <li>
-                        <a href="contact.html">Liên hệ</a>
+                        <a href="{{route('contact')}}">Liên hệ</a>
                     </li>
                 </ul>
             </div>

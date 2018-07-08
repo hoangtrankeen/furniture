@@ -32,7 +32,7 @@
 		<!-- /.ico-item -->
 		{{--<a href="#" class="ico-item fa fa-envelope notice-alarm js__toggle_open" data-target="#message-popup"></a>--}}
 		{{--<a href="#" class="ico-item pulse"><span class="ico-item fa fa-bell notice-alarm js__toggle_open" data-target="#notification-popup"></span></a>--}}
-		<a href="#" class="ico-item fa fa-power-off js__logout"></a>
+		<a href="{{route('admin.logout')}}" class="ico-item fa fa-power-off "></a>
 	</div>
 	<!-- /.pull-right -->
 </div>

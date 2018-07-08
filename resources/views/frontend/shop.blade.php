@@ -37,7 +37,7 @@
             @if($breadname)
                 <span class="stext-109 cl4">{{ $breadname}}</span>
             @else
-                <span class="stext-109 cl4">Sản phẩm</span>
+                <span class="stext-109 cl4">Lọc và Tìm kiếm</span>
             @endif
         </div>
     </div>
@@ -87,17 +87,21 @@
 
                                 </div>
                                 <div class="flex-w flex-c-m m-tb-10">
-                                    <div class="flex-c-m stext-106 cl6 size-104 bor4 pointer trans-04 m-r-8 m-tb-4">
-                                        <select class="sort-field ">
-                                            @php $sort = request()->get('sort') ?? ''; @endphp
-                                            <option value="best-seller" {{ $sort  == 'best-seller' ? 'selected' :'' }}>Bán chạy nhất</option>
-                                            <option value="low_high" {{ $sort == 'low_high' ? 'selected' :'' }}>Giá cao đến thấp</option>
-                                            <option value="high_low" {{ $sort == 'high_low' ? 'selected' :'' }}>Giá thấp đến cao</option>
-                                            <option value="name" {{ $sort == 'name' ? 'selected' :'' }}>Tên</option>
-                                            <option value="combo" {{ $sort == 'combo' ? 'selected' :'' }}>Combo</option>
-                                        </select>
+                                    {{--<div class="flex-c-m stext-106 cl6 size-104 bor4 pointer trans-04 m-r-8 m-tb-4">--}}
+                                        {{--<select class="sort-field ">--}}
+                                            {{--@php $sort = request()->get('sort') ?? ''; @endphp--}}
+                                            {{--<option value="best-seller" {{ $sort  == 'best-seller' ? 'selected' :'' }}>Bán chạy nhất</option>--}}
+                                            {{--<option value="low_high" {{ $sort == 'low_high' ? 'selected' :'' }}>Giá cao đến thấp</option>--}}
+                                            {{--<option value="high_low" {{ $sort == 'high_low' ? 'selected' :'' }}>Giá thấp đến cao</option>--}}
+                                            {{--<option value="name" {{ $sort == 'name' ? 'selected' :'' }}>Tên</option>--}}
+                                            {{--<option value="combo" {{ $sort == 'combo' ? 'selected' :'' }}>Combo</option>--}}
+                                        {{--</select>--}}
+                                    {{--</div>--}}
+                                    <div class="flex-c-m stext-106 cl6 size-104 bor4 pointer hov-btn3 trans-04 m-r-8 m-tb-4 js-show-filter">
+                                        <i class="icon-filter cl2 m-r-6 fs-15 trans-04 zmdi zmdi-filter-list"></i>
+                                        <i class="icon-close-filter cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
+                                        Bộ Lọc
                                     </div>
-
                                     <div class="flex-c-m stext-106 cl6 size-105 bor4 pointer hov-btn3 trans-04 m-tb-4 js-show-search">
                                         <i class="icon-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-search"></i>
                                         <i class="icon-close-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
@@ -115,6 +119,64 @@
                                             <input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="q" placeholder="Nhập từ khóa...">
                                             {{csrf_field()}}
                                         </form>
+                                    </div>
+                                </div>
+
+                                <!-- Filter -->
+                                <div class="dis-none panel-filter w-full p-t-10">
+                                    <div class="wrap-filter flex-w bg6 w-full p-lr-40 p-t-27 p-lr-15-sm">
+                                        <div class="filter-col1 p-r-15 p-b-27">
+                                            <div class="mtext-102 cl2 p-b-15">
+                                                Lọc theo
+                                            </div>
+
+                                            <ul>
+                                                <li class="p-b-6">
+                                                    <a href="{{url()->current() .'?sort=featured'}}}}" class="filter-link stext-106 trans-04 {{request()->get('sort') ==  'featured' ? 'filter-link-active' : ''}}">
+                                                        Nổi bật
+                                                    </a>
+                                                </li>
+
+                                                <li class="p-b-6">
+                                                    <a href="{{url()->current() .'?sort=price_asc'}}" class="filter-link stext-106 trans-04 {{request()->get('sort') ==  'price_asc' ? 'filter-link-active' : ''}}">
+                                                        Giá thấp đến cao
+                                                    </a>
+                                                </li>
+
+                                                <li class="p-b-6">
+                                                    <a href="{{url()->current().'?sort=price_desc'}}" class="filter-link stext-106 trans-04 {{request()->get('sort') ==  'price_desc' ? 'filter-link-active' : ''}}">
+                                                        Giá cao đến thấp
+                                                    </a>
+                                                </li>
+                                                <li class="p-b-6">
+                                                    <a href="{{url()->current().'?sort=name_asc'}}" class="filter-link stext-106 trans-04 {{request()->get('sort') ==  'name_asc' ? 'filter-link-active' : ''}}">
+                                                        Tên từ A - Z
+                                                    </a>
+                                                </li>
+                                                <li class="p-b-6">
+                                                    <a href="{{url()->current().'?sort=name_desc'}}" class="filter-link stext-106 trans-04  {{request()->get('sort') ==  'name_desc' ? 'filter-link-active' : ''}}">
+                                                        Tên từ Z - A
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        @foreach(ManagerCatalog::getAvailableAttribute() as $attribute)
+                                        <div class="filter-col3 p-r-15 p-b-27">
+                                            <div class="mtext-102 cl2 p-b-15">
+                                                {{$attribute->name}}
+                                            </div>
+
+                                            <ul>
+                                                @foreach($attribute->attributeValue as $val)
+                                                <li class="p-b-6">
+                                                    <a href="{{url()->current().'?attribute='.$val->id}}" class="filter-link stext-106 trans-04 {{request()->get('attribute') ==  $val->id ? 'filter-link-active' : ''}}" >
+                                                        {{$val->name}}
+                                                    </a>
+                                                </li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                        @endforeach
                                     </div>
                                 </div>
 
@@ -155,7 +217,7 @@
                             <h5 class="p-l-15">Không có sản phẩm nào tại mục này</h5>
                         @endforelse
                     </div>
-                    {{ $products->links('frontend.partials.pager.pager') }}
+                    {{ $products->appends(request()->query())->links('frontend.partials.pager.pager') }}
                 </div>
             </div>
         </div>
@@ -179,10 +241,10 @@
         });
     </script>
 
-    <script>
-        $(".sort-field").on("change", function () {
-            var sort_value = $(this).val();
-            window.location.href = window.location.origin + '/'+'search' + '?sort='+sort_value;
-        });
-    </script>
+    {{--<script>--}}
+        {{--$(".sort-field").on("change", function () {--}}
+            {{--var sort_value = $(this).val();--}}
+            {{--window.location.href = window.location.origin + '/catalog/category' + '?sort='+sort_value;--}}
+        {{--});--}}
+    {{--</script>--}}
 @endsection

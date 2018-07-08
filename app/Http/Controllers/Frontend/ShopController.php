@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Helpers\Manager\Catalog;
+use App\Http\Controllers\Backend\ToolBarController;
+use App\Model\Attribute;
 use App\Model\Product;
 use App\Model\Post;
 use App\Model\Category;
@@ -12,6 +14,15 @@ use Illuminate\Support\Facades\Session;
 
 class ShopController extends Controller
 {
+    protected $_toolbar;
+
+    public function __construct(
+        ToolBarController $toolBarController
+    )
+    {
+        $this->_toolbar = $toolBarController;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -59,7 +70,11 @@ class ShopController extends Controller
         $category = Category::where('slug', $slug)->first();
         $products = Product::whereHas('categories', function($query) use($slug){
             $query->where('slug', $slug);
-        })->paginate($pagination);
+        });
+
+        $products = $this->_toolbar->filterCollection($products);
+
+        $products = $products->paginate($pagination);
 
         foreach($products as $key =>  $product)
         {
@@ -76,6 +91,7 @@ class ShopController extends Controller
 
         $data['products'] = $products;
         $data['category'] = $category;
+
         return view('frontend/shop', $data);
     }
 
@@ -136,25 +152,8 @@ class ShopController extends Controller
         $products = Product::where('name', 'like', "%$query%")
                             ->orWhere('sku', 'like', "%$query%");
 
-        if($request->has('sort')) {
-            if (request()->sort == 'low_high') {
-                $products = $products->orderBy('price');
-            } elseif (request()->sort == 'high_low') {
-                $products = $products->orderBy('price', 'desc');
-            } elseif (request()->sort == 'name') {
-                $products = $products->orderBy('name', 'asc');
-            } elseif (request()->sort == 'best_seller') {
-                $products = Product::where('featured', '1')->orderBy('name', 'asc');
-            } elseif (request()->sort == 'combo') {
-                $products = Product::where('type_id','group');
-            }
-        }
-        $products = $products ->paginate($pagination);;
-        foreach($products as $key =>  $product)
-        {
-            $product->final_price = Product::getFinalPrice($product);
-        }
-
+        $products = $this->_toolbar->filterCollection($products);
+        $products = $products->paginate($pagination);
         $data['products'] = $products;
 
         if($request->session()->has('category')){
@@ -172,5 +171,4 @@ class ShopController extends Controller
 
         return view('frontend/shop', $data);
     }
-
 }

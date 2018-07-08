@@ -111,11 +111,16 @@ class TopicController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Topic $topic
+     * @return void
      */
     public function destroy($id)
     {
-        //
+        $topic = Topic::findOrFail($id);
+        $topic->children()->delete();
+        $topic->posts()->detach();
+        $topic->delete();
+
+        return redirect()->route('topic.index');
     }
 }

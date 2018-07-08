@@ -26,67 +26,60 @@
     <div class="row">
         <div class="col-md-12 col-xs-12">
             <div class="box-content card white">
-                <h4 class="box-title">Tạo danh mục sản phẩm</h4>
+                <h4 class="box-title">Chỉnh sửa thông tin khách hàng</h4>
                 <!-- /.box-title -->
 
                 <div class="card-content">
-                    <form class="form-horizontal" action="{{route('category.store')}}" id="category" method="post" enctype="multipart/form-data">
+                    <form class="form-horizontal" method="POST" action="{{ route('customer.update', $customer->id) }}">
                         <div class="form-group">
                             <label for="name" class="col-sm-2 control-label">Tên</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="name" name="name" value="{{ old('name')}}">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="slug" class="col-sm-2 control-label">Slug</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" id="slug" name="slug" value="{{ old('slug')}}">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="order" class="col-sm-2 control-label">Thứ tự</label>
-                            <div class="col-sm-8">
-                                <input type="number" class="form-control" id="order" name="order" value="{{ old('order') ? old('order') : 200}}">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="order" class="col-sm-2 control-label">Mô tả</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" id="description" name="description" value="{{ old('description')}}">
+                                <input type="text" class="form-control" id="name" name="name" value="{{$customer->name}}">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="categories" class="col-sm-2 control-label">Danh mục cha</label>
+                            <label for="email" class="col-sm-2 control-label">Email</label>
                             <div class="col-sm-8">
-                                <select class=" categories form-control" id="parent_id" name="parent_id">
-                                    <option value="0" selected>-----</option>
-                                    @foreach($categories as $category)
-                                        <option value="{{$category->id}}">{{$category->name}}</option>
-                                        @if(count($category->childs))
-                                            @include('backend/category/in_create',['childs' => $category->childs, 'html'=>''])
-                                        @endif
+                                <input type="email" class="form-control" id="email" name="email" value="{{$customer->email}}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="address" class="col-sm-2 control-label">Địa chỉ liên hệ</label>
+                            <div class="col-sm-8">
+                                <input type="address" class="form-control" id="address" name="address" value="{{$customer->address}}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="address" class="col-sm-2 control-label">Loại</label>
+                            <div class="col-sm-8">
+                                <select name="type_id" id="type_id" class="form-control">
+                                    @foreach($types  as  $key =>  $type)
+                                        <option value="{{$key}}" {{ $customer->type_id == $key ? 'selected' : '' }}>{{$type}}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
+
                         <div class="form-group">
-                            <label for="active" class="col-sm-2 control-label">Bật</label>
-                            <div class="col-xs-1">
-                                <select class="form-control" id="active" name="active">
-                                    <option value="0" {{ old('active') == 0 ? 'selected': ''}}>No</option>
-                                    <option value="1" {{ old('active') == 1 ? 'selected': ''}}>Yes</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="image" class="col-sm-2 control-label">Ảnh</label>
+                            <label for="new_password" class="col-sm-2 control-label">Mật khẩu</label>
                             <div class="col-sm-8">
-                                <!-- /.dropdown js__dropdown -->
-                                <input type="file" name="image" id="input-file-now-custom-1" class="dropify" data-default-file="" />
+                                <input type="password" class="form-control" id="new_password" name="new_password">
                             </div>
                         </div>
+
+                        <div class="form-group">
+                            <label for="new_password_confirmation" class=" col-sm-2 control-label">Xác nhận mật khẩu*</label>
+                            <div class="col-sm-8">
+                                <input id="new_password_confirmation" type="password" class="form-control" name="new_password_confirmation" >
+                            </div>
+                        </div>
+
+
                         {{ csrf_field() }}
+                        {{method_field('put')}}
                         <div class="form-group margin-bottom-0">
                             <div class="col-sm-offset-2 col-sm-8">
                                 <button type="submit" class="btn btn-info btn-sm waves-effect waves-light">Lưu</button>

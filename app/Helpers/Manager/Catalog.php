@@ -7,6 +7,7 @@
  */
 namespace App\Helpers\Manager;
 
+use App\Model\Attribute;
 use App\Model\Category;
 use App\Model\Product;
 use App\Model\Topic;
@@ -14,7 +15,6 @@ use  Illuminate\Support\ServiceProvider;
 
 class Catalog extends ServiceProvider
 {
-
     /**
      * @return mixed
      */
@@ -317,39 +317,6 @@ class Catalog extends ServiceProvider
         return Topic::take(6)->get();
     }
 
-//    public static function showTopics( $parent_id = 0, $char = '')
-//    {
-//
-//        // BƯỚC 2.1: LẤY DANH SÁCH CATE CON
-//        $cate_child = array();
-//        $categories = Topic::all();
-//        foreach ($categories as $key => $item){
-//
-//            // Nếu là chuyên mục con thì hiển thị
-//            if ((int)$item->parent_id === $parent_id)
-//            {
-//                $cate_child[] = $item;
-//                unset($categories[$key]);
-//            }
-//        }
-//        // BƯỚC 2.2: HIỂN THỊ DANH SÁCH CHUYÊN MỤC CON NẾU CÓ
-//        if ($cate_child)
-//        {
-//            echo '<ul class="sub-menu">';
-//            foreach ($cate_child as $key => $item)
-//            {
-//                // Hiển thị tiêu đề chuyên mục
-//                $route = route('catalog.category',['slug'=>$item->slug]);
-//                echo '<li class="menu_style_dropdown menu-item"><a href='.$route.'>'.$item->name.'</a>';
-//
-//                // Tiếp tục đệ quy để tìm chuyên mục con của chuyên mục đang lặp
-//                self::showTopicsOption($item->id, $char.'|---');
-//                echo '</li>';
-//            }
-//            echo '</ul>';
-//        }
-//    }
-
     public static function showTopicsTable($topics, $parent_id = 0, $char = '')
     {
         foreach ($topics as $key => $item)
@@ -395,4 +362,10 @@ class Catalog extends ServiceProvider
         return Product::where('type_id','group')->where('featured',1)->take($num)->get();
     }
 
+    public static function getAvailableAttribute()
+    {
+        $collection =  Attribute::with('attributeValue')->where('attribute.status',1)->get();
+
+        return $collection;
+    }
 }

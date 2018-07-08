@@ -21,10 +21,7 @@ class Attribute extends Model
     {
         return [
           'select',
-          'text',
-          'textarea',
-          'images',
-          'checkbox'
+          'text'
         ];
     }
 
