@@ -419,4 +419,37 @@ class ProductSimpleController extends ProductController
         Session::flash('success', 'The product was successfully deleted!');
         return redirect()->route('product.index');
     }
+
+    public function copy($id)
+    {
+        $product = Product::findOrFail($id);
+
+        $categories = $product->categories;
+
+
+        $cat_ids = [];
+
+        foreach ($categories as $category)
+        {
+            $cat_ids[] = $category->id;
+        }
+
+        $data['product'] = $product;
+
+        $data['all_products'] = Product::getSimpleProduct();
+
+        $data['cat_ids'] = $cat_ids;
+
+        $data['categories'] = Category::all();
+
+        $data['attributes'] = Attribute::all();
+
+        if($product->type_id == 'simple'){
+            return view('backend/product/copy-simple', $data);
+        }
+
+        Session::flash('error', 'The Product Type not exist');
+        return redirect()->back();
+    }
+
 }

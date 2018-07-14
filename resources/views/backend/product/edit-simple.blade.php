@@ -208,16 +208,14 @@
                                 </div>
                             </div>
                         @endforeach
-
                         <input type="hidden" class="form-control" id="type_id" name="type_id" value="simple">
-                        <input type="hidden" class="form-control" id="child_product" name="child_product" value="{{old('child_product')}}">
-
 
                         {{ csrf_field() }}
                         {{ method_field('put') }}
                         <div class="form-group margin-bottom-0">
                             <div class="col-sm-offset-2 col-sm-8">
-                                <button type="submit" class="btn btn-info btn-sm waves-effect waves-light">Lưu</button>
+                                <input type="submit" name="save" class="btn btn-info btn-sm waves-effect waves-light" value="Lưu">
+                                <a href="{{route('product-simple.copy',$product->id)}}" class="btn btn-success btn-sm waves-effect waves-light">Copy</a>
                             </div>
                         </div>
                     </form>

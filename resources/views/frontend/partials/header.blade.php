@@ -8,9 +8,9 @@
             </div>
 
             <div class="right-top-bar flex-w h-full">
-                <!--<a href="#" class="flex-c-m trans-04 p-lr-25">
-                    Câu hỏi thường gặp
-                </a>-->
+                <a href={{route('tracking.order')}} class="flex-c-m trans-04 p-lr-25">
+                    Tra cứu đơn hàng
+                </a>
 
                 <a href="{{route('checkout')}}" class="flex-c-m trans-04 p-lr-25">
                     Thanh toán

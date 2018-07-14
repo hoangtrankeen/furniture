@@ -39,15 +39,15 @@
 				<!-- /.sub-menu -->
 			</div>
 
-			<div class="row">
-				<div class="col-md-offset-3 col-md-5">
-					<label for="">Lọc</label>
-					<select name="stock" id="stock" class="form-control">
-						<option value="1" {{request()->get('stock') == 1 ? 'selected':''}}>Trong kho</option>
-						<option value="0" {{request()->get('stock') == 0 ? 'selected':''}}>Hết hàng</option>
-					</select>
-				</div>
-			</div>
+			{{--<div class="row">--}}
+				{{--<div class="col-md-offset-3 col-md-5">--}}
+					{{--<label for="">Lọc</label>--}}
+					{{--<select name="stock" id="stock" class="form-control">--}}
+						{{--<option value="1" {{request()->get('stock') == 1 ? 'selected':''}}>Trong kho</option>--}}
+						{{--<option value="0" {{request()->get('stock') == 0 ? 'selected':''}}>Hết hàng</option>--}}
+					{{--</select>--}}
+				{{--</div>--}}
+			{{--</div>--}}
 			<!-- /.dropdown js__dropdown -->
 			<table id="example" class="table table-striped table-bordered display" style="width:100%">
 				<thead>

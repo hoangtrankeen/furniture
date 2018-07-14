@@ -30,7 +30,7 @@
                     <!-- /.checkbox -->
                 </div>
                 <!-- /.pull-left -->
-                <div class="pull-right"><a href="{{ route('admin.password.request') }}" class="a-link"><i class="fa fa-unlock-alt"></i>Quên mật khẩu?</a></div>
+{{--                <div class="pull-right"><a href="{{ route('admin.password.request') }}" class="a-link"><i class="fa fa-unlock-alt"></i>Quên mật khẩu?</a></div>--}}
                 <!-- /.pull-right -->
             </div>
             <!-- /.clearfix -->

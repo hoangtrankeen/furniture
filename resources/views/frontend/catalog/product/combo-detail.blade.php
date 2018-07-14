@@ -4,10 +4,7 @@
 
 @section('css')
     <style>
-
-
         .table-group{
-
             /*border: 1px solid #e9ecef;*/
             width: 100%;
         }
@@ -84,41 +81,76 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12 col-lg-7 p-b-30 combo-lightbox">
-                            <div class="combo-gallery">
-                                @if($product->images)
-                                    @foreach(json_decode($product->images) as $image)
-                                        <a href="{{getFeaturedImageProduct($image)}}" title=""><img src="{{getFeaturedImageProduct($image)}}" width="205" height="230" /></a>
-                                    @endforeach
-                                @endif
+                            <div class="p-l-25 p-r-30 p-lr-0-lg">
+                                <div class="wrap-slick3 flex-sb flex-w">
+                                    <div class="wrap-slick3-dots"></div>
+                                    <div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
+
+                                    <div class="slick3 gallery-lb">
+                                        @if($product->images)
+                                            @foreach(json_decode($product->images) as $image)
+                                                <div class="item-slick3" data-thumb="{{getFeaturedImageProduct($image)}}">
+                                                    <div class="wrap-pic-w pos-relative">
+                                                        <img src="{{getFeaturedImageProduct($image)}}" alt="IMG-PRODUCT">
+                                                        <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="{{getFeaturedImageProduct($image)}}">
+                                                            <i class="fa fa-expand"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
                         <div class="col-md-12 col-lg-5 p-b-30">
                             <div class="p-r-50 p-t-5 p-lr-0-lg">
                                 <h1 class="mtext-105 cl2 js-name-detail p-b-14">
-                                    Combo 1
+                                    {{$product->name}}
                                 </h1>
                                 <img  class="logo-sale" src="{{asset('frontend/images/logo/sale_tag_256.png')}}" alt="">
 
-                                <h3 class="mtext-106 cl2 p-tb-14 original-price" >
-                                    Giá niêm yết: 11.560.000đ
-                                </h3>
+                                {{--<h3 class="mtext-106 cl2 p-tb-14 original-price" >--}}
+                                    {{--Giá niêm yết: 11.560.000đ--}}
+                                {{--</h3>--}}
 
                                 <h3 class="mtext-105 cl2 discout-price" style="color: red;">
-                                    Giá khuyến mại: {{presentPrice($product->final_price)}}
+                                    {{presentPrice($product->final_price)}}
                                 </h3>
+                                <p class="stext-102 cl3 p-t-23">
+                                    {!! $product->description !!}
+                                </p>
+
+                                <p class="stext-102 cl2 p-t-23">
+                                    Bộ sản phẩm đi kèm
+                                </p>
                                 <hr>
+                                @foreach($child_products as $child)
+                                    <table class="table-group ">
+                                        <tr>
+                                            <td>
+                                                <img src="{{getFeaturedImageProduct($child->image)}}" alt="" width="50">
+                                            </td>
+                                            <td>
+                                                <a href="{{route('catalog.product', ['slug'=> $child->slug])}}" class=" stext-103 cl2 hov-cl1 p-b-14">{{$child->name}}</a>
+                                            </td>
+                                            <td class="data">
+                                                <p class="text-right stext-105 cl3">{{presentPrice($child->final_price)}}</p>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                @endforeach
 
                             </div>
 
                             @if($product->in_stock !== 1)
                                 <p>Hết hàng</p>
                             @else
-                                <form action="" class="form-cart">
+                                <form action="" class="form-cart p-t-40">
                                     <div class=" p-b-10">
                                         <div class="size-204 flex-w flex-m respon6-next">
-
-
                                             <input type="hidden" class="mtext-104 cl3 txt-center num-product" type="number" name="quantity" value="1"/>
                                             <input type="hidden" name="id" id="product_id" value="{{$product->id}}">
                                             <input type="hidden" name="name" id="product_name" value="{{$product->name}}">

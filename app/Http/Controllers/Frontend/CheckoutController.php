@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Http\Controllers\Frontend\HandleCheckoutController;
 use App\Http\Middleware\CartMiddleware;
 use App\Jobs\SendOrderConfirmation;
 use App\Model\Order;
@@ -21,6 +22,13 @@ use Illuminate\Support\Facades\Session;
 
 class CheckoutController extends Controller
 {
+    protected $handle_checkout;
+
+    public function __construct(HandleCheckoutController $handle_checkout)
+    {
+            $this->handle_checkout = $handle_checkout;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -98,8 +106,12 @@ class CheckoutController extends Controller
             'error' => $error,
         ]);
 
+
         // Insert into order_product table
         foreach (Cart::content() as $item) {
+
+            $this->handle_checkout->updateProductQuantity($item->model->id,  $item->qty);
+
             OrderProduct::create([
                 'order_id' => $order->id,
                 'product_id' => $item->model->id,

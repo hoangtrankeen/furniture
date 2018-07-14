@@ -34,7 +34,10 @@ function getOneProductImg($images)
 
 function getFeaturedImageProduct($image)
 {
-    return  getProductImagePath().'/'.$image;
+    if($image){
+        return  getProductImagePath().'/'.$image;
+    }
+    return getProductImagePath().'/products/placeholder-image.jpg';
 }
 
 function getPostImgPath()

@@ -46,6 +46,10 @@
     /*background-color: #e65540;*/
 /*}*/
 
+.block1-txt:hover{
+background-color: rgba(103,117,214,0.1);
+}
+
 /*Override button color blue*/
 .hov-btn1, .hov-btn2:hover, .hov-btn2, .hov-btn3:hover, .swal-button{
 background-color: #717fe0;
@@ -183,6 +187,11 @@ form#content{
     -ms-transform: scale(1.1);
     -o-transform: scale(1.1);
     transform: scale(1.1);
+}
+/*Banner*/
+.banner-wrapper-image{
+    max-height: 255px;
+    overflow: hidden;
 }
 
 @media (min-width: 768px){

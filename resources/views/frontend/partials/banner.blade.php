@@ -10,7 +10,7 @@
             @foreach($categories as $category)
             <div class="col-md-6 col-xl-4 p-b-30 ">
                 <!-- Block1 -->
-                <div class="block1 wrap-pic-w " style="max-height: 350px; overflow: hidden;">
+                <div class="block1 wrap-pic-w banner-wrapper-image">
                     <img src="{{getCategoryImgFeatured($category->image)}}" alt="IMG-BANNER">
 
                     <a href="{{route('catalog.category', ['slug' => $category->slug])}}" class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">

@@ -54,6 +54,9 @@ Route::get('/contact', 'Frontend\ShopInfoController@contactPage')->name('contact
 
 Route::get('/combo', 'Frontend\PromoteController@getCombo')->name('promote.combo');
 
+Route::get('/tracking/order', 'Frontend\TrackingOrderController@index')->name('tracking.order');
+Route::get('/tracking/order/info', 'Frontend\TrackingOrderController@getOrderInformation')->name('tracking.order.info');
+
 Auth::routes();
 Route::get('admin/login', 'AuthAdmin\LoginController@showLoginForm')->name('admin.login');
 Route::post('admin/login', 'AuthAdmin\LoginController@login')->name('admin.login.submit');
@@ -77,6 +80,8 @@ Route::group(['prefix'=>'admin', 'middleware' => 'auth:admin'], function () {
     Route::resource('product-group','Backend\ProductGroupController');
 
     Route::resource('product','Backend\ProductController');
+
+    Route::get('product-simple/copy/{id}','Backend\ProductSimpleController@copy')->name('product-simple.copy');
 
     Route::resource('category','Backend\CategoryController');
 

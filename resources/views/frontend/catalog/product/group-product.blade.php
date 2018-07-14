@@ -42,7 +42,6 @@
             $breadslug = '';
         @endphp
     @endif
-
     <div class="bg0 m-t-20 p-b-140 flex-change">
         <div class="container">
             <div class="flex-w flex-sb-m">

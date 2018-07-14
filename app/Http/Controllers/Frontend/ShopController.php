@@ -68,9 +68,8 @@ class ShopController extends Controller
     {
         $pagination = 9;
         $category = Category::where('slug', $slug)->first();
-        $products = Product::whereHas('categories', function($query) use($slug){
-            $query->where('slug', $slug);
-        });
+
+        $products = $category->products();
 
         $products = $this->_toolbar->filterCollection($products);
 
@@ -130,7 +129,7 @@ class ShopController extends Controller
         if($product->type_id == 'group'){
             $child_id = json_decode($product->child_id);
 
-            $child_products = Product::whereIn('id', $child_id)->get();
+            $child_products = Product::whereIn('id', (array)$child_id)->get();
 
             foreach($child_products as $product)
             {

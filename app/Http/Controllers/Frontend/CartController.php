@@ -11,6 +11,12 @@ use App\Http\Controllers\Controller;
 
 class CartController extends Controller
 {
+    protected $handle_cart;
+    public function __construct(HandleCartController $handlecart)
+    {
+        $this->handle_cart = $handlecart;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -199,6 +205,16 @@ class CartController extends Controller
 
             $product = Product::where('id',$request->id)->first();
             $quantity = $request->quantity ?? 1;
+
+            if($this->handle_cart->checkItemQuantity($product->id, $quantity) == false){
+                $message = 'Số lượng không hợp lệ, xin vui lòng nhập số lượng nhỏ hơn';
+
+                return response()->json([
+                    'success' => false,
+                    'message' => $message,
+                ]);
+            }
+
             $duplicates = Cart::search(function ($cartItem, $rowId) use ($request) {
                 return $cartItem->id === $request->id;
             });

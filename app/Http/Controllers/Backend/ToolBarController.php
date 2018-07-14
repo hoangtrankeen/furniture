@@ -39,7 +39,9 @@ class ToolBarController extends Controller
                foreach($attribute->attributeValue as $val)
                {
                    if($this->request->attribute == $val->id){
-                       $products = $val->product();
+                       $products = $products->whereHas('attributeValue', function ($query) use ($val){
+                           $query->where('attribute_value.id',$val->id);
+                       });
                    }
                }
            }
